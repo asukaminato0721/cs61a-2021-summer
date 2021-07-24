@@ -1,0 +1,480 @@
+\documentclass{article}
+
+\usepackage[scaled]{beramono}
+\renewcommand*\familydefault{\ttdefault}
+\usepackage[T1]{fontenc}
+\usepackage[margin=1cm, paperwidth=20in]{geometry}
+\usepackage[document]{ragged2e}
+\usepackage{xcolor}
+
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows.meta}
+\pagenumbering{gobble}
+
+\newcommand{\objnode}[7]{
+\begin{minipage}{0.14\linewidth}
+\setlength{\parindent}{-0.5cm}
+\setlength{\leftskip}{0.5cm}
+
+\begin{tabular}{l}
+\large{\textbf{#1} #3} \\
+\large{#2 health}
+\end{tabular}
+\hfill
+\begin{tabular}{r}
+\includegraphics[width=1cm]{#4}
+\end{tabular}
+
+\hrulefill
+
+\textbf{* Class attributes}
+
+#5
+
+\hrulefill
+
+\textbf{* Instance attributes}
+
+#6
+
+\hrulefill
+
+\textbf{* Methods}
+
+#7
+
+\end{minipage}
+}
+
+\newcommand{\objnodenopic}[4]{
+\begin{minipage}{0.14\linewidth}
+\setlength{\parindent}{-0.5cm}
+\setlength{\leftskip}{0.5cm}
+
+{\large \textbf{#1}}
+
+\hrulefill
+
+\textbf{* Class attributes}
+
+#2
+
+\hrulefill
+
+\textbf{* Instance attributes}
+
+#3
+
+\hrulefill
+
+\textbf{* Methods}
+
+#4
+
+\end{minipage}
+}
+
+\newcommand{\required}[1]{\textbf{\textcolor{orange}{#1}}}
+\newcommand{\fromscratch}[1]{\textbf{\textcolor{red}{#1}}}
+
+\begin{document}
+\pagecolor{pink!10!white}
+
+\huge{\textbf{CS 61A Ants Project Object Map}}
+
+\vspace{1cm}
+
+\begin{figure}[!h]
+\centering
+\scalebox{0.5}{
+\begin{tikzpicture}
+
+\tikzset{every node/.style={draw, line width=0.5mm, inner sep=5mm, outer sep=0, fill=white}}
+
+\node at (0, 0) (insect) {\objnodenopic{Insect \required{[10]}}{
+damage = 0
+
+is\_waterproof = False \required{[10]}
+}
+{
+health
+
+place
+}
+{
+\_\_init\_\_(health, place)
+
+action(gamestate)
+
+add\_to(place)
+
+death\_callback()
+
+reduce\_health(amount)
+
+remove\_from(place)}};
+
+\node[below=2cm of insect, inner sep=0, line width=0, draw opacity=0] (belowinsect) {};
+
+\node[right=6cm of belowinsect] (bee) {\objnode{Bee}{?}{\required{[10]}\required{[opt1]}\required{[opt2]}}{bee}{
+name = 'Bee'
+
+damage = 1
+
+is\_waterproof = True \required{[10]}
+}{}
+{
+sting(ant)
+
+move\_to(place)
+
+blocked(self) \required{[opt1]}
+
+action(gamestate)
+
+add\_to(place)
+
+remove\_from(place)
+
+slow(length) \required{[opt2]}
+
+scare(length) \required{[opt2]}
+
+apply\_status(status, previous\_action, length) \required{[opt2]}
+}};
+
+\node[left=6cm of belowinsect] (ant) {\objnodenopic{Ant \required{[8]}\required{[opt1]}}{
+blocks\_path = True \required{[opt1]}{}
+
+food\_cost = 0
+
+implemented = False
+
+is\_container = False
+}{}
+{
+\_\_init\_\_(health)
+
+add\_to(place) \required{[8]}
+
+can\_contain(other)
+
+store\_ant(other)
+
+remove\_ant(other)
+
+remove\_from(place)
+}};
+
+\node[below=6cm of ant] (wallant) {\objnode{WallAnt}{4}{\fromscratch{[6]}}{ant_wall}{
+food\_cost = 4 \fromscratch{[6]}
+
+implemented = True \fromscratch{[6]}
+
+name = 'Wall' \fromscratch{[6]}
+}{}
+{
+\_\_init\_\_(health) \fromscratch{[6]}
+}};
+
+\node[right=1cm of wallant] (hungryant) {\objnode{HungryAnt}{1}{\fromscratch{[7]}}{ant_hungry}{
+
+chew\_duration = 3 \fromscratch{[7]}
+
+food\_cost = 4 \fromscratch{[7]}
+
+implemented 'True' \fromscratch{[7]}
+
+name = 'Hungry' \fromscratch{[7]}
+}
+{
+chew\_countdown \fromscratch{[7]}
+}
+{
+action(gamestate) \fromscratch{[7]}
+}};
+
+\node[left=1cm of wallant] (fireant) {\objnode{FireAnt}{3}{\required{[5]}}{ant_fire}{
+damage = 3
+
+food\_cost = 5
+
+implemented = True
+
+name = 'Fire'
+}{}
+{
+\_\_init\_\_(health)
+
+reduce\_health(amount) \required{[5]}
+}};
+
+\node[left=1cm of fireant] (throwerant) {\objnode{ThrowerAnt}{1}{\required{[1]}\required{[3]}\required{[4]}}{ant_thrower}{
+damage = 1
+
+food\_cost = 3
+
+implemented = True
+
+max\_range = \_\_\_ \required{[4]}
+
+min\_range = \_\_\_ \required{[4]}
+
+name = 'Thrower'
+}{}
+{
+action(gamestate)
+
+nearest\_bee(beehive) \required{[3]}\required{[4]}
+
+throw\_at(target)
+}};
+
+\node[below=6cm of throwerant, inner sep=0, line width=0, draw opacity=0] (belowthrower) {};
+
+\node[left=1cm of throwerant] (harvesterant) {\objnode{HarvesterAnt}{1}{\required{[1]}}{ant_harvester}{
+food\_cost = 2
+
+implemented = True
+
+name = 'Harvester'
+}{}
+{
+action(gamestate) \required{[1]}
+}};
+
+\node[right=1cm of hungryant] (containerant) {\objnodenopic{ContainerAnt \required{[8]}}{
+is\_container = True
+}
+{
+ant\_contained
+}
+{
+\_\_init\_\_(*args, **kwargs)
+
+action(gamestate) \required{[8]}
+
+can\_contain(other) \required{[8]}
+
+remove\_ant(ant)
+
+remove\_from(place)
+
+store\_ant(ant) \required{[8]}
+}};
+
+\node[right=1cm of containerant] (ninjaant) {\objnode{NinjaAnt}{1}{\required{[opt1]}}{ant_ninja}{
+blocks\_path = False \required{[opt1]}
+
+damage = 1
+
+food\_cost = 5
+
+implemented = True
+
+name = 'Ninja'
+}{}
+{
+action(gamestate) \required{[opt1]}
+}};
+
+\node[below=5cm of containerant, inner sep=0, line width=0, draw opacity=0] (belowcontainer) {};
+
+\node[right=0.5cm of belowcontainer] (tankant) {\objnode{TankAnt}{2}{\fromscratch{[9]}}{ant_tank}{
+damage = 1 \fromscratch{[9]}
+
+food\_cost = 6 \fromscratch{[9]}
+
+implemented = True \fromscratch{[9]}
+
+name = 'Tank' \fromscratch{[9]}
+}{}
+{
+\_\_init\_\_(health) \fromscratch{[9]}
+
+action(gamestate) \fromscratch{[9]}
+}};
+
+\node[left=0.5cm of belowcontainer] (bodyguardant) {\objnode{BodyguardAnt}{2}{\required{[8]}}{ant_bodyguard}{
+food\_cost = 2
+
+implemented = True \required{[8]}
+
+name = 'Bodyguard'
+}{}
+{
+\_\_init\_\_(health) \required{[8]}
+}};
+
+\node[right=0.5cm of belowthrower] (slowthrower) {\objnode{SlowThrower}{1}{\required{[opt2]}}{ant_slow}{
+food\_cost = 4
+
+implemented = True \required{[opt2]}
+
+name = 'Slow' \required{[opt2]}
+}{}
+{
+throw\_at(target) \required{[opt2]}
+}};
+
+\node[right=1cm of slowthrower] (scarythrower) {\objnode{ScaryThrower}{1}{\required{[opt2]}}{ant_scary}{
+food\_cost = 6
+
+implemented = True \required{[opt2]}
+
+name = 'Scary' \required{[opt2]}
+}{}
+{
+throw\_at(target) \required{[opt2]}
+}};
+
+\node[left=0.5cm of belowthrower] (scubathrower) {\objnode{ScubaThrower}{1}{\fromscratch{[11]}}{ant_scuba}{
+food\_cost = 6 \fromscratch{[11]}
+
+implemented = True \fromscratch{[11]}
+
+is\_waterproof = True \fromscratch{[11]}
+
+name = 'Scuba' \fromscratch{[11]}
+}{}
+{
+}};
+
+\node[left=1cm of scubathrower] (longthrower) {\objnode{LongThrower}{1}{\required{[4]}}{ant_longthrower}{
+food\_cost = 2
+
+implemented = True
+
+min\_range = 5 \required{[4]}
+
+name = 'Long'
+}{}
+{
+}};
+
+\node[left=1cm of longthrower] (shortthrower) {\objnode{ShortThrower}{1}{\required{[4]}}{ant_shortthrower}{
+food\_cost = 2
+
+implemented = True
+
+max\_range = 3 \required{[4]}
+
+name = 'Short'
+}{}
+{
+}};
+
+\node[below=1cm of scubathrower] (queenant) {\objnode{QueenAnt}{1}{\required{[EC]}}{ant_queen}{
+food\_cost = 7
+
+implemented = True
+
+name = 'Queen'
+}{}
+{
+\_\_init\_\_(health) \required{[EC]}
+
+action(gamestate) \required{[EC]}
+
+reduce\_health(amount) \required{[EC]}
+}};
+
+\node[right=1cm of scarythrower] (laserant) {\objnode{LaserAnt}{1}{\required{[opt3]}}{ant_laser}{
+
+food\_cost = 10
+
+implemented = True \required{[opt3]}
+
+name = 'Laser'
+}{}
+{
+action(gamestate)
+
+calculate\_damage(distance) \required{[opt3]}
+
+insects\_in\_front(beehive) \required{[opt3]}
+}};
+
+\node at (-30, 0) (place) {\objnodenopic{Place \required{[2]}}{
+ant
+
+bees
+
+entrance
+
+exit
+
+name
+}
+{
+is\_hive = False
+}
+{
+\_\_init\_\_(name, exit) \required{[2]}
+
+add\_insect(insect)
+
+remove\_insect(insect)
+}};
+
+\node[below=1cm of place] (water) {\objnodenopic{Water \required{[10]}}{}{}
+{
+add\_insect(insect) \required{[10]}
+}};
+
+\node at (-55, 0) {\begin{minipage}{0.3\linewidth}
+\setlength{\parindent}{-0.5cm}
+\setlength{\leftskip}{0.5cm}
+\setlength{\parskip}{0.5cm}
+\huge
+
+\textbf{Notes/legend}
+
+\hrulefill
+
+\Large
+
+Please keep in mind that this diagram contains no more information than what is available on the project spec. A working implementation may make use of helper methods that are not included in this diagram.
+
+\required{Orange indicates methods you must fill in and instance variables you must set}
+
+\fromscratch{Red indicates classes, methods, and instance variables that you must implement from scratch}
+
+\end{minipage}};
+
+\tikzset{MYARROW/.style={line width=1mm, arrows={-Latex[length=5mm, width=4mm]}}}
+
+\draw[MYARROW] (ant.east)..controls +(east:2) and +(south:3)..(insect.south);
+\draw[MYARROW] (bee.west)..controls +(west:2) and +(south:3)..(insect.south);
+
+\draw[MYARROW] (containerant.north)..controls +(north:3) and +(south:4)..(ant.south);
+\draw[MYARROW] (fireant.north)..controls +(north:3) and +(south:3)..(ant.south);
+\draw[MYARROW] (harvesterant.north)..controls +(north:7) and +(south:4)..(ant.south);
+\draw[MYARROW] (hungryant.north)..controls +(north:2) and +(south:3)..(ant.south);
+\draw[MYARROW] (ninjaant.north)..controls +(north:3) and +(south:4)..(ant.south);
+\draw[MYARROW] (throwerant.north)..controls +(north:2) and +(south:3)..(ant.south);
+\draw[MYARROW] (wallant.north) -- (ant.south);
+
+\draw[MYARROW] (tankant.north)..controls +(north:1) and +(south:2)..(containerant.south);
+\draw[MYARROW] (bodyguardant.north)..controls +(north:2) and +(south:2)..(containerant.south);
+
+\draw[MYARROW] (laserant.north)..controls +(north:3) and +(south:4)..(throwerant.south);
+\draw[MYARROW] (longthrower.north)..controls +(north:2) and +(south:4)..(throwerant.south);
+\draw[MYARROW] (scarythrower.north)..controls +(north:3) and +(south:4)..(throwerant.south);
+\draw[MYARROW] (scubathrower.north)..controls +(north:1) and +(south:3)..(throwerant.south);
+\draw[MYARROW] (shortthrower.north)..controls +(north:2) and +(south:4)..(throwerant.south);
+\draw[MYARROW] (slowthrower.north)..controls +(north:1) and +(south:3)..(throwerant.south);
+
+\draw[MYARROW] (queenant.north) -- (scubathrower.south);
+
+\draw[MYARROW] (water.north) -- (place.south);
+
+\end{tikzpicture}
+}
+\end{figure}
+
+\end{document}
