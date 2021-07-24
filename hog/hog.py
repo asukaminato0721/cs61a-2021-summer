@@ -169,10 +169,12 @@ def play(
                 break
             if not more_boar(score1, score0):
                 who = next_player(who)
-    # END PROBLEM 5
-    # (note that the indentation for the problem 6 prompt (***YOUR CODE HERE***) might be misleading)
-    # BEGIN PROBLEM 6
-    "*** YOUR CODE HERE ***"
+        # END PROBLEM 5
+        # (note that the indentation for the problem 6 prompt (***YOUR CODE HERE***) might be misleading)
+        # BEGIN PROBLEM 6
+        "*** YOUR CODE HERE ***"
+        say = say(score0, score1)
+    say = say(score0, score1)
     # END PROBLEM 6
     return score0, score1
 
@@ -260,6 +262,32 @@ def announce_highest(who: int, last_score: int = 0, running_high: int = 0):
     assert who == 0 or who == 1, "The who argument should indicate a player."
     # BEGIN PROBLEM 7
     "*** YOUR CODE HERE ***"
+
+    def each_row(
+        score0: int,
+        score1: int,
+        running_high: int = running_high,
+        last_score: int = last_score,
+    ) -> Callable:
+        if who == 0:
+            if score0 - last_score > running_high:
+                print(
+                    f"Player {who} has reached a new maximum point gain. {score0 - last_score} point(s)!"
+                )
+                running_high = score0 - last_score
+            last_score = score0
+            return lambda a, b: each_row(a, b, running_high, last_score)
+        else:
+            if score1 - last_score > running_high:
+                print(
+                    f"Player {who} has reached a new maximum point gain. {score1 - last_score} point(s)!"
+                )
+                running_high = score1 - last_score
+            last_score = score1
+            return lambda a, b: each_row(a, b, running_high, last_score)
+
+    return each_row
+
     # END PROBLEM 7
 
 
@@ -290,7 +318,7 @@ def always_roll(n: int) -> Strategy:
 
 def make_averaged(
     original_function: Callable[[], int], trials_count: int = 1000
-) -> Callable:
+) -> Callable[..., float]:
     """Return a function that returns the average value of ORIGINAL_FUNCTION called TRIALS_COUNT times.
 
     To implement this function, you will have to use *args syntax, a new Python
@@ -303,6 +331,12 @@ def make_averaged(
     """
     # BEGIN PROBLEM 8
     "*** YOUR CODE HERE ***"
+    from statistics import fmean
+
+    def average(*args):
+        return fmean(original_function(*args) for i in range(trials_count))
+
+    return average
     # END PROBLEM 8
 
 
@@ -319,6 +353,12 @@ def max_scoring_num_rolls(
     """
     # BEGIN PROBLEM 9
     "*** YOUR CODE HERE ***"
+    from statistics import fmean
+
+    return max(
+        range(1, 11),
+        key=lambda n: fmean(roll_dice(n, dice) for i in range(trials_count)),
+    )
     # END PROBLEM 9
 
 
@@ -364,7 +404,9 @@ def piggypoints_strategy(
     returns NUM_ROLLS otherwise.
     """
     # BEGIN PROBLEM 10
-    return 6  # Replace this statement
+    if piggy_points(opponent_score) >= cutoff:
+        return 0
+    return num_rolls  # Replace this statement
     # END PROBLEM 10
 
 
@@ -376,6 +418,17 @@ def more_boar_strategy(
     Otherwise, it returns NUM_ROLLS.
     """
     # BEGIN PROBLEM 11
+    if (
+        more_boar(score, opponent_score)
+        and piggy_points(opponent_score) >= cutoff
+    ):
+        return 0
+    if piggy_points(opponent_score) >= cutoff or more_boar(
+        score + piggy_points(opponent_score), opponent_score
+    ):
+        return 0
+
+    return num_rolls
     return 6  # Replace this statement
     # END PROBLEM 11
 

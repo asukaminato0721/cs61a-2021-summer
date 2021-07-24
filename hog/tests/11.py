@@ -7,38 +7,34 @@ test = {
         {
           'code': r"""
           >>> more_boar_strategy(9, 25, cutoff=8, num_rolls=6)
-          962aea5f59fc55bd65ccacf4603c8f22
-          # locked
+          0
           """,
           'hidden': False,
-          'locked': True
+          'locked': False
         },
         {
           'code': r"""
           >>> more_boar_strategy(30, 54, cutoff=7, num_rolls=6)
-          327b19ffebddf93982e1ad2a4a6486f4
-          # locked
+          6
           """,
           'hidden': False,
-          'locked': True
+          'locked': False
         },
         {
           'code': r"""
           >>> more_boar_strategy(20, 36, cutoff=100, num_rolls=6)
-          962aea5f59fc55bd65ccacf4603c8f22
-          # locked
+          0
           """,
           'hidden': False,
-          'locked': True
+          'locked': False
         },
         {
           'code': r"""
           >>> more_boar_strategy(24, 5, cutoff=8, num_rolls=6)
-          962aea5f59fc55bd65ccacf4603c8f22
-          # locked
+          0
           """,
           'hidden': False,
-          'locked': True
+          'locked': False
         },
         {
           'code': r"""

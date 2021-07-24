@@ -15,7 +15,7 @@ Types of dice:
 """
 
 from random import randint
-from typing import Callable
+from typing import Callable, Tuple
 
 
 def make_fair_dice(sides: int) -> Callable[[], int]:
@@ -32,7 +32,7 @@ four_sided = make_fair_dice(4)
 six_sided = make_fair_dice(6)
 
 
-def make_test_dice(*outcomes):
+def make_test_dice(*outcomes: int):
     """Return a die that cycles deterministically through OUTCOMES.
 
     >>> dice = make_test_dice(1, 2, 3)

@@ -17,6 +17,19 @@ current progress:
 - [x] 4
 - [x] 5
 - [ ] 6
+
+  > <https://cs61a.org/lab/sol-lab06/#q3>
+  >
+  > list monad
+  >
+  > 换另一种说法 - 那道题是在考你 nondeterministic prorgamming （在代码中加入 nondeterminism）
+  >
+  > 比如说，你可以想想有如下函数
+  >
+  > amb: a -> a -> a
+  >
+  > runAmb: (() -> a) -> list a
+
 - [x] 7
 - [ ] 8
 
@@ -28,8 +41,10 @@ current progress:
 - [ ] 4
 - [ ] 5
 
+  > accumulator style
+
 ## project
 
-- [ ] hog
+- [x] hog
 - [ ] cats
 - [ ] ants
