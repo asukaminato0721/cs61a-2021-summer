@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from math import prod
 from typing import List
 
 
@@ -48,8 +49,14 @@ def cumulative_mul(t: "Tree"):
     """
     "*** YOUR CODE HERE ***"
 
-    def helper(t: Tree, mul: int):
-        ...
+    def dfs(t: "Tree"):
+        if t.is_leaf():
+            return t.label
+        子树的乘积 = prod(map(dfs, t.branches), start=1)
+        t.label *= 子树的乘积
+        return t.label
+
+    dfs(t)
 
 
 def add_d_leaves(t: "Tree", v: int):
@@ -175,7 +182,7 @@ def every_other(s: "Link"):
     every_other(s.rest)
 
 
-def prune_small(t, n):
+def prune_small(t: Tree, n: int):
     """Prune the tree mutatively, keeping only the n branches
     of each node with the smallest label.
 
@@ -192,11 +199,13 @@ def prune_small(t, n):
     >>> t3
     Tree(6, [Tree(1), Tree(3, [Tree(1), Tree(2)])])
     """
-    while ___________________________:
-        largest = max(_______________, key=____________________)
-        _________________________
-    for __ in _____________:
-        ___________________
+    import heapq
+
+    if t.is_leaf():
+        return
+    t.branches = heapq.nsmallest(n, t.branches, key=lambda x: x.label)
+    for b in t.branches:
+        prune_small(b, n)
 
 
 def reverse_other(t: Tree):
@@ -213,6 +222,20 @@ def reverse_other(t: Tree):
     Tree(1, [Tree(8, [Tree(3, [Tree(5), Tree(4)]), Tree(6, [Tree(7)])]), Tree(2)])
     """
     "*** YOUR CODE HERE ***"
+
+    def dfs(t: "Tree", level: int = 1):
+        if t.is_leaf():
+            return
+        if level % 2 == 0:
+            pass
+        else:
+            labels = [x.label for x in reversed(t.branches)]
+            for l, b in zip(labels, t.branches):
+                b.label = l
+        for t in t.branches:
+            dfs(t, level + 1)
+
+    dfs(t)
 
 
 class Link:

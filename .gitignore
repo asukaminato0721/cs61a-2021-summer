@@ -141,3 +141,4 @@ cython_debug/
 *.pyc
 *.ok*
 ok
+.idea
