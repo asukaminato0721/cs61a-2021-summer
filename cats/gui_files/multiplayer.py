@@ -1,16 +1,17 @@
 import time
-from collections import namedtuple, defaultdict
+from collections import defaultdict, namedtuple
 from datetime import datetime, timedelta
 from random import randrange
 
 import cats
-from gui_files.common_server import route, forward_to_server, server_only
+
+from gui_files.common_server import forward_to_server, route, server_only
 from gui_files.leaderboard_integrity import (
+    create_wpm_authorization,
+    decode_challenge,
+    encode_challenge,
     get_authorized_limit,
     get_captcha_urls,
-    encode_challenge,
-    decode_challenge,
-    create_wpm_authorization,
 )
 
 MIN_PLAYERS = 2
@@ -28,6 +29,7 @@ CAPTCHA_SLOWDOWN_FACTOR = 0.6
 def db_init():
     global connect_db
     from gui_files.db import connect_db
+
     with connect_db() as db:
         db(
             """CREATE TABLE IF NOT EXISTS leaderboard (
@@ -40,7 +42,9 @@ def db_init():
 
 
 def create_multiplayer_server():
-    State = namedtuple("State", ["queue", "game_lookup", "game_data", "progress"])
+    State = namedtuple(
+        "State", ["queue", "game_lookup", "game_data", "progress"]
+    )
     State = State({}, {}, {}, defaultdict(list))
 
     @route
@@ -116,7 +120,9 @@ def create_multiplayer_server():
     @forward_to_server
     def request_progress(targets):
         now = {t: State.progress[t][-1] for t in targets}
-        elapsed = [[now[t][0], now[t][1] - State.progress[t][0][1]] for t in targets]
+        elapsed = [
+            [now[t][0], now[t][1] - State.progress[t][0][1]] for t in targets
+        ]
         return elapsed
 
     @route
@@ -160,7 +166,10 @@ def create_multiplayer_server():
         if len(new_name) > MAX_NAME_LENGTH:
             return
         with connect_db() as db:
-            db("UPDATE leaderboard SET name=(%s) WHERE user_id=(%s)", [new_name, user])
+            db(
+                "UPDATE leaderboard SET name=(%s) WHERE user_id=(%s)",
+                [new_name, user],
+            )
 
     @route
     @forward_to_server
@@ -208,13 +217,19 @@ def create_multiplayer_server():
 
         if wpm < claimed_wpm * CAPTCHA_SLOWDOWN_FACTOR:
             # too slow!
-            return {"success": False, "message": "Your captcha was typed too slowly!"}
+            return {
+                "success": False,
+                "message": "Your captcha was typed too slowly!",
+            }
 
         if accuracy < CAPTCHA_ACCURACY_THRESHOLD:
             # too inaccurate!
             return {"success": False, "message": "You made too many mistakes!"}
 
-        return {"success": True, "token": create_wpm_authorization(user, claimed_wpm)}
+        return {
+            "success": True,
+            "token": create_wpm_authorization(user, claimed_wpm),
+        }
 
     @route
     @forward_to_server

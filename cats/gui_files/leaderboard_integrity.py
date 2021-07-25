@@ -54,7 +54,8 @@ def token_reader(fail):
                 return fail
             try:
                 return f(
-                    token=json.loads(fernet.decrypt(token.encode("utf-8"))), **kwargs
+                    token=json.loads(fernet.decrypt(token.encode("utf-8"))),
+                    **kwargs
                 )
             except (TypeError, InvalidToken):
                 return fail
@@ -101,7 +102,9 @@ def populate_captcha_queue():
 def generate_captcha():
     from claptcha import Claptcha
 
-    word = random.choice([x for x in COMMON_WORDS_SET if len(x) < CAPTCHA_WORD_LEN])
+    word = random.choice(
+        [x for x in COMMON_WORDS_SET if len(x) < CAPTCHA_WORD_LEN]
+    )
     c = Claptcha(word, "gui_files/FreeMono.ttf", margin=(20, 10))
     image_b64 = base64.b64encode(c.bytes[1].getvalue()).decode("utf-8")
     return "data:image/png;base64," + image_b64, word

@@ -1,11 +1,14 @@
 """Typing test implementation"""
 
-import re
-from typing import Callable, List
-from utils import lower, split, remove_punctuation, lines_from_file
-from ucb import main, interact, trace
+from collections import defaultdict
 from datetime import datetime
+from functools import lru_cache
 from itertools import zip_longest
+from operator import eq, ne, sub
+from typing import Callable, Dict, List, Union
+
+from ucb import main
+from utils import lines_from_file, lower, remove_punctuation, split
 
 ###########
 # Phase 1 #
@@ -91,11 +94,16 @@ def accuracy(typed: str, reference: str) -> float:
     reference_words = split(reference)
     # BEGIN PROBLEM 3
     "*** YOUR CODE HERE ***"
-
+    if len(typed_words) == 0:
+        if len(reference_words) == 0:
+            return 100.0
+        else:
+            return 0.0
+    return sum(map(eq, typed_words, reference_words)) / len(typed_words) * 100
     # END PROBLEM 3
 
 
-def wpm(typed, elapsed):
+def wpm(typed: str, elapsed: Union[int, float]) -> float:
     """Return the words-per-minute (WPM) of the TYPED string.
 
     Arguments:
@@ -110,6 +118,7 @@ def wpm(typed, elapsed):
     assert elapsed > 0, "Elapsed time must be positive"
     # BEGIN PROBLEM 4
     "*** YOUR CODE HERE ***"
+    return len(typed) / 5 * (60 / elapsed)
     # END PROBLEM 4
 
 
@@ -118,7 +127,12 @@ def wpm(typed, elapsed):
 ###########
 
 
-def autocorrect(typed_word, valid_words, diff_function, limit):
+def autocorrect(
+    typed_word: str,
+    valid_words: List[str],
+    diff_function: Callable[[str, str, int], int],
+    limit,
+):
     """Returns the element of VALID_WORDS that has the smallest difference
     from TYPED_WORD. Instead returns TYPED_WORD if that difference is greater
     than LIMIT.
@@ -138,10 +152,16 @@ def autocorrect(typed_word, valid_words, diff_function, limit):
     """
     # BEGIN PROBLEM 5
     "*** YOUR CODE HERE ***"
+    if typed_word in valid_words:
+        return typed_word
+    ans = min(valid_words, key=lambda w: diff_function(typed_word, w, limit))
+    if diff_function(typed_word, ans, limit) > limit:
+        return typed_word
+    return ans
     # END PROBLEM 5
 
 
-def feline_flips(start, goal, limit):
+def feline_flips(start: str, goal: str, limit: int) -> int:
     """A diff function for autocorrect that determines how many letters
     in START need to be substituted to create GOAL, then adds the difference in
     their lengths and returns the result.
@@ -164,11 +184,12 @@ def feline_flips(start, goal, limit):
     5
     """
     # BEGIN PROBLEM 6
+    return sum(map(ne, start, goal)) + abs(len(start) - len(goal))
     assert False, "Remove this line"
     # END PROBLEM 6
 
 
-def minimum_mewtations(start, goal, limit):
+def minimum_mewtations(start: str, goal: str, limit: int) -> int:
     """A diff function that computes the edit distance from START to GOAL.
     This function takes in a string START, a string GOAL, and a number LIMIT.
 
@@ -185,25 +206,19 @@ def minimum_mewtations(start, goal, limit):
     >>> minimum_mewtations("ckiteus", "kittens", big_limit) # ckiteus -> kiteus -> kitteus -> kittens
     3
     """
-    assert False, "Remove this line"
 
-    if ______________:  # Fill in the condition
-        # BEGIN
-        "*** YOUR CODE HERE ***"
-        # END
+    @lru_cache(maxsize=None)
+    def dp(i: int, j: int) -> int:
+        if i == -1:
+            return j + 1
+        if j == -1:
+            return i + 1
+        if start[i] == goal[j]:
+            return dp(i - 1, j - 1)
+        else:
+            return min(dp(i, j - 1), dp(i - 1, j), dp(i - 1, j - 1)) + 1
 
-    elif ___________:  # Feel free to remove or add additional cases
-        # BEGIN
-        "*** YOUR CODE HERE ***"
-        # END
-
-    else:
-        add = ...  # Fill in these lines
-        remove = ...
-        substitute = ...
-        # BEGIN
-        "*** YOUR CODE HERE ***"
-        # END
+    return dp(len(start) - 1, len(goal) - 1)
 
 
 def final_diff(start, goal, limit):
@@ -220,7 +235,12 @@ FINAL_DIFF_LIMIT = 6  # REPLACE THIS WITH YOUR LIMIT
 ###########
 
 
-def report_progress(sofar, prompt, user_id, send):
+def report_progress(
+    sofar: List[str],
+    prompt: List[str],
+    user_id: int,
+    send: Callable[[Dict[str, Union[int, float]]], None],
+):
     """Send a report of your id and progress so far to the multiplayer server.
     Returns the progress so far.
 
@@ -245,6 +265,15 @@ def report_progress(sofar, prompt, user_id, send):
     """
     # BEGIN PROBLEM 8
     "*** YOUR CODE HERE ***"
+    ans = 0
+    for i in map(eq, sofar, prompt):
+        if i:
+            ans += 1
+        else:
+            break
+    ans /= len(prompt)
+    send({"id": user_id, "progress": ans})
+    return ans
     # END PROBLEM 8
 
 
@@ -259,7 +288,7 @@ def fastest_words_report(times_per_player, words):
     return report
 
 
-def time_per_word(times_per_player, words):
+def time_per_word(times_per_player: List[List[int]], words: List[str]):
     """Given timing data, return a game data abstraction, which contains a list
     of words and the amount of time each player took to type each word.
 
@@ -278,10 +307,15 @@ def time_per_word(times_per_player, words):
     """
     # BEGIN PROBLEM 9
     "*** YOUR CODE HERE ***"
+
+    return game(
+        words,
+        [list(map(sub, p[1:], p)) for p in times_per_player],
+    )
     # END PROBLEM 9
 
 
-def fastest_words(game):
+def fastest_words(game) -> List[List[str]]:
     """Return a list of lists of which words each player typed fastest.
 
     Arguments:
@@ -300,43 +334,53 @@ def fastest_words(game):
     )  # contains an *index* for each word
     # BEGIN PROBLEM 10
     "*** YOUR CODE HERE ***"
-    # END PROBLEM 10
+    player_num = len(get_times(game))
+    rows = zip(*get_times(game))
+    each_row_shortest_time = [
+        min(range(player_num), key=lambda x: row[x]) for row in rows
+    ]
+    ans = defaultdict(list)
+    for idx, num in enumerate(each_row_shortest_time):
+        ans[num].append(get_words(game)[idx])
+    return [ans[i] for i in player_indices]
 
 
-def game(words, times):
+def game(
+    words: List[str], times: List[List[Union[int, float]]]
+) -> List[Union[List[str], List[List[Union[int, float]]]]]:
     """A data abstraction containing all words typed and their times."""
     assert all(
-        [type(w) == str for w in words]
+        type(w) == str for w in words
     ), "words should be a list of strings"
     assert all(
-        [type(t) == list for t in times]
+        type(t) == list for t in times
     ), "times should be a list of lists"
     assert all(
-        [isinstance(i, (int, float)) for t in times for i in t]
+        isinstance(i, (int, float)) for t in times for i in t
     ), "times lists should contain numbers"
     assert all(
-        [len(t) == len(words) for t in times]
+        len(t) == len(words) for t in times
     ), "There should be one word per time."
     return [words, times]
 
 
-def word_at(game, word_index):
+def word_at(game, word_index: int) -> str:
     """A selector function that gets the word with index word_index"""
     assert 0 <= word_index < len(game[0]), "word_index out of range of words"
     return game[0][word_index]
 
 
-def get_words(game):
+def get_words(game: List) -> List[str]:
     """A selector function for all the words in the game"""
     return game[0]
 
 
-def get_times(game):
+def get_times(game) -> List[List[Union[int, float]]]:
     """A selector function for all typing times for all players"""
     return game[1]
 
 
-def time(game, player_num, word_index):
+def time(game, player_num: int, word_index: int) -> Union[int, float]:
     """A selector function for the time it took player_num to type the word at word_index"""
     assert word_index < len(game[0]), "word_index out of range of words"
     assert player_num < len(game[1]), "player_num out of range of players"
@@ -348,14 +392,15 @@ def game_string(game):
     return "game(%s, %s)" % (game[0], game[1])
 
 
-enable_multiplayer = False  # Change to True when you're ready to race.
+enable_multiplayer = True  # Change to True when you're ready to race.
+
 
 ##########################
 # Command Line Interface #
 ##########################
 
 
-def run_typing_test(topics):
+def run_typing_test(topics: List[str]):
     """Measure typing speed and accuracy on the command line."""
     paragraphs = lines_from_file("data/sample_paragraphs.txt")
     select = lambda p: True
@@ -369,7 +414,8 @@ def run_typing_test(topics):
             return
         print("Type the following paragraph and then press enter/return.")
         print(
-            "If you only type part of it, you will be scored only on that part.\n"
+            "If you only type part of it, you will be scored only on that "
+            "part.\n"
         )
         print(reference)
         print()

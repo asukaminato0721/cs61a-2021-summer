@@ -8,38 +8,28 @@ test = {
           'code': r"""
           >>> big_limit = 10
           >>> feline_flips("car", "cad", big_limit)
-          52f1b72ba99dddc798bb5cebce0be695
-          # locked
+          1
           >>> feline_flips("this", "that", big_limit)
-          45c27a29bbaeb163dec9a0eaed9c7c9c
-          # locked
+          2
           >>> feline_flips("one", "two", big_limit)
-          91711de69bc1d16e478231c51fac5db8
-          # locked
+          3
           >>> feline_flips("from", "form", big_limit)
-          45c27a29bbaeb163dec9a0eaed9c7c9c
-          # locked
+          2
           >>> feline_flips("awe", "awesome", big_limit)
-          bfdc03a3c261c5dc71255ec79dd5977e
-          # locked
+          4
           >>> feline_flips("someawe", "awesome", big_limit)
-          ca82d3ac444a7724c7a6f8a337e495f5
-          # locked
+          6
           >>> feline_flips("awful", "awesome", big_limit)
-          f29bb7189bc0116caaaf05635899b49b
-          # locked
+          5
           >>> feline_flips("awful", "awesome", 3) > 3
-          f0a7036a7438d73054555da0482ad042
-          # locked
+          True
           >>> feline_flips("awful", "awesome", 4) > 4
-          f0a7036a7438d73054555da0482ad042
-          # locked
+          True
           >>> feline_flips("awful", "awesome", 5) > 5
-          81e16d9126cb46b28abbb0a979cb030a
-          # locked
+          False
           """,
           'hidden': False,
-          'locked': True
+          'locked': False
         },
         {
           'code': r"""

@@ -6,7 +6,6 @@ from time import sleep
 from typing import List
 
 import sqlalchemy.engine.url
-
 from common.rpc.secrets import get_secret
 
 use_devdb = getenv("ENV", "DEV") in ("DEV", "TEST")

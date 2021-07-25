@@ -37,17 +37,14 @@ test = {
           'code': r"""
           >>> big_limit = 10
           >>> minimum_mewtations("cats", "scat", big_limit)
-          45c27a29bbaeb163dec9a0eaed9c7c9c
-          # locked
+          2
           >>> minimum_mewtations("purng", "purring", big_limit)
-          45c27a29bbaeb163dec9a0eaed9c7c9c
-          # locked
+          2
           >>> minimum_mewtations("ckiteus", "kittens", big_limit)
-          91711de69bc1d16e478231c51fac5db8
-          # locked
+          3
           """,
           'hidden': False,
-          'locked': True
+          'locked': False
         },
         {
           'code': r"""

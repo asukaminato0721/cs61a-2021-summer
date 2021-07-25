@@ -9,11 +9,12 @@ from typing import Callable, Tuple
 def lines_from_file(path):
     """Return a list of strings, one for each line in a file."""
     with open(path, "r") as f:
-        return [line.strip() for line in f.readlines()]
+        return [line.strip() for line in f]
 
 
-def remove_punctuation(s):
-    """Return a string with the same contents as s, but with punctuation removed.
+def remove_punctuation(s: str) -> str:
+    """Return a string with the same contents as s, but with punctuation
+    removed.
 
     >>> remove_punctuation("It's a lovely day, don't you think?")
     'Its a lovely day dont you think'
@@ -22,7 +23,7 @@ def remove_punctuation(s):
     return s.strip().translate(punctuation_remover)
 
 
-def lower(s:str):
+def lower(s: str):
     """Return a lowercased version of s."""
     return s.lower()
 

@@ -36,14 +36,14 @@ def analyze(prompted_text, typed_text, start_time, end_time):
     }
 
 
-def similar(w, v, n):
+def similar(w: set, v: set, n: int):
     """Whether W intersect V contains at least |W|-N and |V|-N elements."""
     intersect = len(w.intersection(v))
     return intersect >= len(w) - n and intersect >= len(v) - n
 
 
 @route
-def autocorrect(word=""):
+def autocorrect(word: str = ""):
     """Call autocorrect using the best score function available."""
     raw_word = word
     word = cats.lower(cats.remove_punctuation(raw_word))
@@ -67,7 +67,7 @@ def autocorrect(word=""):
     return raw_word
 
 
-def reformat(word, raw_word):
+def reformat(word: str, raw_word: str) -> str:
     """Reformat WORD to match the capitalization and punctuation of RAW_WORD."""
     # handle capitalization
     if raw_word != "" and raw_word[0].isupper():
@@ -102,7 +102,7 @@ def request_id():
 
 
 @route
-def report_progress(id, typed, prompt):
+def report_progress(id, typed:str, prompt: str):
     """Report progress to the multiplayer server and also return it."""
     typed = typed.split()  # A list of word strings
     prompt = prompt.split()  # A list of word strings

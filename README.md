@@ -46,5 +46,5 @@ current progress:
 ## project
 
 - [x] hog
-- [ ] cats
+- [x] cats
 - [ ] ants
