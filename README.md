@@ -31,7 +31,7 @@ current progress:
   > runAmb: (() -> a) -> list a
 
 - [x] 7
-- [ ] 8
+- [x] 8
 
 ## homework
 

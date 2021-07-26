@@ -30,12 +30,8 @@ def label_squarer(t: "Tree"):
     Tree(1, [Tree(9, [Tree(25)]), Tree(49)])
     """
     "*** YOUR CODE HERE ***"
-    if t.is_leaf():
-        t.label **= 2
-    else:
-        t.label **= 2
-        for i in t.branches:
-            label_squarer(i)
+    t.label **= 2
+    [label_squarer(i) for i in t.branches]
 
 
 def cumulative_mul(t: "Tree"):
@@ -50,8 +46,6 @@ def cumulative_mul(t: "Tree"):
     "*** YOUR CODE HERE ***"
 
     def dfs(t: "Tree"):
-        if t.is_leaf():
-            return t.label
         子树的乘积 = prod(map(dfs, t.branches), start=1)
         t.label *= 子树的乘积
         return t.label
@@ -118,6 +112,12 @@ def add_d_leaves(t: "Tree", v: int):
         10
     """
     "*** YOUR CODE HERE ***"
+
+    def adder(t: "Tree", v: int, d: int):
+        [adder(i, v, d + 1) for i in t.branches]
+        t.branches.extend([Tree(v)] * d)
+
+    adder(t, v, 0)
 
 
 def has_cycle(link: "Link") -> bool:
@@ -201,8 +201,6 @@ def prune_small(t: Tree, n: int):
     """
     import heapq
 
-    if t.is_leaf():
-        return
     t.branches = heapq.nsmallest(n, t.branches, key=lambda x: x.label)
     for b in t.branches:
         prune_small(b, n)
@@ -224,12 +222,10 @@ def reverse_other(t: Tree):
     "*** YOUR CODE HERE ***"
 
     def dfs(t: "Tree", level: int = 1):
-        if t.is_leaf():
-            return
         if level % 2 == 0:
             pass
         else:
-            labels = [x.label for x in reversed(t.branches)]
+            labels = (x.label for x in reversed(t.branches))
             for l, b in zip(labels, t.branches):
                 b.label = l
         for t in t.branches:
