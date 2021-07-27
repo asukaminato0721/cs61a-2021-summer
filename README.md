@@ -32,6 +32,8 @@ current progress:
 
 - [x] 7
 - [x] 8
+- [x] 9
+- [ ] 10
 
 ## homework
 
