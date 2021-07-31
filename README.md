@@ -33,7 +33,7 @@ current progress:
 - [x] 7
 - [x] 8
 - [x] 9
-- [ ] 10
+- [x] 10 <https://www.cnblogs.com/ikventure/p/15047654.html>
 
 ## homework
 
@@ -50,3 +50,11 @@ current progress:
 - [x] hog
 - [x] cats
 - [ ] ants
+
+---
+
+## Highlight
+
+- Strong Typed [PEP 484](https://www.python.org/dev/peps/pep-0484/)
+- Modern syntax
+- PEP 8 format [black](https://github.com/psf/black)

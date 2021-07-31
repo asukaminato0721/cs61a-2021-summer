@@ -116,8 +116,8 @@ def read_expr(src: Buffer) -> Union[LambdaExpr, CallExpr]:
 
 
 def read_comma_separated(
-    src: Buffer, reader: Callable[[Buffer], Union[LambdaExpr, CallExpr]]
-) -> List[Union[LambdaExpr, CallExpr]]:
+    src: Buffer, reader: Callable[[Buffer], str]
+) -> List[str]:
     if src.current() in (":", ")"):
         return []
     else:
@@ -138,7 +138,7 @@ def read_call_expr(src: Buffer, operator) -> CallExpr:
 
 
 def read_param(src: Buffer):
-    token = src.pop_first()
+    token: str = src.pop_first()
     if is_name(token):
         return token
     else:

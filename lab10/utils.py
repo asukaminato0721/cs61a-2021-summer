@@ -1,4 +1,7 @@
-def comma_separated(xs):
+from typing import Any, Sequence
+
+
+def comma_separated(xs: Sequence[Any]):
     """Convert each value in the sequence xs to a string, and separate them
     with commas.
 
@@ -9,4 +12,4 @@ def comma_separated(xs):
     >>> comma_separated([])
     ''
     """
-    return ', '.join([str(x) for x in xs])
+    return ", ".join(str(x) for x in xs)

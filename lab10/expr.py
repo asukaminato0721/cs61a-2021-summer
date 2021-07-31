@@ -1,9 +1,9 @@
+from __future__ import annotations
+
 import operator
-from typing import Dict, List, Union
+from typing import Any, Callable, Dict, List, Type, Union
 
 from utils import comma_separated
-
-Env = Dict[str, "Expr"]
 
 
 class Expr:
@@ -32,7 +32,7 @@ class Expr:
         # this function.
         self.args = args
 
-    def eval(self, env: Env):
+    def eval(self, env: Dict):
         """
         Each subclass of Expr implements its own eval method.
 
@@ -82,7 +82,7 @@ class Literal(Expr):
         Expr.__init__(self, value)
         self.value = value
 
-    def eval(self, env):
+    def eval(self, env: Dict[str, PrimitiveFunction]):
         return Number(self.value)
 
     def __str__(self):
@@ -101,7 +101,9 @@ class Name(Expr):
         Expr.__init__(self, var_name)
         self.var_name: str = var_name
 
-    def eval(self, env: Env) -> Union["Expr", None]:
+    def eval(
+        self, env: Dict[str, Union[Number, LambdaFunction]]
+    ) -> Union[Number, LambdaFunction]:
         """
         >>> env = {
         ...     'a': Number(1),
@@ -135,12 +137,12 @@ class LambdaExpr(Expr):
     CallExpr('add', [Name('x'), Name('y')]).
     """
 
-    def __init__(self, parameters, body):
+    def __init__(self, parameters: List[str], body: Expr):
         Expr.__init__(self, parameters, body)
-        self.parameters = parameters
-        self.body = body
+        self.parameters: List[str] = parameters
+        self.body: Expr = body
 
-    def eval(self, env: Env):
+    def eval(self, env: Dict):
         return LambdaFunction(self.parameters, self.body, env)
 
     def __str__(self):
@@ -164,12 +166,14 @@ class CallExpr(Expr):
     where `operator` is Name('add') and `operands` are [Literal(3), Literal(4)].
     """
 
-    def __init__(self, operator: Name, operands: List):
+    def __init__(
+        self, operator: Union[Name, CallExpr], operands: List["Literal"]
+    ):
         Expr.__init__(self, operator, operands)
         self.operator = operator
         self.operands = operands
 
-    def eval(self, env: Env):
+    def eval(self, env: Dict[str, PrimitiveFunction]) -> Union[LambdaFunction]:
         """
         >>> from reader import read
         >>> new_env = global_env.copy()
@@ -186,6 +190,12 @@ class CallExpr(Expr):
         Number(14)
         """
         "*** YOUR CODE HERE ***"
+        # https://www.cnblogs.com/ikventure/p/15047654.html#q4-applying-lambda-functions
+        eval_operands = [
+            operand if isinstance(operand, Number) else operand.eval(env)
+            for operand in self.operands
+        ]
+        return self.operator.eval(env).apply(eval_operands)
 
     def __str__(self):
         function = str(self.operator)
@@ -249,11 +259,11 @@ class Number(Value):
     The `value` attribute is the Python number that this represents.
     """
 
-    def __init__(self, value):
+    def __init__(self, value: Union[float, int]):
         Value.__init__(self, value)
         self.value = value
 
-    def apply(self, arguments):
+    def apply(self, arguments: List):
         raise TypeError(
             "Oof! Cannot apply number {} to arguments {}".format(
                 self.value, comma_separated(arguments)
@@ -275,13 +285,15 @@ class LambdaFunction(Value):
         (strings) as keys and instances of the class Value as values.
     """
 
-    def __init__(self, parameters, body, parent):
+    def __init__(
+        self, parameters: List[str], body: Expr, parent: Dict[str, Value]
+    ):
         Value.__init__(self, parameters, body, parent)
         self.parameters = parameters
         self.body = body
         self.parent = parent
 
-    def apply(self, arguments):
+    def apply(self, arguments: List[Value]):
         """
         >>> from reader import read
         >>> add_lambda = read('lambda x, y: add(x, y)').eval(global_env)
@@ -306,6 +318,14 @@ class LambdaFunction(Value):
                 )
             )
         "*** YOUR CODE HERE ***"
+        """
+        Make a copy of the parent environment. You can make a copy of a dictionary d with d.copy().
+        Update the copy with the parameters of the LambdaFunction and the arguments passed into the method.
+        Evaluate the body using the newly created environment.
+        """
+        return self.body.eval(
+            {**self.parent, **dict(zip(self.parameters, arguments))}
+        )
 
     def __str__(self):
         definition = LambdaExpr(self.parameters, self.body)
@@ -320,11 +340,11 @@ class PrimitiveFunction(Value):
     returns a Python number.
     """
 
-    def __init__(self, operator):
+    def __init__(self, operator: Callable):
         Value.__init__(self, operator)
         self.operator = operator
 
-    def apply(self, arguments):
+    def apply(self, arguments: List[Number]):
         for arg in arguments:
             if type(arg) != Number:
                 raise TypeError(
