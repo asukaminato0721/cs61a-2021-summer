@@ -48,12 +48,14 @@ current progress:
   > accumulator style
 
 - [ ] 6
+- [ ] 7
 
 ## project
 
 - [x] hog
 - [x] cats
 - [ ] ants
+- [ ] scheme
 
 ---
 
