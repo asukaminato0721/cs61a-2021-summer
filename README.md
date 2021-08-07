@@ -34,6 +34,8 @@ current progress:
 - [x] 8
 - [x] 9
 - [x] 10 <https://www.cnblogs.com/ikventure/p/15047654.html>
+- [x] 11
+- [x] 12
 
 ## homework
 
@@ -44,6 +46,8 @@ current progress:
 - [ ] 5
 
   > accumulator style
+
+- [ ] 6
 
 ## project
 
