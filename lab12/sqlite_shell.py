@@ -265,7 +265,7 @@ def sql_commands(read_line: Callable[[int, bool, str], str]):
             line = None
 
 
-class WindowsConsoleIOMixin(object):
+class WindowsConsoleIOMixin:
     # Ctrl+C handling with ReadFile() is messed up on Windows starting on
     # Windows 8... here's some background reading:
     #   https://stackoverflow.com/a/43260436
@@ -507,7 +507,7 @@ def wrap_unicode_stdio(
     return result
 
 
-class StringEscapeParser(object):
+class StringEscapeParser:
     def __init__(self):
         import re
 
@@ -554,7 +554,7 @@ class StringEscapeParser(object):
         return result
 
 
-class Database(object):
+class Database:
     def __init__(self, name, *args, **kwargs):
         self.connection = sqlite3.connect(name, *args, **kwargs)
         self.cursor = self.connection.cursor()
@@ -603,7 +603,7 @@ def can_call_input_for_stdio(stream):
     return stream == sys.stdin and sys.version_info[0] >= 3
 
 
-class StdIOProxy(object):
+class StdIOProxy:
     # Maybe useful later: codecs.StreamRecoder(bytesIO, codec.decode,
     # codec.encode, codec.streamwriter, codec.streamreader,
     # errors='surrogateescape')
@@ -1014,7 +1014,7 @@ def main(
     stdio = StdIOProxy(stdin, stdout, stderr, codec, allow_set_code_page)
     db = None
     no_args = len(args) == 0
-    init_sql = parsed_args.sql
+    init_sql: List[str] = parsed_args.sql
     is_nonpipe_input = (
         stdin.isatty()
     )  # NOT the same thing as TTY! (NUL and /dev/null are the difference)
@@ -1195,9 +1195,7 @@ def main(
         if results is not None:
             for row in results:
                 stdio.outputln(
-                    *tuple(
-                        map(lambda item: item if item is not None else "", row)
-                    ),
+                    *map(lambda item: item if item is not None else "", row),
                     sep="|",
                     flush=False
                 )
@@ -1209,9 +1207,11 @@ def main(
                 stdio.errorln("-- Loading resources from", parsed_args.init)
             exec_script(db, parsed_args.init, False)
 
-        def read_stdin(index, not_in_the_middle_of_any_input, prev_line):
+        def read_stdin(
+            index: int, not_in_the_middle_of_any_input: bool, prev_line
+        ):
             show_prompt = init_show_prompt
-            to_write = []
+            to_write: List[str] = []
             if index < len(init_sql):
                 line = init_sql[index]
                 if not line.startswith(".") and not line.rstrip().endswith(";"):
