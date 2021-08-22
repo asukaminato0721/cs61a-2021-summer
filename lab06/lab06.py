@@ -5,7 +5,7 @@ from typing import Any, List
 def insert_into_all(item: int, nested_list: List[List[int]]):
     """Return a new list consisting of all the lists in nested_list,
     but with item added to the front of each. You can assuming that
-     nested_list is a list of lists.
+    nested_list is a list of lists.
 
     >>> nl = [[], [1, 2], [3]]
     >>> insert_into_all(0, nl)
@@ -48,29 +48,28 @@ def non_decrease_subseqs(s: List[int]) -> List[List[int]]:
     >>> sorted(seqs2)
     [[], [1], [1], [1, 1], [1, 1, 2], [1, 2], [1, 2], [2]]
     """
+    if not s:
+        return [[]]
 
-    def subseq_helper(s: List[int], prev: int) -> List[List[int]]:
-        """
-        负责生成所有元素 >= prev 且不递减的 s 的 result
-        """
-        # print(s, prev)
-        if not s:
-            return [s]
-        elif s[0] < prev:  # 假如插到头部，\ | | | 不单调，所以 skip 掉 s[0]
-            return subseq_helper(s[1:], prev)
-        # 这里都是 s[0] >= prev
-        else:  # 插或者不插
-            return (
-                insert_into_all(
-                    s[0],
-                    subseq_helper(
-                        s[1:], s[0]
-                    ),  # subseq_helper(s[1:], s[0]) 生成了以 s[1:] 为材料的所有的 result，前面插一个 s[0]
-                )
-                + subseq_helper(s[1:], prev)
-            )
+    def insert_into_all(s, a):
+        def gen(s: List[List[int]], a):
+            for l in s:
+                if not l:
+                    yield [a]
+                else:
+                    if a < l[0]:
+                        yield [a] + l
+                    else:
+                        yield l
 
-    return subseq_helper(s, 0)
+        return [x for x in gen(s, a)]
+
+    return insert_into_all(
+        non_decrease_subseqs(s[1:]), s[0]
+    ) + non_decrease_subseqs(s[1:])
+
+
+# return subseq_helper(s, 0)
 
 
 def trade(first: List[int], second: List[int]) -> str:
@@ -116,7 +115,7 @@ def trade(first: List[int], second: List[int]) -> str:
         return "No deal!"
 
 
-def card(n: int):
+def card(n: int) -> str:
     """Return the playing card numeral as a string for a positive n <= 13."""
     assert type(n) == int and n > 0 and n <= 13, "Bad card n"
     specials = {1: "A", 11: "J", 12: "Q", 13: "K"}
@@ -151,7 +150,7 @@ def shuffle(cards: List[Any]) -> List[Any]:
     return [i for x in zip(cards, cards[half:]) for i in x]
 
 
-def same_shape(t1, t2):
+def same_shape(t1: List, t2: List) -> bool:
     """Return True if t1 is indentical in shape to t2.
 
     >>> test_tree1 = tree(1, [tree(2), tree(3)])
@@ -175,7 +174,7 @@ def same_shape(t1, t2):
     )
 
 
-def add_trees(t1, t2):
+def add_trees(t1: List, t2: List) -> List:
     """
     >>> numbers = tree(1,
     ...                [tree(2,
@@ -225,24 +224,24 @@ def add_trees(t1, t2):
 # Tree ADT
 
 
-def tree(label, branches: List = [])-> List:
+def tree(label, branches: List = []) -> List:
     """Construct a tree with the given label value and a list of branches."""
     for branch in branches:
         assert is_tree(branch), "branches must be trees"
     return [label] + list(branches)
 
 
-def label(tree):
+def label(tree: List):
     """Return the label value of a tree."""
     return tree[0]
 
 
-def branches(tree):
+def branches(tree: List) -> List:
     """Return the list of branches of the given tree."""
     return tree[1:]
 
 
-def is_tree(tree):
+def is_tree(tree: List) -> bool:
     """Returns True if the given tree is a tree, and False otherwise."""
     if type(tree) != list or len(tree) < 1:
         return False
@@ -252,14 +251,14 @@ def is_tree(tree):
     return True
 
 
-def is_leaf(tree):
+def is_leaf(tree: List) -> bool:
     """Returns True if the given tree's list of branches is empty, and False
     otherwise.
     """
     return not branches(tree)
 
 
-def print_tree(t, indent=0):
+def print_tree(t: List, indent: int = 0):
     """Print a representation of this tree in which each node is
     indented by two spaces times its depth from the root.
 
@@ -283,7 +282,7 @@ def print_tree(t, indent=0):
         print_tree(b, indent + 1)
 
 
-def copy_tree(t):
+def copy_tree(t: List) -> List:
     """Returns a copy of t. Only for testing purposes.
 
     >>> t = tree(5)

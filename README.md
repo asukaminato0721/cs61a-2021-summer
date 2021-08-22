@@ -18,6 +18,8 @@ current progress:
 - [x] 5
 - [ ] 6
 
+  - [ ] <https://cs61a.org/lab/lab06/#q3>
+
   > <https://cs61a.org/lab/sol-lab06/#q3>
   >
   > list monad
@@ -37,12 +39,14 @@ current progress:
 - [x] 11
 - [x] 12
 - [ ] 13
+  - [ ] <https://cs61a.org/lab/lab13/#q5>
+  - [ ] <https://cs61a.org/lab/lab13/#q14>
 
 ## homework
 
 - [x] 1
 - [x] 2
-- [ ] 3
+- [x] 3
 - [ ] 4
 - [ ] 5
 
@@ -50,6 +54,8 @@ current progress:
 
 - [ ] 6
 - [ ] 7
+- [x] 8
+  > This homework has nothing you need to submit to ok.
 
 ## project
 
