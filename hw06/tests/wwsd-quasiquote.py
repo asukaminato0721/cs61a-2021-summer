@@ -19,26 +19,20 @@ test = {
           scm> `(,1 x 3)
           (1 x 3)
           scm> `,(+ 1 x 3)
-          d23732d1b20fb6b71359865c206e63b3
-          # locked
+          6
           scm> `(1 (,x) 3)
-          3fdef15cad8f0770863e3eef2903106c
-          # locked
+          (1 (2) 3)
           scm> `(1 ,(+ x 2) 3)
-          484f5e687604e746b28cb3172fa80ed4
-          # locked
+          (1 4 3)
           scm> (define y 3)
-          ca6f65a7ca9d6f55beab4d01b93afdc3
-          # locked
+          y
           scm> `(x ,(* y x) y)
-          a5f284d2cd367ae238ff48871dd79c2b
-          # locked
+          (x 6 y)
           scm> `(1 ,(cons x (list y 4)) 5)
-          4397c140c0bf657b8481ff3315d0019c
-          # locked
+          (1 (2 3 4) 5)
           """,
           'hidden': False,
-          'locked': True
+          'locked': False
         }
       ],
       'scored': False,

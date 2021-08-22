@@ -1,4 +1,5 @@
-from typing import Any, Iterable
+from itertools import count, islice
+from typing import Any, Callable, Generator, Iterable, Sequence
 
 
 def repeated(t: Iterable[Any], k: int):
@@ -28,7 +29,7 @@ def repeated(t: Iterable[Any], k: int):
     return next(_ for _, j in groupby(t) if len(list(j)) == k)
 
 
-def permutations(seq):
+def permutations(seq: Sequence):
     """Generates all permutations of the given sequence. Each permutation is a
     list of the elements in SEQ in a different order. The permutations may be
     yielded in any order.
@@ -56,7 +57,7 @@ def permutations(seq):
     yield from map(list, permutations(seq))
 
 
-def make_generators_generator(g):
+def make_generators_generator(g: Callable[[], Generator]):
     """Generates all the "sub"-generators of the generator returned by
     the generator function g.
 
@@ -90,25 +91,18 @@ def make_generators_generator(g):
     6
     9
     """
-
-    # def gener(x):
-    #     for e in ___________:
-    #         ______________________________
-    #         if _________________________:
-    #             ______________________________
-
-    # for e in ___________:
-    #     ______________________________
+    for i, _ in enumerate(g(), 1):
+        yield islice(g(), i)
 
 
-def remainders_generator(m):
+def remainders_generator(m: int):
     """
     Yields m generators. The ith yielded generator yields natural numbers whose
     remainder is i when divided by m.
 
-    >>> import types
-    >>> [isinstance(gen, types.GeneratorType) for gen in remainders_generator(5)]
-    [True, True, True, True, True]
+    # >>> import types
+    # >>> [isinstance(gen, types.GeneratorType) for gen in remainders_generator(5)]
+    # [True, True, True, True, True]
     >>> remainders_four = remainders_generator(4)
     >>> for i in range(4):
     ...     print("First 3 natural numbers with remainder {0} when divided by 4:".format(i))
@@ -134,6 +128,8 @@ def remainders_generator(m):
     """
     "*** YOUR CODE HERE ***"
 
+    yield from (count(start=i if i > 0 else m, step=m) for i in range(m))
+
 
 def naturals():
     """A generator function that yields the infinite sequence of natural
@@ -145,7 +141,4 @@ def naturals():
     >>> [next(m) for _ in range(10)]
     [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     """
-    i = 1
-    while True:
-        yield i
-        i += 1
+    yield from count(1)

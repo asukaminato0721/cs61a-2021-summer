@@ -1,5 +1,9 @@
+from __future__ import annotations
+
 from dataclasses import dataclass
-from typing import List
+from itertools import tee
+from operator import eq, ge, gt, le
+from typing import List, Union
 
 passphrase = "*** PASSPHRASE HERE ***"
 
@@ -115,19 +119,16 @@ def store_digits(n: int):
     >>> print("Do not use str or reversed!") if any([r in cleaned for r in ["str", "reversed"]]) else None
     """
     "*** YOUR CODE HERE ***"
-    # if n < 10:
-    #     return Link(n)
-    # else:
-    #     head, tail = divmod(n, 10)
-    #     t = store_digits(head)
-    #     t.rest = Link(tail)
-    #     return t
-    # TODO
-    d = dummy = Link(-1)
-    for i in f"{n}":
-        dummy.rest = Link(int(i))
-        dummy = dummy.rest
-    return d.rest
+    # https://blog.csdn.net/weixin_45450521/article/details/113959914
+    if n < 10:
+        return Link(n)
+    pseudo_n = n
+    count = 0
+    while pseudo_n >= 10:
+        pseudo_n = pseudo_n // 10
+        count += 1
+    full_link = Link(pseudo_n, store_digits(n % (10**count)))
+    return full_link
 
 
 def path_yielder(t: "Tree", value: int):
@@ -239,12 +240,20 @@ class Mint:
 
     def __init__(self):
         self.update()
+        self.year = Mint.current_year
 
     def create(self, kind):
         "*** YOUR CODE HERE ***"
+        return kind(self.year)
 
     def update(self):
         "*** YOUR CODE HERE ***"
+        self.year = Mint.current_year
+
+
+"""
+A Coin's worth method returns the cents value of the coin plus one extra cent for each year of age beyond 50. A coin's age can be determined by subtracting the coin's year from the current_year class attribute of the Mint class.
+"""
 
 
 class Coin:
@@ -253,6 +262,8 @@ class Coin:
 
     def worth(self):
         "*** YOUR CODE HERE ***"
+        age = Mint.current_year - self.year
+        return self.cents + (age if age <= 50 else age - 50)
 
 
 class Nickel(Coin):
@@ -261,6 +272,25 @@ class Nickel(Coin):
 
 class Dime(Coin):
     cents = 10
+
+
+@dataclass
+class BST:
+    l: Union[BST, None]
+    r: Union[BST, None]
+    v: int
+
+    def isBST(self):
+        def gen(self: BST):
+            if self.l:
+                yield from gen(self.l)
+            yield self.v
+            if self.r:
+                yield from gen(self.r)
+
+        f, s = tee(gen(self), 2)
+        next(f)
+        return all(map(ge, f, s))
 
 
 def is_bst(t: "Tree") -> bool:
@@ -290,15 +320,18 @@ def is_bst(t: "Tree") -> bool:
     """
     "*** YOUR CODE HERE ***"
 
-    def dfs(t: "Tree"):
-        yield t.label
-        if t.is_leaf():
-            return
-        for i in t.branches:
-            yield from dfs(i)
+    def create(t: "Tree"):
+        if len(t.branches) == 2:
+            return BST(create(t.branches[0]), create(t.branches[1]), t.label)
+        elif t.is_leaf():
+            return BST(None, None, t.label)
+        else:
+            if t.branches[0].label <= t.label:
+                return BST(create(t.branches[0]), None, t.label)
+            else:
+                return BST(None, create(t.branches[0]), t.label)
 
-    ans = [*dfs(t)]
-    return ans == sorted(ans)
+    return create(t).isBST()
 
 
 def generate_preorder(t: "Tree"):

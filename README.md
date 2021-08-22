@@ -18,9 +18,9 @@ current progress:
 - [x] 5
 - [ ] 6
 
-  - [ ] <https://cs61a.org/lab/lab06/#q3>
+  - [ ] <https://inst.eecs.berkeley.edu/~cs61a/su21/lab/lab06/#q3>
 
-  > <https://cs61a.org/lab/sol-lab06/#q3>
+  > <https://inst.eecs.berkeley.edu/~cs61a/su21/lab/sol-lab06/#q3>
   >
   > list monad
   >
@@ -39,21 +39,25 @@ current progress:
 - [x] 11
 - [x] 12
 - [ ] 13
-  - [ ] <https://cs61a.org/lab/lab13/#q5>
-  - [ ] <https://cs61a.org/lab/lab13/#q14>
+  - [ ] <https://inst.eecs.berkeley.edu/~cs61a/su21/lab/lab13/#q5>
+  - [ ] <https://inst.eecs.berkeley.edu/~cs61a/su21/lab/lab13/#q14>
 
 ## homework
 
 - [x] 1
 - [x] 2
 - [x] 3
-- [ ] 4
-- [ ] 5
+- [x] 4
+  - in remainders_generator, I skip the type check since `itertools.count` isn't a Generator.
+- [x] 5
 
-  > accumulator style
+  - [x] <https://inst.eecs.berkeley.edu/~cs61a/su21/hw/hw05/#q3>
+    > <https://blog.csdn.net/weixin_45450521/article/details/113959914>
 
-- [ ] 6
+- [x] 6
 - [ ] 7
+  > <https://inst.eecs.berkeley.edu/~cs61a/su21/hw/hw07/#q6> This should be `tallest` instead of `above_average`
+  - [ ] <https://inst.eecs.berkeley.edu/~cs61a/su21/hw/hw07/#q7>
 - [x] 8
   > This homework has nothing you need to submit to ok.
 
