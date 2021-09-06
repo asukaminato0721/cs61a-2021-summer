@@ -68,6 +68,9 @@ current progress:
 - [x] hog
 - [x] cats
 - [ ] ants
+  - [ ] Optional2
+  - [ ] Optional3
+    > ContainerAnt 这个 class 是没图的，但是默认设置会尝试载入图. 要手动把代码改掉 `self.ant_types = {a.name: a for a in ant_types if a != ContainerAnt}`
 - [ ] scheme
 
 ---

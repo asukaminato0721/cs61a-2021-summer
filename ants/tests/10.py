@@ -82,11 +82,10 @@ test = {
           >>> test_bee.health
           0
           >>> test_water.bees
-          a1218a9cb09e85b249f8863ced8a8dad
-          # locked
+          []
           """,
           'hidden': False,
-          'locked': True
+          'locked': False
         },
         {
           'code': r"""
@@ -95,14 +94,12 @@ test = {
           >>> test_water = Water('Water Test3')
           >>> test_water.add_insect(test_bee)
           >>> test_bee.health
-          d89cf7c79d5a479b0f636734143ed5e6
-          # locked
+          1
           >>> test_bee in test_water.bees
-          c7a88a0ffd3aef026b98eef6e7557da3
-          # locked
+          True
           """,
           'hidden': False,
-          'locked': True
+          'locked': False
         },
         {
           'code': r"""
