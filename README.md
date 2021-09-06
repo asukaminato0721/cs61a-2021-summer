@@ -1,10 +1,12 @@
-# CS61A-2021: Introduction to Computer Science I
+# CS61A-2021-Summer: Introduction to Computer Science I
 
 ## How to use CS61A
 
 Goto <https://cs61a.org/>, scroll down, see `Lab, Discussion, & Exam Prep Links` and `Homework & Project`
 
 Download the zip, unzip and `cd` into the directory. After finishing the code, run `python3 ok` (you may need to unlock the test first) <https://cs61a.org/lab/lab00/#doing-the-assignment>
+
+> This project is for <https://inst.eecs.berkeley.edu/~cs61a/su21/>
 
 current progress:
 

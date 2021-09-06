@@ -5,7 +5,7 @@ test = {
     {
       'cases': [
         {
-          'answer': 'c9e4559526ed96dcae3a8a67e48f2539',
+          'answer': 'The Ant instance that is in the same place as itself',
           'choices': [
             'The Ant instance that is in the same place as itself',
             'The Ant instance in the place closest to its own place',
@@ -13,11 +13,11 @@ test = {
             'All the Ant instances in the gamestate'
           ],
           'hidden': False,
-          'locked': True,
+          'locked': False,
           'question': 'Which Ant does a BodyguardAnt guard?'
         },
         {
-          'answer': '22a2c7eb1d7adee7ea4eb970d3cc09e9',
+          'answer': 'By protecting the ant from Bees and allowing it to perform its original action',
           'choices': [
             'By protecting the ant from Bees and allowing it to perform its original action',
             'By attacking Bees that try to attack it',
@@ -25,11 +25,11 @@ test = {
             'By allowing Bees to pass without attacking'
           ],
           'hidden': False,
-          'locked': True,
+          'locked': False,
           'question': 'How does a BodyguardAnt guard its ant?'
         },
         {
-          'answer': '0f9462d3397d2977d69609766d3b85ce',
+          'answer': "In the BodyguardAnt's ant_contained instance attribute",
           'choices': [
             "In the BodyguardAnt's ant_contained instance attribute",
             "In the BodyguardAnt's ant_contained class attribute",
@@ -37,11 +37,11 @@ test = {
             "Nowhere, a BodyguardAnt has no knowledge of the ant that it's protecting"
           ],
           'hidden': False,
-          'locked': True,
+          'locked': False,
           'question': 'Where is the ant contained by a BodyguardAnt stored?'
         },
         {
-          'answer': '7a81f10493cb9dd2a778afa061e3edd5',
+          'answer': 'When exactly one of the Ant instances is a container and the container ant does not already contain another ant',
           'choices': [
             r"""
             When exactly one of the Ant instances is a container and the
@@ -52,11 +52,11 @@ test = {
             'There can never be two Ant instances in the same place'
           ],
           'hidden': False,
-          'locked': True,
+          'locked': False,
           'question': 'When can a second Ant be added to a place that already contains an Ant?'
         },
         {
-          'answer': '9ee6782d61a987d40e66726eb2354093',
+          'answer': 'The Container Ant',
           'choices': [
             'The Container Ant',
             'The Ant being contained',
@@ -64,7 +64,7 @@ test = {
             'Whichever Ant was placed there first'
           ],
           'hidden': False,
-          'locked': True,
+          'locked': False,
           'question': r"""
           If two Ants occupy the same Place, what is stored in that place's ant
           instance attribute?
@@ -81,14 +81,12 @@ test = {
           >>> # Testing BodyguardAnt parameters
           >>> bodyguard = BodyguardAnt()
           >>> BodyguardAnt.food_cost
-          c9452203eb0b0f0bd2454586a6c2fc5c
-          # locked
+          4
           >>> bodyguard.health
-          20d533d3e06345c8bd7072212867f2d1
-          # locked
+          2
           """,
           'hidden': False,
-          'locked': True
+          'locked': False
         },
         {
           'code': r"""
@@ -132,14 +130,12 @@ test = {
           >>> place.add_insect(bodyguard)  # Bodyguard in place first
           >>> place.add_insect(other_ant)
           >>> place.ant is bodyguard
-          c7a88a0ffd3aef026b98eef6e7557da3
-          # locked
+          True
           >>> bodyguard.ant_contained is other_ant
-          c7a88a0ffd3aef026b98eef6e7557da3
-          # locked
+          True
           """,
           'hidden': False,
-          'locked': True
+          'locked': False
         },
         {
           'code': r"""
@@ -149,18 +145,15 @@ test = {
           >>> place = gamestate.places['tunnel_0_0']
           >>> place.add_insect(other_ant)  # Other ant in place first
           >>> place.ant is other_ant
-          c7a88a0ffd3aef026b98eef6e7557da3
-          # locked
+          True
           >>> place.add_insect(bodyguard)
           >>> place.ant is bodyguard
-          c7a88a0ffd3aef026b98eef6e7557da3
-          # locked
+          True
           >>> bodyguard.ant_contained is other_ant
-          c7a88a0ffd3aef026b98eef6e7557da3
-          # locked
+          True
           """,
           'hidden': False,
-          'locked': True
+          'locked': False
         },
         {
           'code': r"""

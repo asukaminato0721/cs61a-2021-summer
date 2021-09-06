@@ -5,7 +5,7 @@ test = {
     {
       'cases': [
         {
-          'answer': '64cb170acd2b167609e6df7dd048fd96',
+          'answer': 'Ant',
           'choices': [
             'Ant',
             'ThrowerAnt',
@@ -13,11 +13,11 @@ test = {
             'The WallAnt class does not inherit from any class'
           ],
           'hidden': False,
-          'locked': True,
+          'locked': False,
           'question': 'What class does WallAnt inherit from?'
         },
         {
-          'answer': '342b4efa1ef6de0defc39dc4fbf1ebf1',
+          'answer': 'A WallAnt takes no action each turn',
           'choices': [
             'A WallAnt takes no action each turn',
             'A WallAnt increases its own health by 1 each turn',
@@ -25,22 +25,22 @@ test = {
             'A WallAnt attacks all the Bees in its place each turn'
           ],
           'hidden': False,
-          'locked': True,
+          'locked': False,
           'question': "What is a WallAnt's action?"
         },
         {
-          'answer': '50be1539e31a90ea01dbc6bf87f83b9f',
+          'answer': 'Ant subclasses inherit the action method from the Insect class',
           'choices': [
             'Ant subclasses inherit the action method from the Insect class',
             'Ant subclasses inherit the action method from the Ant class',
             'Ant subclasses do not inherit the action method from any class'
           ],
           'hidden': False,
-          'locked': True,
+          'locked': False,
           'question': 'Where do Ant subclasses inherit the action method from?'
         },
         {
-          'answer': 'c3962b43bab9946b4984107f5e53e9e7',
+          'answer': 'Nothing',
           'choices': [
             'Nothing',
             'Throw a leaf at the nearest Bee',
@@ -48,14 +48,14 @@ test = {
             'Reduce the health of all Bees in its place'
           ],
           'hidden': False,
-          'locked': True,
+          'locked': False,
           'question': r"""
           If a subclass of Ant does not override the action method, what is the
           default action?
           """
         },
         {
-          'answer': 'c46d0cd5a01fe32316806ea8f741f968',
+          'answer': 'instance, all Ants keep track of their own health',
           'choices': [
             'class, all Ants of the same subclass have the same health',
             'class, all Ants have the same health no matter what type of Ant it is',
@@ -63,7 +63,7 @@ test = {
             'instance, all Ants have different default starting healths'
           ],
           'hidden': False,
-          'locked': True,
+          'locked': False,
           'question': 'What type of attribute is health?'
         }
       ],
