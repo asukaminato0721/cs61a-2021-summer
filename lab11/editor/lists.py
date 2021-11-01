@@ -17,13 +17,14 @@ class Append(BuiltIn):
         exprs = []
         for operand in operands[:-1]:
             if not isinstance(operand, Pair) and operand is not Nil:
-                raise OperandDeduceError(f"Expected operand to be valid list, not {operand}")
+                raise OperandDeduceError(
+                    f"Expected operand to be valid list, not {operand}"
+                )
             exprs.extend(pair_to_list(operand))
         out = operands[-1]
         for expr in reversed(exprs):
             out = Pair(expr, out)
         return out
-
 
 
 @global_attr("car")
@@ -32,7 +33,9 @@ class Car(SingleOperandPrimitive):
         if isinstance(operand, Pair):
             return operand.first
         else:
-            raise OperandDeduceError(f"Unable to extract first element, as {operand} is not a Pair.")
+            raise OperandDeduceError(
+                f"Unable to extract first element, as {operand} is not a Pair."
+            )
 
 
 @global_attr("cdr")
@@ -41,7 +44,9 @@ class Cdr(SingleOperandPrimitive):
         if isinstance(operand, Pair):
             return operand.rest
         else:
-            raise OperandDeduceError(f"Unable to extract second element, as {operand} is not a Pair.")
+            raise OperandDeduceError(
+                f"Unable to extract second element, as {operand} is not a Pair."
+            )
 
 
 @global_attr("cons")
@@ -55,7 +60,9 @@ class Cons(BuiltIn):
 class Length(SingleOperandPrimitive):
     def execute_simple(self, operand: Expression) -> Expression:
         if not isinstance(operand, Pair) and operand is not Nil:
-            raise OperandDeduceError(f"Unable to calculate length, as {operand} is not a valid list.")
+            raise OperandDeduceError(
+                f"Unable to calculate length, as {operand} is not a valid list."
+            )
         return Number(len(pair_to_list(operand)))
 
 
@@ -94,21 +101,27 @@ class SetCar(BuiltIn):
         if not isinstance(pair, Pair):
             raise OperandDeduceError(f"set-car! expected a Pair, received {pair}.")
         pair.first = val
-        log.logger.raw_out("WARNING: Mutation operations on pairs are not yet supported by the debugger.")
+        log.logger.raw_out(
+            "WARNING: Mutation operations on pairs are not yet supported by the debugger."
+        )
         return Undefined
 
 
 @global_attr("set-cdr!")
 class SetCdr(BuiltIn):
-        def execute_evaluated(self, operands: List[Expression], frame: Frame) -> Expression:
-            verify_exact_callable_length(self, 2, len(operands))
-            if log.logger.fragile:
-                raise IrreversibleOperationError()
-            pair, val = operands
-            if not isinstance(pair, Pair):
-                raise OperandDeduceError(f"set-cdr! expected a Pair, received {pair}.")
-            if not isinstance(val, (Pair, Promise, NilType)):
-                raise OperandDeduceError(f"Unable to assign {val} to cdr, expected a Pair, Nil, or Promise.")
-            pair.rest = val
-            log.logger.raw_out("WARNING: Mutation operations on pairs are not yet supported by the debugger.")
-            return Undefined
+    def execute_evaluated(self, operands: List[Expression], frame: Frame) -> Expression:
+        verify_exact_callable_length(self, 2, len(operands))
+        if log.logger.fragile:
+            raise IrreversibleOperationError()
+        pair, val = operands
+        if not isinstance(pair, Pair):
+            raise OperandDeduceError(f"set-cdr! expected a Pair, received {pair}.")
+        if not isinstance(val, (Pair, Promise, NilType)):
+            raise OperandDeduceError(
+                f"Unable to assign {val} to cdr, expected a Pair, Nil, or Promise."
+            )
+        pair.rest = val
+        log.logger.raw_out(
+            "WARNING: Mutation operations on pairs are not yet supported by the debugger."
+        )
+        return Undefined

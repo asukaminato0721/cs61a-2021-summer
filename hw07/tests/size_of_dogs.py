@@ -1,11 +1,11 @@
 test = {
-  'name': 'small',
-  'points': 1,
-  'suites': [
-    {
-      'cases': [
+    "name": "small",
+    "points": 1,
+    "suites": [
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           sqlite> SELECT name FROM size_of_dogs WHERE size="toy" OR size="mini";
           abraham
           eisenhower
@@ -13,17 +13,17 @@ test = {
           grover
           herbert
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'ordered': False,
-      'scored': True,
-      'setup': r"""
+                    "hidden": False,
+                    "locked": False,
+                }
+            ],
+            "ordered": False,
+            "scored": True,
+            "setup": r"""
       sqlite> .read hw07.sql
       """,
-      'teardown': '',
-      'type': 'sqlite'
-    }
-  ]
+            "teardown": "",
+            "type": "sqlite",
+        }
+    ],
 }

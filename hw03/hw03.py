@@ -78,9 +78,7 @@ def is_planet(w: Planet) -> bool:
 
 def examples():
     t = mobile(arm(1, planet(2)), arm(2, planet(1)))
-    u = mobile(
-        arm(5, planet(1)), arm(1, mobile(arm(2, planet(3)), arm(3, planet(2))))
-    )
+    u = mobile(arm(5, planet(1)), arm(1, mobile(arm(2, planet(3)), arm(3, planet(2)))))
     v = mobile(arm(4, t), arm(2, u))
     return t, u, v
 

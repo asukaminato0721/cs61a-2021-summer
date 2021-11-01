@@ -1,11 +1,11 @@
 test = {
-  'name': 'bluedog',
-  'points': 1,
-  'suites': [
-    {
-      'cases': [
+    "name": "bluedog",
+    "points": 1,
+    "suites": [
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           sqlite> SELECT * FROM bluedog;
           blue|dog
           blue|dog
@@ -19,17 +19,17 @@ test = {
           blue|dog|Starman
           blue|dog|Clair De Lune
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'ordered': False,
-      'scored': True,
-      'setup': r"""
+                    "hidden": False,
+                    "locked": False,
+                }
+            ],
+            "ordered": False,
+            "scored": True,
+            "setup": r"""
       sqlite> .read lab12.sql
       """,
-      'teardown': '',
-      'type': 'sqlite'
-    }
-  ]
+            "teardown": "",
+            "type": "sqlite",
+        }
+    ],
 }

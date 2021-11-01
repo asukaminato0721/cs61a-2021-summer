@@ -3,7 +3,13 @@ from functools import lru_cache
 from typing import List, Tuple, Type, Union
 
 import lexer as lexer
-from format_parser import FormatAtom, FormatComment, FormatList, Formatted, get_expression
+from format_parser import (
+    FormatAtom,
+    FormatComment,
+    FormatList,
+    Formatted,
+    get_expression,
+)
 
 LINE_LENGTH = 50
 MAX_EXPR_COUNT = 10
@@ -12,7 +18,13 @@ INDENT = 4
 
 DEFINE_VALS = ["define", "define-macro"]
 DECLARE_VALS = ["lambda", "mu"]
-SHORTHAND = {"quote": "'", "quasiquote": "`", "unquote": ",", "unquote-splicing": ",@", "variadic": "."}
+SHORTHAND = {
+    "quote": "'",
+    "quasiquote": "`",
+    "unquote": ",",
+    "unquote-splicing": ",@",
+    "variadic": ".",
+}
 MULTILINE_VALS = ["let", "cond", "if"]
 
 FREE_TOKENS = ["if", "define", "define-macro", "mu", "lambda"]
@@ -88,7 +100,7 @@ class FormatSeq:
             return other.__radd__(self)
         return NotImplemented
 
-    def __radd__(self, other: 'FormatSeq'):
+    def __radd__(self, other: "FormatSeq"):
         if other is None:
             return self
         if not other.active:
@@ -100,7 +112,9 @@ class FormatSeq:
         self.left = other.left
         self.line_lengths[0] += other.line_lengths.pop()
         self.line_lengths = other.line_lengths + self.line_lengths
-        self.max_line_len = max(self.max_line_len, other.max_line_len, *self.line_lengths)
+        self.max_line_len = max(
+            self.max_line_len, other.max_line_len, *self.line_lengths
+        )
         if len(self.line_lengths) > 1:
             self.line_lengths = [self.line_lengths[0], self.line_lengths[-1]]
         return self
@@ -200,7 +214,9 @@ class SpecialFormFormatter(Formatter, ABC):
         if not isinstance(expr.contents[0], FormatAtom):
             raise WeakMatchFailure("Special form must begin with a Symbol.")
         if not expr.contents[0].value == form:
-            raise WeakMatchFailure("Call expression does not match desired special form.")
+            raise WeakMatchFailure(
+                "Call expression does not match desired special form."
+            )
         # if expr.last:
         #     raise StrongMatchFailure("Special form must not be dotted.")
 
@@ -254,10 +270,22 @@ class AlignedCondFormatter(SpecialFormFormatter):
         for clause in expr.contents[1:]:
             max_pred_len = max(max_pred_len, cls.Clause.pred_len(clause))
 
-        out = Token(expr.open_paren) + Token("cond") + Space() + ChangeIndent(2) + Newline()
+        out = (
+            Token(expr.open_paren)
+            + Token("cond")
+            + Space()
+            + ChangeIndent(2)
+            + Newline()
+        )
 
-        out += rest_format(expr.contents[1:], -1, max_pred_len,
-                           formatter=cls.Clause, indent_level=2, close_paren=expr.close_paren)
+        out += rest_format(
+            expr.contents[1:],
+            -1,
+            max_pred_len,
+            formatter=cls.Clause,
+            indent_level=2,
+            close_paren=expr.close_paren,
+        )
 
         return out
 
@@ -275,10 +303,21 @@ class MultilineCondFormatter(SpecialFormFormatter):
     def format(cls, expr: Formatted, remaining) -> FormatSeq:
         cls.assert_form(expr, "cond")
 
-        out = Token(expr.open_paren) + Token("cond") + Space() + ChangeIndent(2) + Newline()
+        out = (
+            Token(expr.open_paren)
+            + Token("cond")
+            + Space()
+            + ChangeIndent(2)
+            + Newline()
+        )
 
-        out += rest_format(expr.contents[1:], remaining - 2,
-                           formatter=cls.Clause, indent_level=2, close_paren=expr.close_paren)
+        out += rest_format(
+            expr.contents[1:],
+            remaining - 2,
+            formatter=cls.Clause,
+            indent_level=2,
+            close_paren=expr.close_paren,
+        )
 
         return out
 
@@ -303,8 +342,13 @@ class LetFormatter(SpecialFormFormatter):
         out = Token(expr.open_paren) + Token("let") + Space() + ChangeIndent(5)
 
         let_handler = cls.LetHandler()
-        out += rest_format(expr.contents[1:], remaining - 6,
-                           formatter=let_handler, indent_level=2, close_paren=expr.close_paren)
+        out += rest_format(
+            expr.contents[1:],
+            remaining - 6,
+            formatter=let_handler,
+            indent_level=2,
+            close_paren=expr.close_paren,
+        )
 
         if let_handler.bindings_next:
             raise WeakMatchFailure("Let statement with too few arguments")
@@ -330,11 +374,21 @@ class ProcedureFormatter(SpecialFormFormatter):
         cls.assert_form(expr, DEFINE_VALS + DECLARE_VALS)
 
         indent_level = 2 + len(expr.contents[0].value)
-        out = Token(expr.open_paren) + Token(expr.contents[0].value) + Space() + ChangeIndent(indent_level)
+        out = (
+            Token(expr.open_paren)
+            + Token(expr.contents[0].value)
+            + Space()
+            + ChangeIndent(indent_level)
+        )
 
         procedure_handler = cls.ProcedureHandler(indent_level)
-        out += rest_format(expr.contents[1:], remaining - indent_level,
-                           formatter=procedure_handler, indent_level=2, close_paren=expr.close_paren)
+        out += rest_format(
+            expr.contents[1:],
+            remaining - indent_level,
+            formatter=procedure_handler,
+            indent_level=2,
+            close_paren=expr.close_paren,
+        )
 
         if procedure_handler.formals_next:
             raise WeakMatchFailure("Formals not specified")
@@ -376,8 +430,16 @@ class ListFormatter(Formatter):
     def format(expr: Formatted, remaining: int) -> FormatSeq:
         if not isinstance(expr, FormatList):
             raise WeakMatchFailure("expr is not a list")
-        return find_best(expr, [InlineFormatter, PrefixedListFormatter, CallExprFormatter, NoHangingListFormatter],
-                         remaining)
+        return find_best(
+            expr,
+            [
+                InlineFormatter,
+                PrefixedListFormatter,
+                CallExprFormatter,
+                NoHangingListFormatter,
+            ],
+            remaining,
+        )
 
 
 class CallExprFormatter(Formatter):
@@ -385,17 +447,26 @@ class CallExprFormatter(Formatter):
     def format(expr: FormatList, remaining: int) -> FormatSeq:
         assert isinstance(expr, FormatList)
         if len(expr.contents) <= 1:
-            raise WeakMatchFailure("Call expr must have at least 2 arguments, otherwise handle using DataListFormatter")
+            raise WeakMatchFailure(
+                "Call expr must have at least 2 arguments, otherwise handle using DataListFormatter"
+            )
         if expr.prefix:
             raise WeakMatchFailure("Call expr cannot be prefixed")
         if not isinstance(expr.contents[0], FormatAtom):
-            raise WeakMatchFailure("Unable to inline first two arguments, fallback to DataListFormatter")
-        return find_best(expr, [
-            AlignedCondFormatter,
-            MultilineCondFormatter,
-            LetFormatter,
-            ProcedureFormatter,
-            DefaultCallExprFormatter], remaining)
+            raise WeakMatchFailure(
+                "Unable to inline first two arguments, fallback to DataListFormatter"
+            )
+        return find_best(
+            expr,
+            [
+                AlignedCondFormatter,
+                MultilineCondFormatter,
+                LetFormatter,
+                ProcedureFormatter,
+                DefaultCallExprFormatter,
+            ],
+            remaining,
+        )
 
 
 class PrefixedListFormatter(Formatter):
@@ -424,8 +495,12 @@ class DefaultCallExprFormatter(Formatter):
         out += AtomFormatter.format(operator)
         out += ChangeIndent(indent_level) + Space()
 
-        out += rest_format(expr.contents[1:], remaining - indent_level,
-                           indent_level=indent_level, close_paren=expr.close_paren)
+        out += rest_format(
+            expr.contents[1:],
+            remaining - indent_level,
+            indent_level=indent_level,
+            close_paren=expr.close_paren,
+        )
 
         return out
 
@@ -443,14 +518,21 @@ class DataFormatter(Formatter):
 
 class NoHangingListFormatter(Formatter):
     @staticmethod
-    def format(expr: Formatted, remaining: int, callback: Type[Formatter] = None) -> FormatSeq:
+    def format(
+        expr: Formatted, remaining: int, callback: Type[Formatter] = None
+    ) -> FormatSeq:
         if callback is None:
             callback = ExpressionFormatter
         if expr.prefix:
             raise WeakMatchFailure("Cannot format prefixed datalist")
         out = Token(expr.open_paren) + ChangeIndent(1)
-        out += rest_format(expr.contents, remaining - 1,
-                           formatter=callback, indent_level=1, close_paren=expr.close_paren)
+        out += rest_format(
+            expr.contents,
+            remaining - 1,
+            formatter=callback,
+            indent_level=1,
+            close_paren=expr.close_paren,
+        )
         return out
 
 
@@ -492,7 +574,9 @@ class Best:
         return self.curr_best
 
 
-def find_best(raw: Formatted, candidates: List[Type[Formatter]], remaining) -> FormatSeq:
+def find_best(
+    raw: Formatted, candidates: List[Type[Formatter]], remaining
+) -> FormatSeq:
     best = Best(remaining)
     for candidate in candidates:
         try:
@@ -507,11 +591,13 @@ def find_best(raw: Formatted, candidates: List[Type[Formatter]], remaining) -> F
     return best.get_best()
 
 
-def rest_format(exprs: List[Formatted],
-                *args,
-                formatter: Union[Formatter, Type[Formatter]] = ExpressionFormatter,
-                indent_level: int,
-                close_paren: str) -> Tuple[FormatSeq, bool]:
+def rest_format(
+    exprs: List[Formatted],
+    *args,
+    formatter: Union[Formatter, Type[Formatter]] = ExpressionFormatter,
+    indent_level: int,
+    close_paren: str
+) -> Tuple[FormatSeq, bool]:
     out = None
     i = 0
 
@@ -519,10 +605,13 @@ def rest_format(exprs: List[Formatted],
         curr_expr = exprs[i]
         i += 1
         formatted_expr = formatter.format(curr_expr, *args)
-        if "not formatted_expr.contains_newline()" and i != len(exprs) \
-                and not isinstance(curr_expr, FormatComment) \
-                and isinstance(exprs[i], FormatComment) \
-                and exprs[i].allow_inline:
+        if (
+            "not formatted_expr.contains_newline()"
+            and i != len(exprs)
+            and not isinstance(curr_expr, FormatComment)
+            and isinstance(exprs[i], FormatComment)
+            and exprs[i].allow_inline
+        ):
             inline_comment = exprs[i]
             formatted_expr += Space() + CommentFormatter.format(inline_comment)
             i += 1

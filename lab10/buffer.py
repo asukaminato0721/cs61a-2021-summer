@@ -21,6 +21,7 @@ class Buffer:
     ')'
     >>> buf.pop_first()  # returns None
     """
+
     def __init__(self, source):
         self.index = 0
         self.source = source
@@ -47,4 +48,4 @@ class Buffer:
             return actual
 
     def __str__(self):
-        return str(self.source[self.index:])
+        return str(self.source[self.index :])

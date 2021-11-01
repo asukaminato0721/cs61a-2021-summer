@@ -1,83 +1,83 @@
 test = {
-  'name': 'Problem 8',
-  'points': 3,
-  'suites': [
-    {
-      'cases': [
+    "name": "Problem 8",
+    "points": 3,
+    "suites": [
         {
-          'answer': 'The Ant instance that is in the same place as itself',
-          'choices': [
-            'The Ant instance that is in the same place as itself',
-            'The Ant instance in the place closest to its own place',
-            'A random Ant instance in the gamestate',
-            'All the Ant instances in the gamestate'
-          ],
-          'hidden': False,
-          'locked': False,
-          'question': 'Which Ant does a BodyguardAnt guard?'
-        },
-        {
-          'answer': 'By protecting the ant from Bees and allowing it to perform its original action',
-          'choices': [
-            'By protecting the ant from Bees and allowing it to perform its original action',
-            'By attacking Bees that try to attack it',
-            "By increasing the ant's health",
-            'By allowing Bees to pass without attacking'
-          ],
-          'hidden': False,
-          'locked': False,
-          'question': 'How does a BodyguardAnt guard its ant?'
-        },
-        {
-          'answer': "In the BodyguardAnt's ant_contained instance attribute",
-          'choices': [
-            "In the BodyguardAnt's ant_contained instance attribute",
-            "In the BodyguardAnt's ant_contained class attribute",
-            "In its place's ant instance attribute",
-            "Nowhere, a BodyguardAnt has no knowledge of the ant that it's protecting"
-          ],
-          'hidden': False,
-          'locked': False,
-          'question': 'Where is the ant contained by a BodyguardAnt stored?'
-        },
-        {
-          'answer': 'When exactly one of the Ant instances is a container and the container ant does not already contain another ant',
-          'choices': [
-            r"""
+            "cases": [
+                {
+                    "answer": "The Ant instance that is in the same place as itself",
+                    "choices": [
+                        "The Ant instance that is in the same place as itself",
+                        "The Ant instance in the place closest to its own place",
+                        "A random Ant instance in the gamestate",
+                        "All the Ant instances in the gamestate",
+                    ],
+                    "hidden": False,
+                    "locked": False,
+                    "question": "Which Ant does a BodyguardAnt guard?",
+                },
+                {
+                    "answer": "By protecting the ant from Bees and allowing it to perform its original action",
+                    "choices": [
+                        "By protecting the ant from Bees and allowing it to perform its original action",
+                        "By attacking Bees that try to attack it",
+                        "By increasing the ant's health",
+                        "By allowing Bees to pass without attacking",
+                    ],
+                    "hidden": False,
+                    "locked": False,
+                    "question": "How does a BodyguardAnt guard its ant?",
+                },
+                {
+                    "answer": "In the BodyguardAnt's ant_contained instance attribute",
+                    "choices": [
+                        "In the BodyguardAnt's ant_contained instance attribute",
+                        "In the BodyguardAnt's ant_contained class attribute",
+                        "In its place's ant instance attribute",
+                        "Nowhere, a BodyguardAnt has no knowledge of the ant that it's protecting",
+                    ],
+                    "hidden": False,
+                    "locked": False,
+                    "question": "Where is the ant contained by a BodyguardAnt stored?",
+                },
+                {
+                    "answer": "When exactly one of the Ant instances is a container and the container ant does not already contain another ant",
+                    "choices": [
+                        r"""
             When exactly one of the Ant instances is a container and the
             container ant does not already contain another ant
             """,
-            'When exactly one of the Ant instances is a container',
-            'When both Ant instances are containers',
-            'There can never be two Ant instances in the same place'
-          ],
-          'hidden': False,
-          'locked': False,
-          'question': 'When can a second Ant be added to a place that already contains an Ant?'
-        },
-        {
-          'answer': 'The Container Ant',
-          'choices': [
-            'The Container Ant',
-            'The Ant being contained',
-            'A list containing both Ants',
-            'Whichever Ant was placed there first'
-          ],
-          'hidden': False,
-          'locked': False,
-          'question': r"""
+                        "When exactly one of the Ant instances is a container",
+                        "When both Ant instances are containers",
+                        "There can never be two Ant instances in the same place",
+                    ],
+                    "hidden": False,
+                    "locked": False,
+                    "question": "When can a second Ant be added to a place that already contains an Ant?",
+                },
+                {
+                    "answer": "The Container Ant",
+                    "choices": [
+                        "The Container Ant",
+                        "The Ant being contained",
+                        "A list containing both Ants",
+                        "Whichever Ant was placed there first",
+                    ],
+                    "hidden": False,
+                    "locked": False,
+                    "question": r"""
           If two Ants occupy the same Place, what is stored in that place's ant
           instance attribute?
-          """
-        }
-      ],
-      'scored': False,
-      'type': 'concept'
-    },
-    {
-      'cases': [
+          """,
+                },
+            ],
+            "scored": False,
+            "type": "concept",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           >>> # Testing BodyguardAnt parameters
           >>> bodyguard = BodyguardAnt()
           >>> BodyguardAnt.food_cost
@@ -85,11 +85,11 @@ test = {
           >>> bodyguard.health
           2
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # Abstraction tests
           >>> original = ContainerAnt.__init__
           >>> ContainerAnt.__init__ = lambda self, health: print("init") #If this errors, you are not calling the parent constructor correctly.
@@ -100,29 +100,29 @@ test = {
           >>> hasattr(bodyguard, 'ant_contained')
           True
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": r"""
       >>> from ants import *
       """,
-      'teardown': '',
-      'type': 'doctest'
-    },
-    {
-      'cases': [
+            "teardown": "",
+            "type": "doctest",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           >>> bodyguard = BodyguardAnt()
           >>> bodyguard.action(gamestate) # Action without contained ant should not error
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # Bodyguard ant added before another ant
           >>> bodyguard = BodyguardAnt()
           >>> other_ant = ThrowerAnt()
@@ -134,11 +134,11 @@ test = {
           >>> bodyguard.ant_contained is other_ant
           True
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # Bodyguard ant can be added after another ant
           >>> bodyguard = BodyguardAnt()
           >>> other_ant = ThrowerAnt()
@@ -152,11 +152,11 @@ test = {
           >>> bodyguard.ant_contained is other_ant
           True
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # Testing bodyguard performs thrower's action
           >>> bodyguard = BodyguardAnt()
           >>> thrower = ThrowerAnt()
@@ -169,11 +169,11 @@ test = {
           >>> bee.health
           1
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # Testing bodyguard performs thrower's action
           >>> bodyguard = BodyguardAnt()
           >>> thrower = ThrowerAnt()
@@ -186,11 +186,11 @@ test = {
           >>> bee.health
           1
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # Testing removing a bodyguard doesn't remove contained ant
           >>> place = gamestate.places['tunnel_0_0']
           >>> bodyguard = BodyguardAnt()
@@ -204,11 +204,11 @@ test = {
           >>> bodyguard.place is None
           True
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # Testing removing a bodyguard doesn't remove contained ant
           >>> place = gamestate.places['tunnel_0_0']
           >>> bodyguard = BodyguardAnt()
@@ -222,11 +222,11 @@ test = {
           >>> bodyguard.place is None
           True
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # Testing bodyguarded ant keeps instance attributes
           >>> test_ant = Ant()
           >>> def new_action(gamestate):
@@ -240,11 +240,11 @@ test = {
           >>> place.ant.ant_contained.health
           9001
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # Testing single BodyguardAnt cannot hold two other ants
           >>> bodyguard = BodyguardAnt()
           >>> first_ant = ThrowerAnt()
@@ -257,11 +257,11 @@ test = {
           ...
           AssertionError: Two ants in tunnel_0_0
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # Testing BodyguardAnt cannot hold another BodyguardAnt
           >>> bodyguard1 = BodyguardAnt()
           >>> bodyguard2 = BodyguardAnt()
@@ -272,11 +272,11 @@ test = {
           ...
           AssertionError: Two ants in tunnel_0_0
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # Testing BodyguardAnt takes all the damage
           >>> thrower = ThrowerAnt()
           >>> bodyguard = BodyguardAnt()
@@ -303,11 +303,11 @@ test = {
           >>> place.ant is None
           True
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # test proper call to death callback
           >>> original_death_callback = Insect.death_callback
           >>> Insect.death_callback = lambda x: print("insect died")
@@ -325,36 +325,36 @@ test = {
           insect died
           >>> Insect.death_callback = original_death_callback
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": r"""
       >>> from ants import *
       >>> beehive, layout = Hive(AssaultPlan()), dry_layout
       >>> gamestate = GameState(None, beehive, ant_types(), layout, (1, 9))
       >>> #
       """,
-      'teardown': '',
-      'type': 'doctest'
-    },
-    {
-      'cases': [
+            "teardown": "",
+            "type": "doctest",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           >>> from ants import *
           >>> BodyguardAnt.implemented
           True
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': '',
-      'teardown': '',
-      'type': 'doctest'
-    }
-  ]
+                    "hidden": False,
+                    "locked": False,
+                }
+            ],
+            "scored": True,
+            "setup": "",
+            "teardown": "",
+            "type": "doctest",
+        },
+    ],
 }

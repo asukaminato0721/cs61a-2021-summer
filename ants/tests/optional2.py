@@ -1,11 +1,11 @@
 test = {
-  'name': 'Problem Optional 2',
-  'points': 0,
-  'suites': [
-    {
-      'cases': [
+    "name": "Problem Optional 2",
+    "points": 0,
+    "suites": [
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           >>> # Testing status parameters
           >>> slow = SlowThrower()
           >>> scary = ScaryThrower()
@@ -18,11 +18,11 @@ test = {
           >>> scary.health
           1
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # Testing Slow
           >>> slow = SlowThrower()
           >>> bee = Bee(3)
@@ -43,11 +43,11 @@ test = {
           >>> bee.place.name
           'tunnel_0_1'
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # Testing Scare
           >>> scary = ScaryThrower()
           >>> bee = Bee(3)
@@ -64,11 +64,11 @@ test = {
           >>> bee.place.name
           'tunnel_0_5'
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # Scary stings an ant
           >>> scary = ScaryThrower()
           >>> harvester = HarvesterAnt()
@@ -86,11 +86,11 @@ test = {
           >>> harvester.health
           0
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # Testing if statuses stack
           >>> slow = SlowThrower()
           >>> bee = Bee(3)
@@ -133,11 +133,11 @@ test = {
           >>> bee.place.name
           'tunnel_0_3'
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # Testing multiple scared bees
           >>> scare1 = ScaryThrower()
           >>> scare2 = ScaryThrower()
@@ -168,11 +168,11 @@ test = {
           >>> bee2.place.name
           'tunnel_0_6'
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> scare = ScaryThrower()
           >>> bee = Bee(3)
           >>> gamestate.places["tunnel_0_0"].add_insect(scare)
@@ -191,11 +191,11 @@ test = {
           >>> bee.place.name
           'tunnel_0_2'
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # Testing long status stack
           >>> scary = ScaryThrower()
           >>> slow = SlowThrower()
@@ -239,11 +239,11 @@ test = {
           >>> bee.place.name
           'tunnel_0_2'
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> scary = ScaryThrower()
           >>> slow = SlowThrower()
           >>> bee = Bee(3)
@@ -267,29 +267,29 @@ test = {
           >>> bee.place.name
           'tunnel_0_3'
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> ScaryThrower.implemented
           True
           >>> SlowThrower.implemented
           True
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": r"""
       >>> from ants import *
       >>> beehive, layout = Hive(AssaultPlan()), dry_layout
       >>> dimensions = (1, 9)
       >>> gamestate = GameState(None, beehive, ant_types(), layout, dimensions)
       """,
-      'teardown': '',
-      'type': 'doctest'
-    }
-  ]
+            "teardown": "",
+            "type": "doctest",
+        }
+    ],
 }

@@ -36,9 +36,7 @@ def distance(city_a, city_b):
     5.0
     """
     "*** YOUR CODE HERE ***"
-    return hypot(
-        get_lat(city_a) - get_lat(city_b), get_lon(city_a) - get_lon(city_b)
-    )
+    return hypot(get_lat(city_a) - get_lat(city_b), get_lon(city_a) - get_lon(city_b))
 
 
 def closer_city(lat: float, lon: float, city_a, city_b):
@@ -335,9 +333,7 @@ def add_trees(t1, t2):
         label(t1) + label(t2),
         [
             add_trees(a, b)
-            for a, b in zip_longest(
-                branches(t1), branches(t2), fillvalue=tree(0)
-            )
+            for a, b in zip_longest(branches(t1), branches(t2), fillvalue=tree(0))
         ],
     )
 

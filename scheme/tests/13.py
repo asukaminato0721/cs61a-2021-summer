@@ -1,11 +1,11 @@
 test = {
-  'name': 'Problem 13',
-  'points': 2,
-  'suites': [
-    {
-      'cases': [
+    "name": "Problem 13",
+    "points": 2,
+    "suites": [
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           scm> (cond ((> 2 3) 5)
           ....       ((> 2 4) 6)
           ....       ((< 2 5) 7)
@@ -23,19 +23,19 @@ test = {
           c65729b823194bffbccc4a162f8653bd
           # locked
           """,
-          'hidden': False,
-          'locked': True
-        }
-      ],
-      'scored': True,
-      'setup': '',
-      'teardown': '',
-      'type': 'scheme'
-    },
-    {
-      'cases': [
+                    "hidden": False,
+                    "locked": True,
+                }
+            ],
+            "scored": True,
+            "setup": "",
+            "teardown": "",
+            "type": "scheme",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           scm> (cond ((> 2 3) 5)
           ....       ((> 2 4) 6)
           ....       ((< 2 5) 7))
@@ -62,20 +62,20 @@ test = {
           hi
           scm> (eval (cond (False 1) (False 2)))
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (cond (0 'yea)
           ....       (else 'nay))
           yea
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (define x 0)
           x
           scm> (define y 0)
@@ -94,11 +94,11 @@ test = {
           scm> (list x y z)
           (1 1 1)
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (define x 0)
           x
           scm> (cond ((define x (+ x 1)) 'a)
@@ -109,11 +109,11 @@ test = {
           scm> (cond ((= 1 1) nil))
           ()
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (define (print-and-false val)
           ....         (print val)
           ....         #f)
@@ -139,14 +139,14 @@ test = {
           cond3
           #t
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': '',
-      'teardown': '',
-      'type': 'scheme'
-    }
-  ]
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": "",
+            "teardown": "",
+            "type": "scheme",
+        },
+    ],
 }

@@ -12,6 +12,7 @@ from ucb import main, trace
 # Eval/Apply #
 ##############
 
+
 def scheme_eval(expr, env, _=None):  # Optional third argument is ignored
     """Evaluate Scheme expression EXPR in environment ENV.
 
@@ -22,19 +23,20 @@ def scheme_eval(expr, env, _=None):  # Optional third argument is ignored
     4
     """
     # PROBLEM 2
-    return 'Your Code Here'
+    return "Your Code Here"
 
 
 def scheme_apply(procedure, args, env):
     """Apply Scheme PROCEDURE to argument values ARGS (a Scheme list) in
     environment ENV."""
     # PROBLEM 2
-    return 'Your Code Here'
+    return "Your Code Here"
 
 
 ################
 # Environments #
 ################
+
 
 class Frame:
     """An environment frame binds Scheme symbols to Scheme values."""
@@ -46,18 +48,19 @@ class Frame:
 
     def __repr__(self):
         if self.parent is None:
-            return '<Global Frame>'
-        s = sorted(['{0}: {1}'.format(k, v) for k, v in self.bindings.items()])
-        return '<{{{0}}} -> {1}>'.format(', '.join(s), repr(self.parent))
+            return "<Global Frame>"
+        s = sorted(["{0}: {1}".format(k, v) for k, v in self.bindings.items()])
+        return "<{{{0}}} -> {1}>".format(", ".join(s), repr(self.parent))
 
     def define(self, symbol, value):
         """Define Scheme SYMBOL to have VALUE."""
 
-        return 'Your Code Here'
+        return "Your Code Here"
 
     # BEGIN PROBLEM 2/3
     "*** YOUR CODE HERE ***"
     # END PROBLEM 2/3
+
 
 ##############
 # Procedures #
@@ -75,13 +78,13 @@ def scheme_procedurep(x):
 class BuiltinProcedure(Procedure):
     """A Scheme procedure defined as a Python function."""
 
-    def __init__(self, fn, expect_env=False, name='builtin'):
+    def __init__(self, fn, expect_env=False, name="builtin"):
         self.name = name
         self.fn = fn
         self.expect_env = expect_env
 
     def __str__(self):
-        return '#[{0}]'.format(self.name)
+        return "#[{0}]".format(self.name)
 
     def apply(self, args, env):
         """Apply SELF to ARGS in ENV, where ARGS is a Scheme list.
@@ -113,11 +116,12 @@ class LambdaProcedure(Procedure):
     # END PROBLEM 3
 
     def __str__(self):
-        return str(Pair('lambda', Pair(self.formals, self.body)))
+        return str(Pair("lambda", Pair(self.formals, self.body)))
 
     def __repr__(self):
-        return 'LambdaProcedure({0}, {1}, {2})'.format(
-            repr(self.formals), repr(self.body), repr(self.env))
+        return "LambdaProcedure({0}, {1}, {2})".format(
+            repr(self.formals), repr(self.body), repr(self.env)
+        )
 
 
 def add_builtins(frame, funcs_and_names):
@@ -126,6 +130,7 @@ def add_builtins(frame, funcs_and_names):
     (NAME, PYTHON-FUNCTION, INTERNAL-NAME)."""
     for name, fn, proc_name in funcs_and_names:
         frame.define(name, BuiltinProcedure(fn, name=proc_name))
+
 
 #################
 # Special Forms #
@@ -144,7 +149,7 @@ logic for each special form separately somehow, which you can do here.
 # Utility methods for checking the structure of Scheme programs
 
 
-def validate_form(expr, min, max=float('inf')):
+def validate_form(expr, min, max=float("inf")):
     """Check EXPR is a proper list whose length is at least MIN and no more
     than MAX (default: no maximum). Raises a SchemeError if this is not the
     case.
@@ -152,12 +157,12 @@ def validate_form(expr, min, max=float('inf')):
     >>> validate_form(read_line('(a b)'), 2)
     """
     if not scheme_listp(expr):
-        raise SchemeError('badly formed expression: ' + repl_str(expr))
+        raise SchemeError("badly formed expression: " + repl_str(expr))
     length = len(expr)
     if length < min:
-        raise SchemeError('too few operands in form')
+        raise SchemeError("too few operands in form")
     elif length > max:
-        raise SchemeError('too many operands in form')
+        raise SchemeError("too many operands in form")
 
 
 def validate_formals(formals):
@@ -171,9 +176,9 @@ def validate_formals(formals):
 
     def validate_and_add(symbol, is_last):
         if not scheme_symbolp(symbol):
-            raise SchemeError('non-symbol: {0}'.format(symbol))
+            raise SchemeError("non-symbol: {0}".format(symbol))
         if symbol in symbols:
-            raise SchemeError('duplicate symbol: {0}'.format(symbol))
+            raise SchemeError("duplicate symbol: {0}".format(symbol))
         symbols.add(symbol)
 
     while isinstance(formals, Pair):
@@ -188,8 +193,12 @@ def validate_formals(formals):
 def validate_procedure(procedure):
     """Check that PROCEDURE is a valid Scheme procedure."""
     if not scheme_procedurep(procedure):
-        raise SchemeError('{0} is not callable: {1}'.format(
-            type(procedure).__name__.lower(), repl_str(procedure)))
+        raise SchemeError(
+            "{0} is not callable: {1}".format(
+                type(procedure).__name__.lower(), repl_str(procedure)
+            )
+        )
+
 
 #################
 # Dynamic Scope #
@@ -207,6 +216,7 @@ class MuProcedure(Procedure):
                     ||----w |
                     ||     ||
     """
+
     # BEGIN NO PROMPT
     "*** YOUR CODE HERE ***"
     # END NO PROMPT
@@ -222,11 +232,10 @@ class MuProcedure(Procedure):
     # END PROBLEM EC
 
     def __str__(self):
-        return str(Pair('mu', Pair(self.formals, self.body)))
+        return str(Pair("mu", Pair(self.formals, self.body)))
 
     def __repr__(self):
-        return 'MuProcedure({0}, {1})'.format(
-            repr(self.formals), repr(self.body))
+        return "MuProcedure({0}, {1})".format(repr(self.formals), repr(self.body))
 
 
 # BEGIN PROBLEM EC
@@ -240,6 +249,7 @@ class MuProcedure(Procedure):
 
 
 # Make classes/functions for creating tail recursive programs here?
+
 
 def complete_apply(procedure, args, env):
     """Apply procedure to args in env; ensure the result is not an Unevaluated.
@@ -259,15 +269,16 @@ def complete_apply(procedure, args, env):
 # Extra Procedures #
 ####################
 
+
 def scheme_map(fn, s, env):
-    validate_type(fn, scheme_procedurep, 0, 'map')
-    validate_type(s, scheme_listp, 1, 'map')
+    validate_type(fn, scheme_procedurep, 0, "map")
+    validate_type(s, scheme_listp, 1, "map")
     return s.map(lambda x: complete_apply(fn, Pair(x, nil), env))
 
 
 def scheme_filter(fn, s, env):
-    validate_type(fn, scheme_procedurep, 0, 'filter')
-    validate_type(s, scheme_listp, 1, 'filter')
+    validate_type(fn, scheme_procedurep, 0, "filter")
+    validate_type(s, scheme_listp, 1, "filter")
     head, current = nil, nil
     while s is not nil:
         item, s = s.first, s.rest
@@ -282,22 +293,24 @@ def scheme_filter(fn, s, env):
 
 
 def scheme_reduce(fn, s, env):
-    validate_type(fn, scheme_procedurep, 0, 'reduce')
-    validate_type(s, lambda x: x is not nil, 1, 'reduce')
-    validate_type(s, scheme_listp, 1, 'reduce')
+    validate_type(fn, scheme_procedurep, 0, "reduce")
+    validate_type(s, lambda x: x is not nil, 1, "reduce")
+    validate_type(s, scheme_listp, 1, "reduce")
     value, s = s.first, s.rest
     while s is not nil:
         value = complete_apply(fn, scheme_list(value, s.first), env)
         s = s.rest
     return value
 
+
 ################
 # Input/Output #
 ################
 
 
-def read_eval_print_loop(next_line, env, interactive=False, quiet=False,
-                         startup=False, load_files=()):
+def read_eval_print_loop(
+    next_line, env, interactive=False, quiet=False, startup=False, load_files=()
+):
     """Read and evaluate input until an end of file or keyboard interrupt."""
     if startup:
         for filename in load_files:
@@ -311,18 +324,20 @@ def read_eval_print_loop(next_line, env, interactive=False, quiet=False,
                 if not quiet and result is not None:
                     print(repl_str(result))
         except (SchemeError, SyntaxError, ValueError, RuntimeError) as err:
-            if (isinstance(err, RuntimeError) and
-                'maximum recursion depth exceeded' not in getattr(err, 'args')[0]):
+            if (
+                isinstance(err, RuntimeError)
+                and "maximum recursion depth exceeded" not in getattr(err, "args")[0]
+            ):
                 raise
             elif isinstance(err, RuntimeError):
-                print('Error: maximum recursion depth exceeded')
+                print("Error: maximum recursion depth exceeded")
             else:
-                print('Error:', err)
+                print("Error:", err)
         except KeyboardInterrupt:  # <Control>-C
             if not startup:
                 raise
             print()
-            print('KeyboardInterrupt')
+            print("KeyboardInterrupt")
             if not interactive:
                 return
         except EOFError:  # <Control>-D, etc.
@@ -336,14 +351,16 @@ def scheme_load(*args):
     with verbosity determined by QUIET (default true)."""
     if not (2 <= len(args) <= 3):
         expressions = args[:-1]
-        raise SchemeError('"load" given incorrect number of arguments: '
-                          '{0}'.format(len(expressions)))
+        raise SchemeError(
+            '"load" given incorrect number of arguments: '
+            "{0}".format(len(expressions))
+        )
     sym = args[0]
     quiet = args[1] if len(args) > 2 else True
     env = args[-1]
-    if (scheme_stringp(sym)):
+    if scheme_stringp(sym):
         sym = eval(sym)
-    validate_type(sym, scheme_symbolp, 0, 'load')
+    validate_type(sym, scheme_symbolp, 0, "load")
     with scheme_open(sym) as infile:
         lines = infile.readlines()
     args = (lines, None) if quiet else (lines,)
@@ -360,10 +377,10 @@ def scheme_open(filename):
     try:
         return open(filename)
     except IOError as exc:
-        if filename.endswith('.scm'):
+        if filename.endswith(".scm"):
             raise SchemeError(str(exc))
     try:
-        return open(filename + '.scm')
+        return open(filename + ".scm")
     except IOError as exc:
         raise SchemeError(str(exc))
 
@@ -371,21 +388,14 @@ def scheme_open(filename):
 def create_global_frame():
     """Initialize and return a single-frame environment with built-in names."""
     env = Frame(None)
-    env.define('eval',
-               BuiltinProcedure(scheme_eval, True, 'eval'))
-    env.define('apply',
-               BuiltinProcedure(complete_apply, True, 'apply'))
-    env.define('load',
-               BuiltinProcedure(scheme_load, True, 'load'))
-    env.define('procedure?',
-               BuiltinProcedure(scheme_procedurep, False, 'procedure?'))
-    env.define('map',
-               BuiltinProcedure(scheme_map, True, 'map'))
-    env.define('filter',
-               BuiltinProcedure(scheme_filter, True, 'filter'))
-    env.define('reduce',
-               BuiltinProcedure(scheme_reduce, True, 'reduce'))
-    env.define('undefined', None)
+    env.define("eval", BuiltinProcedure(scheme_eval, True, "eval"))
+    env.define("apply", BuiltinProcedure(complete_apply, True, "apply"))
+    env.define("load", BuiltinProcedure(scheme_load, True, "load"))
+    env.define("procedure?", BuiltinProcedure(scheme_procedurep, False, "procedure?"))
+    env.define("map", BuiltinProcedure(scheme_map, True, "map"))
+    env.define("filter", BuiltinProcedure(scheme_filter, True, "filter"))
+    env.define("reduce", BuiltinProcedure(scheme_reduce, True, "reduce"))
+    env.define("undefined", None)
     add_builtins(env, BUILTINS)
     return env
 
@@ -393,22 +403,35 @@ def create_global_frame():
 @main
 def run(*argv):
     import argparse
-    parser = argparse.ArgumentParser(description='CS 61A Scheme Interpreter')
-    parser.add_argument('--pillow-turtle', action='store_true',
-                        help='run with pillow-based turtle. This is much faster for rendering but there is no GUI')
-    parser.add_argument('--turtle-save-path', default=None,
-                        help='save the image to this location when done')
-    parser.add_argument('-load', '-i', action='store_true',
-                       help='run file interactively')
-    parser.add_argument('file', nargs='?',
-                        type=argparse.FileType('r'), default=None,
-                        help='Scheme file to run')
+
+    parser = argparse.ArgumentParser(description="CS 61A Scheme Interpreter")
+    parser.add_argument(
+        "--pillow-turtle",
+        action="store_true",
+        help="run with pillow-based turtle. This is much faster for rendering but there is no GUI",
+    )
+    parser.add_argument(
+        "--turtle-save-path",
+        default=None,
+        help="save the image to this location when done",
+    )
+    parser.add_argument(
+        "-load", "-i", action="store_true", help="run file interactively"
+    )
+    parser.add_argument(
+        "file",
+        nargs="?",
+        type=argparse.FileType("r"),
+        default=None,
+        help="Scheme file to run",
+    )
     args = parser.parse_args()
 
     import scheme
+
     scheme.TK_TURTLE = not args.pillow_turtle
     scheme.TURTLE_SAVE_PATH = args.turtle_save_path
-    sys.path.insert(0, '')
+    sys.path.insert(0, "")
     sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(scheme.__file__))))
 
     next_line = buffer_input
@@ -417,14 +440,20 @@ def run(*argv):
 
     if args.file is not None:
         if args.load:
-            load_files.append(getattr(args.file, 'name'))
+            load_files.append(getattr(args.file, "name"))
         else:
             lines = args.file.readlines()
 
             def next_line():
                 return buffer_lines(lines)
+
             interactive = False
 
-    read_eval_print_loop(next_line, create_global_frame(), startup=True,
-                         interactive=interactive, load_files=load_files)
+    read_eval_print_loop(
+        next_line,
+        create_global_frame(),
+        startup=True,
+        interactive=interactive,
+        load_files=load_files,
+    )
     tscheme_exitonclick()

@@ -1,6 +1,15 @@
-from datamodel import Expression, Boolean, Number, Symbol, Nil, SingletonTrue, \
-    SingletonFalse, Pair, bools, \
-    String
+from datamodel import (
+    Expression,
+    Boolean,
+    Number,
+    Symbol,
+    Nil,
+    SingletonTrue,
+    SingletonFalse,
+    Pair,
+    bools,
+    String,
+)
 from environment import global_attr
 from helper import pair_to_list
 from primitives import SingleOperandPrimitive
@@ -11,8 +20,12 @@ from special_forms import LambdaObject, MuObject, MacroObject
 @global_attr("atom?")
 class IsAtom(SingleOperandPrimitive):
     def execute_simple(self, operand: Expression):
-        return bools[isinstance(operand, Boolean) or isinstance(operand, Number)
-                     or isinstance(operand, Symbol) or operand is Nil]
+        return bools[
+            isinstance(operand, Boolean)
+            or isinstance(operand, Number)
+            or isinstance(operand, Symbol)
+            or operand is Nil
+        ]
 
 
 @global_attr("boolean?")
@@ -24,8 +37,7 @@ class IsBoolean(SingleOperandPrimitive):
 @global_attr("integer?")
 class IsInteger(SingleOperandPrimitive):
     def execute_simple(self, operand: Expression):
-        return bools[
-            isinstance(operand, Number) and isinstance(operand.value, int)]
+        return bools[isinstance(operand, Number) and isinstance(operand.value, int)]
 
 
 @global_attr("list?")
@@ -65,9 +77,11 @@ class IsPair(SingleOperandPrimitive):
 @global_attr("procedure?")
 class IsProcedure(SingleOperandPrimitive):
     def execute_simple(self, operand: Expression):
-        return bools[isinstance(operand, LambdaObject) or
-                     isinstance(operand, MuObject) or
-                     isinstance(operand, MacroObject)]
+        return bools[
+            isinstance(operand, LambdaObject)
+            or isinstance(operand, MuObject)
+            or isinstance(operand, MacroObject)
+        ]
 
 
 @global_attr("string?")

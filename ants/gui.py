@@ -71,9 +71,7 @@ class GUI:
         importlib.reload(ants)  # resets ants, e.g. with newly implemented Ants
         self.makeHooks()
 
-        self.winner = ants_strategies.start_with_strategy(
-            gui.args, gui.strategy, ants
-        )
+        self.winner = ants_strategies.start_with_strategy(gui.args, gui.strategy, ants)
         self.gameOver = True
         self.saveState("winner", self.winner)
         self.saveState("gameOver", self.gameOver)
@@ -218,9 +216,7 @@ class GUI:
                 # Check if it's a container ant
                 if place.ant is not None:
                     ant_container = isinstance(place.ant, ants.ContainerAnt)
-                    self.places[pRow][pCol]["insects"][
-                        "container"
-                    ] = ant_container
+                    self.places[pRow][pCol]["insects"]["container"] = ant_container
                     if ant_container and place.ant.ant_contained:
                         self.places[pRow][pCol]["insects"]["contains"] = {
                             "type": place.ant.ant_contained.name,
@@ -418,9 +414,7 @@ def run(*args):
         except:
             pass
     else:
-        print(
-            "Could not start webserver: all ports in range 8000-8099 are taken"
-        )
+        print("Could not start webserver: all ports in range 8000-8099 are taken")
         sys.exit(1)
     print("Web Server started @ localhost:" + str(PORT))
 
@@ -434,6 +428,4 @@ def run(*args):
         webbrowser.open("http://localhost:" + str(PORT) + "/gui.html", 2)
     except Exception:
         print("Unable to automatically open web browser.")
-        print(
-            "Point your browser to http://localhost:" + str(PORT) + "/gui.html"
-        )
+        print("Point your browser to http://localhost:" + str(PORT) + "/gui.html")

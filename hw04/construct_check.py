@@ -1,78 +1,79 @@
 from ast import parse, NodeVisitor, Name
 
 _NAMES = {
-    'Add': '+',
-    'And': 'and',
-    'Assert': 'assert',
-    'Assign': '=',
-    'AugAssign': 'op=',
-    'BitAnd': '&',
-    'BitOr': '|',
-    'BitXor': '^',
-    'Break': 'break',
-    'Recursion': 'recursive call',
-    'ClassDef': 'class',
-    'Continue': 'continue',
-    'Del': 'del',
-    'Delete': 'delete',
-    'Dict': '{...}',
-    'DictComp': '{...}',
-    'Div': '/',
-    'Ellipsis': '...',
-    'Eq': '==',
-    'ExceptHandler': 'except',
-    'ExtSlice': '[::]',
-    'FloorDiv': '//',
-    'For': 'for',
-    'FunctionDef': 'def',
-    'Filter': 'filter',
-    'GeneratorExp': '(... for ...)',
-    'Global': 'global',
-    'Gt': '>',
-    'GtE': '>=',
-    'If': 'if',
-    'IfExp': '...if...else...',
-    'Import': 'import',
-    'ImportFrom': 'from ... import ...',
-    'In': 'in',
-    'Index': '...[...]',
-    'Invert': '~',
-    'Is': 'is',
-    'IsNot': 'is not ',
-    'LShift': '<<',
-    'Lambda': 'lambda',
-    'List': '[...]',
-    'ListComp': '[...for...]',
-    'Lt': '<',
-    'LtE': '<=',
-    'Mod': '%',
-    'Mult': '*',
-    'Nonlocal': 'nonlocal',
-    'Not': 'not',
-    'NotEq': '!=',
-    'NotIn': 'not in',
-    'Or': 'or',
-    'Pass': 'pass',
-    'Pow': '**',
-    'RShift': '>>',
-    'Raise': 'raise',
-    'Return': 'return',
-    'Set': '{ ... } (set)',
-    'SetComp': '{ ... for ... } (set)',
-    'Slice': '[ : ]',
-    'Starred': '',
-    'Str': 'str',
-    'Sub': '-',
-    'Subscript': '[]',
-    'Try': 'try',
-    'Tuple': '(... , ... )',
-    'UAdd': '+',
-    'USub': '-',
-    'While': 'while',
-    'With': 'with',
-    'Yield': 'yield',
-    'YieldFrom': 'yield from',
+    "Add": "+",
+    "And": "and",
+    "Assert": "assert",
+    "Assign": "=",
+    "AugAssign": "op=",
+    "BitAnd": "&",
+    "BitOr": "|",
+    "BitXor": "^",
+    "Break": "break",
+    "Recursion": "recursive call",
+    "ClassDef": "class",
+    "Continue": "continue",
+    "Del": "del",
+    "Delete": "delete",
+    "Dict": "{...}",
+    "DictComp": "{...}",
+    "Div": "/",
+    "Ellipsis": "...",
+    "Eq": "==",
+    "ExceptHandler": "except",
+    "ExtSlice": "[::]",
+    "FloorDiv": "//",
+    "For": "for",
+    "FunctionDef": "def",
+    "Filter": "filter",
+    "GeneratorExp": "(... for ...)",
+    "Global": "global",
+    "Gt": ">",
+    "GtE": ">=",
+    "If": "if",
+    "IfExp": "...if...else...",
+    "Import": "import",
+    "ImportFrom": "from ... import ...",
+    "In": "in",
+    "Index": "...[...]",
+    "Invert": "~",
+    "Is": "is",
+    "IsNot": "is not ",
+    "LShift": "<<",
+    "Lambda": "lambda",
+    "List": "[...]",
+    "ListComp": "[...for...]",
+    "Lt": "<",
+    "LtE": "<=",
+    "Mod": "%",
+    "Mult": "*",
+    "Nonlocal": "nonlocal",
+    "Not": "not",
+    "NotEq": "!=",
+    "NotIn": "not in",
+    "Or": "or",
+    "Pass": "pass",
+    "Pow": "**",
+    "RShift": ">>",
+    "Raise": "raise",
+    "Return": "return",
+    "Set": "{ ... } (set)",
+    "SetComp": "{ ... for ... } (set)",
+    "Slice": "[ : ]",
+    "Starred": "",
+    "Str": "str",
+    "Sub": "-",
+    "Subscript": "[]",
+    "Try": "try",
+    "Tuple": "(... , ... )",
+    "UAdd": "+",
+    "USub": "-",
+    "While": "while",
+    "With": "with",
+    "Yield": "yield",
+    "YieldFrom": "yield from",
 }
+
 
 def check(source_file, checked_funcs, disallow, source=None):
     """Checks that AST nodes whose type names are present in DISALLOW
@@ -86,6 +87,7 @@ def check(source_file, checked_funcs, disallow, source=None):
     checks for overtly recursive calls (i.e., calls of the form NAME(...) where
     NAME is an enclosing def."""
     return ExclusionChecker(disallow).check(source_file, checked_funcs, source)
+
 
 class ExclusionChecker(NodeVisitor):
     """An AST visitor that checks that certain constructs are excluded from
@@ -113,9 +115,11 @@ class ExclusionChecker(NodeVisitor):
         super().generic_visit(node)
 
     def visit_Call(self, node):
-        if 'Recursion' in self._disallow and \
-           type(node.func) is Name and \
-           node.func.id in self._func_nest:
+        if (
+            "Recursion" in self._disallow
+            and type(node.func) is Name
+            and node.func.id in self._func_nest
+        ):
             self._report(node, "should not be recursive")
         self.generic_visit(node)
 
@@ -162,13 +166,13 @@ class ExclusionChecker(NodeVisitor):
         self._source_file = source_file
         self._func_nest = []
         if type(checked_funcs) is str:
-            self._checked_funcs = { checked_funcs }
+            self._checked_funcs = {checked_funcs}
         else:
             self._checked_funcs = set(checked_funcs)
         if disallow is not None:
             self._disallow = set(disallow)
         if source is None:
-            with open(source_file, 'r', errors='ignore') as inp:
+            with open(source_file, "r", errors="ignore") as inp:
                 source = inp.read()
         p = parse(source, source_file)
         self._errs = 0

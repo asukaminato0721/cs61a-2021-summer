@@ -32,9 +32,7 @@ def reformat_files(src, dest=None, check=False):
     exit()
 
 
-parser = argparse.ArgumentParser(
-    description="CS61A Scheme Editor - Spring 2021"
-)
+parser = argparse.ArgumentParser(description="CS61A Scheme Editor - Spring 2021")
 
 parser.add_argument(
     "-f",
@@ -97,8 +95,6 @@ else:
     elif len(configs) > 0:
         with open(configs[0]) as f:
             file_names = [
-                name
-                for name in json.loads(f.read())["src"]
-                if name.endswith(".scm")
+                name for name in json.loads(f.read())["src"] if name.endswith(".scm")
             ]
 local_server.start(file_names, args.port, not args.nobrowser)

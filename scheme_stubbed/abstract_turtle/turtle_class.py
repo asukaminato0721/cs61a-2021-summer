@@ -4,6 +4,7 @@ from math import pi, sin, cos, copysign
 from .model import Color, Position, DrawnTurtle, Mode, LineTo, Arc
 from .canvas import Canvas
 
+
 def turtle_method(func):
     """
     Marks the given method as one that needs to be placed in global.
@@ -48,13 +49,14 @@ class BaseTurtle:
     """
     Manages all the basic turtle functionality. The other turtle methods can be expressed in terms of these.
     """
+
     def __init__(self, canvas):
         if not isinstance(canvas, Canvas):
-            raise RuntimeError("Expected the argument to Turtle to be of type {} but was {} of type {}".format(
-                Canvas.__name__,
-                canvas,
-                type(canvas).__name__
-            ))
+            raise RuntimeError(
+                "Expected the argument to Turtle to be of type {} but was {} of type {}".format(
+                    Canvas.__name__, canvas, type(canvas).__name__
+                )
+            )
         self.__canvas = canvas
         self.__x = 0
         self.__y = 0
@@ -70,7 +72,7 @@ class BaseTurtle:
         self.__turtle_stretch_len = 1
         self.__pixel_size = 1
         self.__mode = Mode.STANDARD
-        self.__speed = 3 # default from the normal turtle module
+        self.__speed = 3  # default from the normal turtle module
 
         self.__update_turtle()
 
@@ -80,12 +82,15 @@ class BaseTurtle:
         Go to the given position (X, Y).
         """
         if self.__pen_down:
-            self.__canvas.draw_line(self.__current_pos, Position(x, y), self.__pen_color, self.__line_width)
+            self.__canvas.draw_line(
+                self.__current_pos, Position(x, y), self.__pen_color, self.__line_width
+            )
         self.__x = x
         self.__y = y
         if self.filling():
             self.__path.append(LineTo(self.__current_pos))
         self.__update_turtle()
+
     setpos = setposition = goto
 
     @turtle_method
@@ -93,7 +98,11 @@ class BaseTurtle:
         """
         Move forward the given amount.
         """
-        self.goto(self.xcor() + amount * cos(self.__theta), self.ycor() + amount * sin(self.__theta))
+        self.goto(
+            self.xcor() + amount * cos(self.__theta),
+            self.ycor() + amount * sin(self.__theta),
+        )
+
     fd = forward
 
     @turtle_method
@@ -103,6 +112,7 @@ class BaseTurtle:
         """
         self.__theta = self.__to_real_angle(heading)
         self.__update_turtle()
+
     seth = setheading
 
     @turtle_method
@@ -131,8 +141,15 @@ class BaseTurtle:
         if self.__pen_down:
             if radius * extent < 0:
                 start_angle, end_angle = end_angle, start_angle
-            self.__canvas.draw_circle(center, abs(radius), self.__pen_color, self.__line_width, False, start_angle,
-                                      end_angle)
+            self.__canvas.draw_circle(
+                center,
+                abs(radius),
+                self.__pen_color,
+                self.__line_width,
+                False,
+                start_angle,
+                end_angle,
+            )
 
         final_pos = Position(
             center.x + radius * sin(self.__theta + angle_change),
@@ -151,7 +168,15 @@ class BaseTurtle:
         if size is None:
             size = max(self.__line_width + 4, self.__line_width * 2)
         if self.__pen_down:
-            self.__canvas.draw_circle(self.__current_pos, size, self.__pen_color, self.__line_width, True, 0, 2 * pi)
+            self.__canvas.draw_circle(
+                self.__current_pos,
+                size,
+                self.__pen_color,
+                self.__line_width,
+                True,
+                0,
+                2 * pi,
+            )
 
     @turtle_method
     def pixel(self, x, y, *color):
@@ -160,15 +185,17 @@ class BaseTurtle:
         """
         d = self.__pixel_size
         self.__canvas.axis_aligned_rectangle(
-            Position(x * d, y * d),
-            d, d,
-            self.__convert_color(*color)
+            Position(x * d, y * d), d, d, self.__convert_color(*color)
         )
 
     @turtle_method
     def pixel_size(self, pixel_size):
         if not isinstance(pixel_size, int) or pixel_size <= 0:
-            raise ValueError("Expected a positive integer for pixel_size but got {}".format(pixel_size))
+            raise ValueError(
+                "Expected a positive integer for pixel_size but got {}".format(
+                    pixel_size
+                )
+            )
         self.__pixel_size = pixel_size
 
     @turtle_method
@@ -219,6 +246,7 @@ class BaseTurtle:
         Do draw when moving
         """
         self.__pen_down = True
+
     pd = down = pendown
 
     @turtle_method
@@ -227,6 +255,7 @@ class BaseTurtle:
         Do not draw when moving
         """
         self.__pen_down = False
+
     pu = up = penup
 
     @turtle_method
@@ -237,6 +266,7 @@ class BaseTurtle:
         if width is None:
             return self.__line_width
         self.__line_width = width
+
     width = pensize
 
     @turtle_method
@@ -297,7 +327,12 @@ class BaseTurtle:
 
     def __update_turtle(self):
         if self.__turtle_is_shown:
-            self.__canvas.turtle = DrawnTurtle(self.__current_pos, self.__theta % (2 * pi), self.__turtle_stretch_wid, self.__turtle_stretch_len)
+            self.__canvas.turtle = DrawnTurtle(
+                self.__current_pos,
+                self.__theta % (2 * pi),
+                self.__turtle_stretch_wid,
+                self.__turtle_stretch_len,
+            )
         else:
             self.__canvas.turtle = None
 
@@ -308,6 +343,7 @@ class BaseTurtle:
         """
         self.__turtle_is_shown = False
         self.__update_turtle()
+
     ht = hideturtle
 
     @turtle_method
@@ -317,6 +353,7 @@ class BaseTurtle:
         """
         self.__turtle_is_shown = True
         self.__update_turtle()
+
     st = showturtle
 
     @turtle_method
@@ -331,6 +368,7 @@ class BaseTurtle:
         self.__turtle_stretch_wid = stretch_wid
         self.__turtle_stretch_len = stretch_len
         self.__update_turtle()
+
     turtlesize = shapesize
 
     @turtle_method
@@ -396,6 +434,7 @@ class Turtle(BaseTurtle):
         Move backward the given amount.
         """
         self.forward(-amount)
+
     bk = back = backward
 
     @formode(Mode.STANDARD)
@@ -418,6 +457,7 @@ class Turtle(BaseTurtle):
         Rotate left the given amount.
         """
         self.right(-amount)
+
     lt = left
 
     @turtle_method
@@ -448,6 +488,7 @@ class Turtle(BaseTurtle):
         Get the current position as a tuple
         """
         return self.xcor(), self.ycor()
+
     pos = position
 
     @turtle_method

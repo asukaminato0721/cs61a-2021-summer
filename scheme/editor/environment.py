@@ -33,9 +33,7 @@ class MathProcedure(BuiltIn):
         self.func = func
         self.name = name
 
-    def execute_evaluated(
-        self, operands: List[Expression], frame: Frame
-    ) -> Expression:
+    def execute_evaluated(self, operands: List[Expression], frame: Frame) -> Expression:
         for operand in operands:
             if not isinstance(operand, Number):
                 raise MathError()

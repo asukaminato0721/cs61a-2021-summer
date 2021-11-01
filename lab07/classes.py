@@ -240,8 +240,7 @@ class ProfessorCard(Card):
         opponent.deck.cards = [
             x
             for x in opponent.deck.cards
-            if x.attack != opponent_card.attack
-            and x.defense != opponent_card.defense
+            if x.attack != opponent_card.attack and x.defense != opponent_card.defense
         ]
         discarded = orig_opponent_deck_length - len(opponent.deck.cards)
         if discarded:
@@ -324,11 +323,7 @@ class Game:
             result = "tied"
         # Display results to user.
         print("You {} this round!".format(result))
-        print(
-            "{}'s card: {}; Power: {}".format(
-                self.player1.name, p1_card, p1_power
-            )
-        )
+        print("{}'s card: {}; Power: {}".format(self.player1.name, p1_card, p1_power))
         print("Opponent's card: {}; Power: {}".format(p2_card, p2_power))
 
     def game_won(self):

@@ -1,11 +1,11 @@
 test = {
-  'name': 'tail replicate',
-  'points': 1,
-  'suites': [
-    {
-      'cases': [
+    "name": "tail replicate",
+    "points": 1,
+    "suites": [
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           scm> (tail-replicate 3 10)
           (3 3 3 3 3 3 3 3 3 3)
           scm> (tail-replicate 5 0)
@@ -17,16 +17,16 @@ test = {
           scm> (define a (tail-replicate 10 500)) ; Test for tail recursion
           a
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': r"""
+                    "hidden": False,
+                    "locked": False,
+                }
+            ],
+            "scored": True,
+            "setup": r"""
       scm> (load-all ".")
       """,
-      'teardown': '',
-      'type': 'scheme'
-    }
-  ]
+            "teardown": "",
+            "type": "scheme",
+        }
+    ],
 }

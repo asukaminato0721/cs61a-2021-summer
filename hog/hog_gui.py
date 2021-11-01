@@ -153,9 +153,7 @@ def trace_play(play, strategy0, strategy1, score0, score1, dice, goal, say):
 
     def mod_strategy(who, my_score, opponent_score):
         if game_trace:
-            prev_total_score = (
-                game_trace[-1]["s0_start"] + game_trace[-1]["s1_start"]
-            )
+            prev_total_score = game_trace[-1]["s0_start"] + game_trace[-1]["s1_start"]
             if prev_total_score == my_score + opponent_score:
                 # game is still on last turn since the total number of points
                 # goes up every turn
@@ -174,9 +172,7 @@ def trace_play(play, strategy0, strategy1, score0, score1, dice, goal, say):
     def mod_dice():
         roll = dice()
         if not game_trace:
-            raise RuntimeError(
-                "roll_dice called before either strategy function"
-            )
+            raise RuntimeError("roll_dice called before either strategy function")
         game_trace[-1]["dice_values"].append(roll)
         return roll
 
@@ -192,7 +188,5 @@ def trace_play(play, strategy0, strategy1, score0, score1, dice, goal, say):
     return s0, s1, game_trace
 
 
-if __name__ == "__main__" or "gunicorn" in os.environ.get(
-    "SERVER_SOFTWARE", ""
-):
+if __name__ == "__main__" or "gunicorn" in os.environ.get("SERVER_SOFTWARE", ""):
     app = start(PORT, DEFAULT_SERVER, GUI_FOLDER)

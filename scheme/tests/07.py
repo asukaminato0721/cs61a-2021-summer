@@ -1,11 +1,11 @@
 test = {
-  'name': 'Problem 7',
-  'points': 1,
-  'suites': [
-    {
-      'cases': [
+    "name": "Problem 7",
+    "points": 1,
+    "suites": [
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           >>> eval_all(Pair(2, nil), env)
           2b7cdec3904f986982cbd24a0bc12887
           # locked
@@ -20,11 +20,11 @@ test = {
           # choice: SchemeError
           >>> eval_all(nil, env) # return None (meaning undefined)
           """,
-          'hidden': False,
-          'locked': True
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": True,
+                },
+                {
+                    "code": r"""
           >>> lst = Pair(1, Pair(2, Pair(3, nil)))
           >>> eval_all(lst, env)
           3c7e8a3a2176a696c3a66418f78dff6b
@@ -33,22 +33,22 @@ test = {
           4ced98984f008e5161274d6481e4b568
           # locked
           """,
-          'hidden': False,
-          'locked': True
-        }
-      ],
-      'scored': True,
-      'setup': r"""
+                    "hidden": False,
+                    "locked": True,
+                },
+            ],
+            "scored": True,
+            "setup": r"""
       >>> from scheme import *
       >>> env = create_global_frame()
       """,
-      'teardown': '',
-      'type': 'doctest'
-    },
-    {
-      'cases': [
+            "teardown": "",
+            "type": "doctest",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           scm> (begin (+ 2 3) (+ 5 6))
           20169e9f217f8370ba4f37a3cf0cc2b3
           # locked
@@ -56,11 +56,11 @@ test = {
           3c7e8a3a2176a696c3a66418f78dff6b
           # locked
           """,
-          'hidden': False,
-          'locked': True
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": True,
+                },
+                {
+                    "code": r"""
           scm> (begin 30 '(+ 2 2))
           85d97cf58c044cc51a6a7d4315b4ad71
           # locked
@@ -81,11 +81,11 @@ test = {
           2b7cdec3904f986982cbd24a0bc12887
           # locked
           """,
-          'hidden': False,
-          'locked': True
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": True,
+                },
+                {
+                    "code": r"""
           scm> (begin 30 'hello)
           hello
           scm> (begin (define x 3) (cons x '(y z)))
@@ -93,11 +93,11 @@ test = {
           scm> (begin (define x 3) (cons x '(x z)))
           (3 x z)
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (define x 0)
           x
           scm> (begin (define x (+ x 1))
@@ -108,14 +108,14 @@ test = {
           scm> x
           1111
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': '',
-      'teardown': '',
-      'type': 'scheme'
-    }
-  ]
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": "",
+            "teardown": "",
+            "type": "scheme",
+        },
+    ],
 }

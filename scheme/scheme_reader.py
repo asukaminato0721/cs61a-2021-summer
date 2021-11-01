@@ -15,12 +15,15 @@ The __str__ method of a Scheme value will return a Scheme expression that
 would be read to the value, where possible.
 """
 
-import numbers
-import builtins
+from __future__ import annotations
 
-from ucb import main, trace, interact
-from scheme_tokens import tokenize_lines, DELIMITERS
+import builtins
+import numbers
+from typing import Any, Callable, Union
+
 from buffer import Buffer, InputReader, LineReader
+from scheme_tokens import DELIMITERS, tokenize_lines
+from ucb import interact, main, trace
 
 # Pairs and Scheme lists
 
@@ -37,11 +40,11 @@ class Pair:
     (5 6)
     """
 
-    def __init__(self, first, rest):
-        from scheme_builtins import scheme_valid_cdrp, SchemeError
+    def __init__(self, first, rest: Union[Pair, nil]):
+        from scheme_builtins import SchemeError, scheme_valid_cdrp
 
         self.first = first
-        self.rest = rest
+        self.rest: Union[Pair, nil] = rest
 
     def __repr__(self):
         return "Pair({0}, {1})".format(repr(self.first), repr(self.rest))
@@ -70,7 +73,7 @@ class Pair:
             return False
         return self.first == p.first and self.rest == p.rest
 
-    def map(self, fn):
+    def map(self, fn: Callable[[Any], Any]):
         """Return a Scheme list after mapping Python function FN to SELF."""
         mapped = fn(self.first)
         if self.rest is nil or isinstance(self.rest, Pair):
@@ -78,7 +81,7 @@ class Pair:
         else:
             raise TypeError("ill-formed list (cdr is a promise)")
 
-    def flatmap(self, fn):
+    def flatmap(self, fn: Callable[[Any], Any]):
         """Return a Scheme list after flatmapping Python function FN to SELF."""
         from scheme_builtins import scheme_append
 
@@ -126,10 +129,12 @@ def scheme_read(src):
         raise EOFError
     val = src.pop_first()  # Get and remove the first token
     if val == "nil":
+        return nil
         # BEGIN PROBLEM 1
         "*** YOUR CODE HERE ***"
         # END PROBLEM 1
     elif val == "(":
+        return read_tail(src)
         # BEGIN PROBLEM 1
         "*** YOUR CODE HERE ***"
         # END PROBLEM 1
@@ -143,7 +148,7 @@ def scheme_read(src):
         raise SyntaxError("unexpected token: {0}".format(val))
 
 
-def read_tail(src):
+def read_tail(src: Buffer):
     """Return the remainder of a list in SRC, starting before an element or ).
 
     >>> read_tail(Buffer(tokenize_lines([')'])))
@@ -156,6 +161,8 @@ def read_tail(src):
             raise SyntaxError("unexpected end of file")
         elif src.current() == ")":
             # BEGIN PROBLEM 1
+            src.pop_first()
+            return nil
             "*** YOUR CODE HERE ***"
             # END PROBLEM 1
         elif (
@@ -170,6 +177,9 @@ def read_tail(src):
             return expr
         else:
             # BEGIN PROBLEM 1
+            first = scheme_read(src)
+            second = read_tail(src)
+            return Pair(first, second)
             "*** YOUR CODE HERE ***"
             # END PROBLEM 1
     except EOFError:

@@ -50,9 +50,7 @@ class Multiply(BuiltIn):
 
 @global_attr("/")
 class Divide(BuiltIn):
-    def execute_evaluated(
-        self, operands: List[Expression], frame: Frame
-    ) -> Expression:
+    def execute_evaluated(self, operands: List[Expression], frame: Frame) -> Expression:
         verify_min_callable_length(self, 1, len(operands))
         assert_all_numbers(operands)
         if len(operands) == 1:
@@ -73,9 +71,7 @@ class Abs(SingleOperandPrimitive):
 
 @global_attr("expt")
 class Expt(BuiltIn):
-    def execute_evaluated(
-        self, operands: List[Expression], frame: Frame
-    ) -> Expression:
+    def execute_evaluated(self, operands: List[Expression], frame: Frame) -> Expression:
         verify_exact_callable_length(self, 2, len(operands))
         assert_all_numbers(operands)
         return Number(operands[0].value ** operands[1].value)
@@ -83,9 +79,7 @@ class Expt(BuiltIn):
 
 @global_attr("modulo")
 class Modulo(BuiltIn):
-    def execute_evaluated(
-        self, operands: List[Expression], frame: Frame
-    ) -> Expression:
+    def execute_evaluated(self, operands: List[Expression], frame: Frame) -> Expression:
         verify_exact_callable_length(self, 2, len(operands))
         assert_all_numbers(operands)
         return Number(operands[0].value % abs(operands[1].value))
@@ -93,9 +87,7 @@ class Modulo(BuiltIn):
 
 @global_attr("quotient")
 class Quotient(BuiltIn):
-    def execute_evaluated(
-        self, operands: List[Expression], frame: Frame
-    ) -> Expression:
+    def execute_evaluated(self, operands: List[Expression], frame: Frame) -> Expression:
         verify_exact_callable_length(self, 2, len(operands))
         assert_all_numbers(operands)
         negate = (operands[0].value < 0) != (operands[1].value < 0)
@@ -105,23 +97,17 @@ class Quotient(BuiltIn):
 
 @global_attr("remainder")
 class Remainder(BuiltIn):
-    def execute_evaluated(
-        self, operands: List[Expression], frame: Frame
-    ) -> Expression:
+    def execute_evaluated(self, operands: List[Expression], frame: Frame) -> Expression:
         verify_exact_callable_length(self, 2, len(operands))
         assert_all_numbers(operands)
         negate = operands[0].value < 0
         negate = -1 if negate else 1
-        return Number(
-            negate * (abs(operands[0].value) % abs(operands[1].value))
-        )
+        return Number(negate * (abs(operands[0].value) % abs(operands[1].value)))
 
 
 @global_attr("=")
 class NumEq(BuiltIn):
-    def execute_evaluated(
-        self, operands: List[Expression], frame: Frame
-    ) -> Expression:
+    def execute_evaluated(self, operands: List[Expression], frame: Frame) -> Expression:
         verify_exact_callable_length(self, 2, len(operands))
         assert_all_numbers(operands)
         return bools[operands[0].value == operands[1].value]
@@ -129,9 +115,7 @@ class NumEq(BuiltIn):
 
 @global_attr("<")
 class Less(BuiltIn):
-    def execute_evaluated(
-        self, operands: List[Expression], frame: Frame
-    ) -> Expression:
+    def execute_evaluated(self, operands: List[Expression], frame: Frame) -> Expression:
         verify_exact_callable_length(self, 2, len(operands))
         assert_all_numbers(operands)
         return bools[operands[0].value < operands[1].value]
@@ -139,9 +123,7 @@ class Less(BuiltIn):
 
 @global_attr("<=")
 class LessOrEq(BuiltIn):
-    def execute_evaluated(
-        self, operands: List[Expression], frame: Frame
-    ) -> Expression:
+    def execute_evaluated(self, operands: List[Expression], frame: Frame) -> Expression:
         verify_exact_callable_length(self, 2, len(operands))
         assert_all_numbers(operands)
         return bools[operands[0].value <= operands[1].value]
@@ -149,9 +131,7 @@ class LessOrEq(BuiltIn):
 
 @global_attr(">")
 class Greater(BuiltIn):
-    def execute_evaluated(
-        self, operands: List[Expression], frame: Frame
-    ) -> Expression:
+    def execute_evaluated(self, operands: List[Expression], frame: Frame) -> Expression:
         verify_exact_callable_length(self, 2, len(operands))
         assert_all_numbers(operands)
         return bools[operands[0].value > operands[1].value]
@@ -159,9 +139,7 @@ class Greater(BuiltIn):
 
 @global_attr(">=")
 class GreaterOrEq(BuiltIn):
-    def execute_evaluated(
-        self, operands: List[Expression], frame: Frame
-    ) -> Expression:
+    def execute_evaluated(self, operands: List[Expression], frame: Frame) -> Expression:
         verify_exact_callable_length(self, 2, len(operands))
         assert_all_numbers(operands)
         return bools[operands[0].value >= operands[1].value]

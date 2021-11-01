@@ -213,9 +213,7 @@ class BlockGrammar(object):
             r"<%s(?:%s)*?\s*\/?>" % (_block_tag, _valid_attr),
         )
     )
-    table = re.compile(
-        r"^ *\|(.+)\n *\|( *[-:]+[-| :]*)\n((?: *\|.*(?:\n|$))*)\n*"
-    )
+    table = re.compile(r"^ *\|(.+)\n *\|( *[-:]+[-| :]*)\n((?: *\|.*(?:\n|$))*)\n*")
     nptable = re.compile(
         r"^ *(\S.*\|.*)\n *([-:]+ *\|[-| :]*)\n((?:.*\|.*(?:\n|$))*)\n*"
     )
@@ -561,8 +559,7 @@ class InlineGrammar(object):
         r"^(?:%s|%s|%s)"
         % (
             r"<!--[\s\S]*?-->",
-            r"<(\w+%s)((?:%s)*?)\s*>([\s\S]*?)<\/\1>"
-            % (_valid_end, _valid_attr),
+            r"<(\w+%s)((?:%s)*?)\s*>([\s\S]*?)<\/\1>" % (_valid_end, _valid_attr),
             r"<\w+%s(?:%s)*?\s*\/?>" % (_valid_end, _valid_attr),
         )
     )
@@ -575,9 +572,7 @@ class InlineGrammar(object):
         r"\)"
     )
     reflink = re.compile(
-        r"^!?\[("
-        r"(?:\[[^^\]]*\]|[^\[\]]|\](?=[^\[]*\]))*"
-        r")\]\s*\[([^^\]]*)\]"
+        r"^!?\[(" r"(?:\[[^^\]]*\]|[^\[\]]|\](?=[^\[]*\]))*" r")\]\s*\[([^^\]]*)\]"
     )
     nolink = re.compile(r"^!?\[((?:\[[^\]]*\]|[^\[\]])*)\]")
     url = re.compile(r"""^(https?:\/\/[^\s<]+[^<.,:;"')\]\s])""")
@@ -894,9 +889,10 @@ class Renderer(object):
         :param header: header part of the table.
         :param body: body part of the table.
         """
-        return (
-            "<table>\n<thead>%s</thead>\n" "<tbody>\n%s</tbody>\n</table>\n"
-        ) % (header, body)
+        return ("<table>\n<thead>%s</thead>\n" "<tbody>\n%s</tbody>\n</table>\n") % (
+            header,
+            body,
+        )
 
     def table_row(self, content):
         """Rendering a table row. Like ``<tr>``.
@@ -1039,8 +1035,7 @@ class Renderer(object):
         :param index: the index count of current footnote.
         """
         html = (
-            '<sup class="footnote-ref" id="fnref-%s">'
-            '<a href="#fn-%s">%d</a></sup>'
+            '<sup class="footnote-ref" id="fnref-%s">' '<a href="#fn-%s">%d</a></sup>'
         ) % (escape(key), escape(key), index)
         return html
 
@@ -1050,9 +1045,7 @@ class Renderer(object):
         :param key: identity key for the footnote.
         :param text: text content of the footnote.
         """
-        back = ('<a href="#fnref-%s" class="footnote">&#8617;</a>') % escape(
-            key
-        )
+        back = ('<a href="#fnref-%s" class="footnote">&#8617;</a>') % escape(key)
         text = text.rstrip()
         if text.endswith("</p>"):
             text = re.sub(r"<\/p>$", r"%s</p>" % back, text)

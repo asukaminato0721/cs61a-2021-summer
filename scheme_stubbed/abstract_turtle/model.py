@@ -7,7 +7,7 @@ from math import sin, cos
 from .color_names import COLORS
 
 
-class Color(namedtuple('Color', ['red', 'green', 'blue'])):
+class Color(namedtuple("Color", ["red", "green", "blue"])):
     @staticmethod
     def of(*color):
         if len(color) == 3 and all(isinstance(c, int) for c in color):
@@ -23,14 +23,18 @@ class Color(namedtuple('Color', ['red', 'green', 'blue'])):
                 return Color.of(COLORS[color])
             raise RuntimeError("Invalid color string: {!r}".format(color))
         types = [type(c).__name__ for c in color]
-        raise RuntimeError("Invalid color. Expected either 3 ints or 1 string, but got: {}".format(", ".join(types)))
+        raise RuntimeError(
+            "Invalid color. Expected either 3 ints or 1 string, but got: {}".format(
+                ", ".join(types)
+            )
+        )
 
     @staticmethod
     def hexcolor(color):
         if len(color) == 3:  # shorthand hex
             color = "".join(x * 2 for x in color)
         if len(color) == 6:
-            vals = [Color.hexparse(color[i:i+2]) for i in range(0, 6, 2)]
+            vals = [Color.hexparse(color[i : i + 2]) for i in range(0, 6, 2)]
             if all(x is not None for x in vals):
                 return Color.of(*vals)
         raise RuntimeError("Invalid hex color string: {!r}".format(color))
@@ -43,9 +47,12 @@ class Color(namedtuple('Color', ['red', 'green', 'blue'])):
             return None
 
 
-Position = namedtuple('Position', ['x', 'y'])
+Position = namedtuple("Position", ["x", "y"])
 
-class DrawnTurtle(namedtuple('DrawnTurtle', ['pos', 'heading', 'stretch_wid', 'stretch_len'])):
+
+class DrawnTurtle(
+    namedtuple("DrawnTurtle", ["pos", "heading", "stretch_wid", "stretch_len"])
+):
     @property
     def points(self):
         unadjusted_points = [
@@ -55,11 +62,10 @@ class DrawnTurtle(namedtuple('DrawnTurtle', ['pos', 'heading', 'stretch_wid', 's
             (8, 0),
         ]
         stretched_points = [
-            (dx * self.stretch_len, dy * self.stretch_wid) for dx, dy in unadjusted_points
+            (dx * self.stretch_len, dy * self.stretch_wid)
+            for dx, dy in unadjusted_points
         ]
-        rotated_points = [
-            rotate(*dxy, self.heading) for dxy in stretched_points
-        ]
+        rotated_points = [rotate(*dxy, self.heading) for dxy in stretched_points]
         moved_points = [
             Position(self.pos.x + dx, self.pos.y + dy) for dx, dy in rotated_points
         ]
@@ -71,7 +77,7 @@ class DrawnTurtle(namedtuple('DrawnTurtle', ['pos', 'heading', 'stretch_wid', 's
             [self.pos.x, self.pos.y],
             self.heading,
             self.stretch_wid,
-            self.stretch_len
+            self.stretch_len,
         ]
 
 
@@ -117,8 +123,13 @@ class Arc(Path, namedtuple("Arc", ["center", "radius", "start_angle", "end_angle
 
     def to_points(self, divisions=100):
         for i in range(divisions + 1):
-            ang = self.start_angle + (i / divisions) * (self.end_angle - self.start_angle)
-            yield Position(self.center.x + self.radius * cos(ang), self.center.y + self.radius * sin(ang))
+            ang = self.start_angle + (i / divisions) * (
+                self.end_angle - self.start_angle
+            )
+            yield Position(
+                self.center.x + self.radius * cos(ang),
+                self.center.y + self.radius * sin(ang),
+            )
 
     @property
     def json_friendly(self):

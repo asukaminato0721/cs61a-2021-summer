@@ -1,11 +1,11 @@
 test = {
-  'name': 'Problem 14',
-  'points': 2,
-  'suites': [
-    {
-      'cases': [
+    "name": "Problem 14",
+    "points": 2,
+    "suites": [
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           scm> (define x 1)
           38ba916dc1f41eb239567ee41a251ecd
           # locked
@@ -17,11 +17,11 @@ test = {
           eb892a26497f936d1f6cae54aacc5f51
           # locked
           """,
-          'hidden': False,
-          'locked': True
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": True,
+                },
+                {
+                    "code": r"""
           scm> (let ((a 1) (b a)) b)
           ec908af60f03727428c7ee3f22ec3cd8
           # locked
@@ -30,11 +30,11 @@ test = {
           # choice: x
           # choice: y
           """,
-          'hidden': False,
-          'locked': True
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": True,
+                },
+                {
+                    "code": r"""
           scm> (let ((x 5))
           ....    (let ((x 2)
           ....          (y x))
@@ -42,11 +42,11 @@ test = {
           27c11fef0d1b8697654b38bb53c550c8
           # locked
           """,
-          'hidden': False,
-          'locked': True
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": True,
+                },
+                {
+                    "code": r"""
           scm> (let ((a 2) (a 3)) (+ a a)) ; how should we catch something like this?
           ec908af60f03727428c7ee3f22ec3cd8
           # locked
@@ -54,11 +54,11 @@ test = {
           ec908af60f03727428c7ee3f22ec3cd8
           # locked
           """,
-          'hidden': False,
-          'locked': True
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": True,
+                },
+                {
+                    "code": r"""
           scm> (define (square x) (* x x))
           square
           scm> (define (f x y)
@@ -71,39 +71,39 @@ test = {
           scm> (f 3 4)
           456
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': '',
-      'teardown': '',
-      'type': 'scheme'
-    },
-    {
-      'cases': [
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": "",
+            "teardown": "",
+            "type": "scheme",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           >>> # Incorrectly formatted bindings
           >>> bindings = Pair(Pair('x', Pair(2, nil)), Pair(Pair('y', nil), nil)) # equivalent to ((x 2) (y))
           >>> make_let_frame(bindings, global_frame)
           SchemeError
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # Improper formals list - used same variable name twice
           >>> bindings = Pair(Pair('x', Pair(2, nil)), Pair(Pair('x', Pair(3, nil)), nil)) # equivalent to ((x 2) (x 3))
           >>> make_let_frame(bindings, global_frame)
           SchemeError
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> bindings = Pair(Pair('x', Pair(2, nil)), Pair(Pair('y', Pair(3, nil)), nil)) # equivalent to ((x 2) (y 3))
           >>> f1 = make_let_frame(bindings, global_frame)
           >>> f1.lookup('x')
@@ -111,22 +111,22 @@ test = {
           >>> bindings # make sure bindings isn't mutated
           Pair(Pair('x', Pair(2, nil)), Pair(Pair('y', Pair(3, nil)), nil))
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": r"""
       >>> from scheme import *
       >>> global_frame = create_global_frame()
       """,
-      'teardown': '',
-      'type': 'doctest'
-    },
-    {
-      'cases': [
+            "teardown": "",
+            "type": "doctest",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           scm> (define x 3)
           x
           scm> (define y 4)
@@ -153,14 +153,14 @@ test = {
           scm> (let ((a 1) (2 2)) a)
           SchemeError
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': '',
-      'teardown': '',
-      'type': 'scheme'
-    }
-  ]
+                    "hidden": False,
+                    "locked": False,
+                }
+            ],
+            "scored": True,
+            "setup": "",
+            "teardown": "",
+            "type": "scheme",
+        },
+    ],
 }

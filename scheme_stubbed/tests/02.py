@@ -1,11 +1,11 @@
 test = {
-  'name': 'Problem 2',
-  'points': 7,
-  'suites': [
-    {
-      'cases': [
+    "name": "Problem 2",
+    "points": 7,
+    "suites": [
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           scm> +
           #[+]
           scm> display
@@ -13,52 +13,52 @@ test = {
           scm> hello
           SchemeError
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': '',
-      'teardown': '',
-      'type': 'scheme'
-    },
-    {
-      'cases': [
+                    "hidden": False,
+                    "locked": False,
+                }
+            ],
+            "scored": True,
+            "setup": "",
+            "teardown": "",
+            "type": "scheme",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           >>> env = create_global_frame()
           >>> twos = Pair(2, Pair(2, nil))
           >>> plus = BuiltinProcedure(scheme_add) # + procedure
           >>> scheme_apply(plus, twos, env) # Type SchemeError if you think this errors
           4
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> env = create_global_frame()
           >>> twos = Pair(2, Pair(2, nil))
           >>> oddp = BuiltinProcedure(scheme_oddp) # odd? procedure
           >>> scheme_apply(oddp, twos, env)
           SchemeError
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> env = create_global_frame()
           >>> two = Pair(2, nil)
           >>> eval = BuiltinProcedure(scheme_eval, True) # eval procedure
           >>> scheme_apply(eval, two, env) # be sure to check expect_env
           2
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> env = create_global_frame()
           >>> args = nil
           >>> def make_scheme_counter():
@@ -72,21 +72,21 @@ test = {
           >>> scheme_apply(counter, args, env) # only call procedure.fn once!
           1
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": r"""
       >>> from scheme import *
       """,
-      'teardown': '',
-      'type': 'doctest'
-    },
-    {
-      'cases': [
+            "teardown": "",
+            "type": "doctest",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           >>> expr = read_line('(+ 2 2)')
           >>> scheme_eval(expr, create_global_frame())
           4
@@ -97,22 +97,22 @@ test = {
           >>> scheme_eval(expr, create_global_frame())
           SchemeError
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': r"""
+                    "hidden": False,
+                    "locked": False,
+                }
+            ],
+            "scored": True,
+            "setup": r"""
       >>> from scheme_reader import *
       >>> from scheme import *
       """,
-      'teardown': '',
-      'type': 'doctest'
-    },
-    {
-      'cases': [
+            "teardown": "",
+            "type": "doctest",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           scm> (+ 2 3)
           5
           scm> (* (+ 3 2) (+ 1 7))
@@ -122,11 +122,11 @@ test = {
           scm> (1 (print 0)) ; validate_procedure should be called before operands are evaluated
           SchemeError
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (+)
           0
           scm> (odd? 13)
@@ -138,11 +138,11 @@ test = {
           scm> (odd? 1 2 3)
           SchemeError
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (+ (+ 1) (* 2 3) (+ 5) (+ 6 (+ 7)))
           25
           scm> (*)
@@ -160,40 +160,40 @@ test = {
           scm> (+ (/ 1 0))
           SchemeError
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> ((/ 1 0) (print 5)) ; operator should be evaluated before operands
           SchemeError
           scm> (null? (print 5)) ; operands should only be evaluated once
           5
           #f
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': '',
-      'teardown': '',
-      'type': 'scheme'
-    },
-    {
-      'cases': [
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": "",
+            "teardown": "",
+            "type": "scheme",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           scm> (define size 2)
           size
           scm> size
           2
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (define x (+ 2 3))
           x
           scm> x
@@ -205,11 +205,11 @@ test = {
           scm> (eval (define tau 6.28))
           6.28
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (define pi 3.14159)
           pi
           scm> (define radius 10)
@@ -225,29 +225,29 @@ test = {
           scm> area
           314.159
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (define 0 1)
           SchemeError
           scm> (define error (/ 1 0))
           SchemeError
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': '',
-      'teardown': '',
-      'type': 'scheme'
-    },
-    {
-      'cases': [
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": "",
+            "teardown": "",
+            "type": "scheme",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           >>> read_line("(a (b 'c))")
           Pair('a', Pair(Pair('b', Pair(Pair('quote', Pair('c', nil)), nil)), nil))
           >>> read_line("(a (b '(c d)))")
@@ -257,11 +257,11 @@ test = {
           >>> read_line("'()")
           Pair('quote', Pair(nil, nil))
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> read_line("'('a)")
           Pair('quote', Pair(Pair(Pair('quote', Pair('a', nil)), nil), nil))
           >>> read_line("''a")
@@ -273,11 +273,11 @@ test = {
           >>> read_line("'('+ '(1 2) '3)")
           Pair('quote', Pair(Pair(Pair('quote', Pair('+', nil)), Pair(Pair('quote', Pair(Pair(1, Pair(2, nil)), nil)), Pair(Pair('quote', Pair(3, nil)), nil))), nil))
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> scheme_read(Buffer(tokenize_lines(["'hello"])))
           Pair('quote', Pair('hello', nil))
           >>> read_line("(car '(1 2))")
@@ -295,21 +295,21 @@ test = {
           >>> read_line("'('+ '(1 2) '3)")
           Pair('quote', Pair(Pair(Pair('quote', Pair('+', nil)), Pair(Pair('quote', Pair(Pair(1, Pair(2, nil)), nil)), Pair(Pair('quote', Pair(3, nil)), nil))), nil))
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": r"""
       >>> from scheme_reader import *
       """,
-      'teardown': '',
-      'type': 'doctest'
-    },
-    {
-      'cases': [
+            "teardown": "",
+            "type": "doctest",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           scm> (quote hello)
           hello
           scm> 'hello
@@ -329,14 +329,14 @@ test = {
           scm> (eval (cons 'car '('(4 2))))
           4
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': '',
-      'teardown': '',
-      'type': 'scheme'
-    }
-  ]
+                    "hidden": False,
+                    "locked": False,
+                }
+            ],
+            "scored": True,
+            "setup": "",
+            "teardown": "",
+            "type": "scheme",
+        },
+    ],
 }

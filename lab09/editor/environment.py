@@ -40,7 +40,9 @@ class MathProcedure(BuiltIn):
         try:
             return Number(self.func(*(operand.value for operand in operands)))
         except TypeError:
-            raise OperandDeduceError(f"Incorrect number of arguments for #[{self.name}].")
+            raise OperandDeduceError(
+                f"Incorrect number of arguments for #[{self.name}]."
+            )
 
     def __repr__(self):
         return f"#[{self.name}]"
@@ -55,6 +57,7 @@ def get_special_form(name: str):
 
 def build_global_frame():
     import primitives
+
     primitives.load_primitives()
     frame = Frame("builtins")
     for k, v in defdict.items():
@@ -65,13 +68,36 @@ def build_global_frame():
     # frame.assign(Symbol("#t"), SingletonTrue)
     # frame.assign(Symbol("#f"), SingletonFalse)
 
-    for name in ["acos", "acosh", "asin", "asinh", "atan", "atanh",
-                 "ceil", "copysign", "cos", "cosh", "degrees", "floor", "log",
-                 "log10", "log1p", "log2", "radians", "sin", "sinh", "sqrt",
-                 "tan", "tanh", "trunc"]:
+    for name in [
+        "acos",
+        "acosh",
+        "asin",
+        "asinh",
+        "atan",
+        "atanh",
+        "ceil",
+        "copysign",
+        "cos",
+        "cosh",
+        "degrees",
+        "floor",
+        "log",
+        "log10",
+        "log1p",
+        "log2",
+        "radians",
+        "sin",
+        "sinh",
+        "sqrt",
+        "tan",
+        "tanh",
+        "trunc",
+    ]:
         frame.assign(Symbol(name), MathProcedure(getattr(math, name), name))
 
     with open("editor/builtins.scm") as file:
-        execution.string_exec([" ".join(file.readlines())], lambda *x, **y: None, False, frame)
+        execution.string_exec(
+            [" ".join(file.readlines())], lambda *x, **y: None, False, frame
+        )
 
     return Frame("Global", frame)

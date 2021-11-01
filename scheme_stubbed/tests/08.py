@@ -1,11 +1,11 @@
 test = {
-  'name': 'Problem 8 (EC)',
-  'points': 2,
-  'suites': [
-    {
-      'cases': [
+    "name": "Problem 8 (EC)",
+    "points": 2,
+    "suites": [
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           scm> (define (sum n total)
           ....   (if (zero? n)
           ....       total
@@ -14,11 +14,11 @@ test = {
           scm> (sum 1001 0)
           501501
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (define (sum n total)
           ....   (if (zero? n)
           ....       total
@@ -27,11 +27,11 @@ test = {
           scm> (sum 1001 0)
           501501
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (define (sum n total)
           ....   (cond ((zero? n) total)
           ....         ((zero? 0) (sum (- n 1) (+ n total)))
@@ -40,11 +40,11 @@ test = {
           scm> (sum 1001 0)
           501501
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (define (sum n total)
           ....   (if (zero? n)
           ....       total
@@ -55,11 +55,11 @@ test = {
           scm> (sum 1001 0)
           501501
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (define (sum n total)
           ....   (if (zero? n)
           ....       total
@@ -69,11 +69,11 @@ test = {
           scm> (sum 1001 0)
           501501
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (define (sum n total)
           ....   (or (and (zero? n) total)
           ....       (add n (+ n total))))
@@ -83,11 +83,11 @@ test = {
           scm> (sum 1001 0)
           501501
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (define (sum n total)
           ....   (define add (lambda (x+1 y) (sum (- x+1 1) y)))
           ....   (or (and (zero? n) total)
@@ -96,11 +96,11 @@ test = {
           scm> (sum 1001 0)
           501501
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (define (sum n total)
           ....   (begin
           ....      (define add (lambda (x+1 y) (sum (- x+1 1) y)))
@@ -110,14 +110,14 @@ test = {
           scm> (sum 1001 0)
           501501
           """,
-          'hidden': False,
-          'locked': False
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": "",
+            "teardown": "",
+            "type": "scheme",
         }
-      ],
-      'scored': True,
-      'setup': '',
-      'teardown': '',
-      'type': 'scheme'
-    }
-  ]
+    ],
 }

@@ -1,11 +1,11 @@
 test = {
-  'name': 'Self-Reference',
-  'points': 0,
-  'suites': [
-    {
-      'cases': [
+    "name": "Self-Reference",
+    "points": 0,
+    "suites": [
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           >>> def crust():
           ...   print("70km")
           ...   def mantle():
@@ -28,12 +28,12 @@ test = {
           2900km
           Function
           """,
-          'hidden': False,
-          'locked': False
+                    "hidden": False,
+                    "locked": False,
+                }
+            ],
+            "scored": False,
+            "type": "wwpp",
         }
-      ],
-      'scored': False,
-      'type': 'wwpp'
-    }
-  ]
+    ],
 }

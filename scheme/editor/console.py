@@ -27,9 +27,7 @@ class Display(SingleOperandPrimitive):
 
 @global_attr("newline")
 class Newline(BuiltIn):
-    def execute_evaluated(
-        self, operands: List[Expression], frame: Frame
-    ) -> Expression:
+    def execute_evaluated(self, operands: List[Expression], frame: Frame) -> Expression:
         verify_exact_callable_length(self, 0, len(operands))
         log.logger.raw_out("\n")
         return Undefined

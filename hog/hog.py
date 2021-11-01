@@ -97,8 +97,7 @@ def more_boar(player_score: int, opponent_score: int) -> bool:
     opponent_score_min = min(map(int, str(opponent_score)))
     opponent_score_max = max(map(int, str(opponent_score)))
     return (
-        player_score_min < opponent_score_min
-        and player_score_max > opponent_score_max
+        player_score_min < opponent_score_min and player_score_max > opponent_score_max
     )
     # END PROBLEM 4
 
@@ -418,10 +417,7 @@ def more_boar_strategy(
     Otherwise, it returns NUM_ROLLS.
     """
     # BEGIN PROBLEM 11
-    if (
-        more_boar(score, opponent_score)
-        and piggy_points(opponent_score) >= cutoff
-    ):
+    if more_boar(score, opponent_score) and piggy_points(opponent_score) >= cutoff:
         return 0
     if piggy_points(opponent_score) >= cutoff or more_boar(
         score + piggy_points(opponent_score), opponent_score

@@ -40,27 +40,21 @@ def assert_all_numbers(operands):
             )
 
 
-def verify_exact_callable_length(
-    operator: Expression, expected: int, actual: int
-):
+def verify_exact_callable_length(operator: Expression, expected: int, actual: int):
     if expected != actual:
         raise CallableResolutionError(
             f"{operator} expected {expected} operands, received {actual}."
         )
 
 
-def verify_min_callable_length(
-    operator: Expression, expected: int, actual: int
-):
+def verify_min_callable_length(operator: Expression, expected: int, actual: int):
     if expected > actual:
         raise CallableResolutionError(
             f"{operator} expected at least {expected} operands, received {actual}."
         )
 
 
-def make_list(
-    exprs: List[Expression], last: Expression = Nil
-) -> Union[Pair, NilType]:
+def make_list(exprs: List[Expression], last: Expression = Nil) -> Union[Pair, NilType]:
     out = last
     for expr in reversed(exprs):
         out = Pair(expr, out)

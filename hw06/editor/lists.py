@@ -11,9 +11,7 @@ from scheme_exceptions import OperandDeduceError, IrreversibleOperationError
 
 @global_attr("append")
 class Append(BuiltIn):
-    def execute_evaluated(
-        self, operands: List[Expression], frame: Frame
-    ) -> Expression:
+    def execute_evaluated(self, operands: List[Expression], frame: Frame) -> Expression:
         if len(operands) == 0:
             return Nil
         exprs = []
@@ -53,9 +51,7 @@ class Cdr(SingleOperandPrimitive):
 
 @global_attr("cons")
 class Cons(BuiltIn):
-    def execute_evaluated(
-        self, operands: List[Expression], frame: Frame
-    ) -> Expression:
+    def execute_evaluated(self, operands: List[Expression], frame: Frame) -> Expression:
         verify_exact_callable_length(self, 2, len(operands))
         return Pair(operands[0], operands[1])
 
@@ -91,25 +87,19 @@ class Length(SingleOperandPrimitive):
 
 @global_attr("list")
 class MakeList(BuiltIn):
-    def execute_evaluated(
-        self, operands: List[Expression], frame: Frame
-    ) -> Expression:
+    def execute_evaluated(self, operands: List[Expression], frame: Frame) -> Expression:
         return make_list(operands)
 
 
 @global_attr("set-car!")
 class SetCar(BuiltIn):
-    def execute_evaluated(
-        self, operands: List[Expression], frame: Frame
-    ) -> Expression:
+    def execute_evaluated(self, operands: List[Expression], frame: Frame) -> Expression:
         verify_exact_callable_length(self, 2, len(operands))
         if log.logger.fragile:
             raise IrreversibleOperationError()
         pair, val = operands
         if not isinstance(pair, Pair):
-            raise OperandDeduceError(
-                f"set-car! expected a Pair, received {pair}."
-            )
+            raise OperandDeduceError(f"set-car! expected a Pair, received {pair}.")
         pair.first = val
         log.logger.raw_out(
             "WARNING: Mutation operations on pairs are not yet supported by the debugger."
@@ -119,17 +109,13 @@ class SetCar(BuiltIn):
 
 @global_attr("set-cdr!")
 class SetCdr(BuiltIn):
-    def execute_evaluated(
-        self, operands: List[Expression], frame: Frame
-    ) -> Expression:
+    def execute_evaluated(self, operands: List[Expression], frame: Frame) -> Expression:
         verify_exact_callable_length(self, 2, len(operands))
         if log.logger.fragile:
             raise IrreversibleOperationError()
         pair, val = operands
         if not isinstance(pair, Pair):
-            raise OperandDeduceError(
-                f"set-cdr! expected a Pair, received {pair}."
-            )
+            raise OperandDeduceError(f"set-cdr! expected a Pair, received {pair}.")
         if not isinstance(val, (Pair, Promise, NilType)):
             raise OperandDeduceError(
                 f"Unable to assign {val} to cdr, expected a Pair, Nil, or Promise."

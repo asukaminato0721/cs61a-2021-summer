@@ -144,14 +144,12 @@ def evaluate(
                 operator = expr.first
                 import environment
 
-                if isinstance(
-                    operator, Symbol
-                ) and environment.get_special_form(operator.value):
+                if isinstance(operator, Symbol) and environment.get_special_form(
+                    operator.value
+                ):
                     operator = environment.get_special_form(operator.value)
                 else:
-                    operator = evaluate(
-                        operator, frame, visual_expression.children[0]
-                    )
+                    operator = evaluate(operator, frame, visual_expression.children[0])
                 operands = pair_to_list(expr.rest)
                 out = apply(operator, operands, frame, gui_holder)
                 if isinstance(out, Thunk):
@@ -170,8 +168,7 @@ def evaluate(
                         )
                         gui_holder.expression.set_entries(
                             list(
-                                x.expression
-                                for x in out.gui_holder.expression.children
+                                x.expression for x in out.gui_holder.expression.children
                             )
                         )
                     continue
@@ -208,15 +205,11 @@ def apply(
             f"Unable to pass parameters into the Symbol '{operator}'"
         )
     else:
-        raise CallableResolutionError(
-            f"Unable to pass parameters into: '{operator}'"
-        )
+        raise CallableResolutionError(f"Unable to pass parameters into: '{operator}'")
 
 
 class Callable(Expression):
-    def execute(
-        self, operands: List[Expression], frame: Frame, gui_holder: log.Holder
-    ):
+    def execute(self, operands: List[Expression], frame: Frame, gui_holder: log.Holder):
         raise NotImplementedError()
 
 

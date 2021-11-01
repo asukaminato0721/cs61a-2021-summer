@@ -166,9 +166,7 @@ class CallExpr(Expr):
     where `operator` is Name('add') and `operands` are [Literal(3), Literal(4)].
     """
 
-    def __init__(
-        self, operator: Union[Name, CallExpr], operands: List["Literal"]
-    ):
+    def __init__(self, operator: Union[Name, CallExpr], operands: List["Literal"]):
         Expr.__init__(self, operator, operands)
         self.operator = operator
         self.operands = operands
@@ -285,9 +283,7 @@ class LambdaFunction(Value):
         (strings) as keys and instances of the class Value as values.
     """
 
-    def __init__(
-        self, parameters: List[str], body: Expr, parent: Dict[str, Value]
-    ):
+    def __init__(self, parameters: List[str], body: Expr, parent: Dict[str, Value]):
         Value.__init__(self, parameters, body, parent)
         self.parameters = parameters
         self.body = body
@@ -323,9 +319,7 @@ class LambdaFunction(Value):
         Update the copy with the parameters of the LambdaFunction and the arguments passed into the method.
         Evaluate the body using the newly created environment.
         """
-        return self.body.eval(
-            {**self.parent, **dict(zip(self.parameters, arguments))}
-        )
+        return self.body.eval({**self.parent, **dict(zip(self.parameters, arguments))})
 
     def __str__(self):
         definition = LambdaExpr(self.parameters, self.body)

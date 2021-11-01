@@ -1,21 +1,21 @@
 test = {
-  'name': 'Problem 3',
-  'points': 6,
-  'suites': [
-    {
-      'cases': [
+    "name": "Problem 3",
+    "points": 6,
+    "suites": [
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           scm> (begin (+ 2 3) (+ 5 6))
           11
           scm> (begin (define x 3) x)
           3
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (begin 30 '(+ 2 2))
           (+ 2 2)
           scm> (define x 0)
@@ -25,11 +25,11 @@ test = {
           scm> x
           1
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (begin 30 'hello)
           hello
           scm> (begin (define x 3) (cons x '(y z)))
@@ -37,11 +37,11 @@ test = {
           scm> (begin (define x 3) (cons x '(x z)))
           (3 x z)
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (define x 0)
           x
           scm> (begin (define x (+ x 1))
@@ -52,101 +52,101 @@ test = {
           scm> x
           1111
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': '',
-      'teardown': '',
-      'type': 'scheme'
-    },
-    {
-      'cases': [
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": "",
+            "teardown": "",
+            "type": "scheme",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           scm> (lambda (x y) (+ x y))
           (lambda (x y) (+ x y))
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (lambda (x) (+ x) (+ x x))
           (lambda (x) (+ x) (+ x x))
           scm> (lambda (x))
           SchemeError
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (lambda () 2)
           (lambda () 2)
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': '',
-      'teardown': '',
-      'type': 'scheme'
-    },
-    {
-      'cases': [
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": "",
+            "teardown": "",
+            "type": "scheme",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           scm> (define (f) (+ 2 2))
           f
           scm> f
           (lambda () (+ 2 2))
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (define (f x) (* x x))
           f
           scm> f
           (lambda (x) (* x x))
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (define (foo x) 1 2 3 4 5)
           foo
           scm> foo
           (lambda (x) 1 2 3 4 5)
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (define (foo) (/ 1 0))
           foo
           scm> foo
           (lambda () (/ 1 0))
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': '',
-      'teardown': '',
-      'type': 'scheme'
-    },
-    {
-      'cases': [
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": "",
+            "teardown": "",
+            "type": "scheme",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           scm> (define (square x) (* x x))
           square
           scm> square
@@ -160,27 +160,27 @@ test = {
           scm> (square (square 21))
           194481
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> ((lambda (x) (list x (list (quote quote) x))) (quote (lambda (x) (list x (list (quote quote) x)))))
           ((lambda (x) (list x (list (quote quote) x))) (quote (lambda (x) (list x (list (quote quote) x)))))
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': '',
-      'teardown': '',
-      'type': 'scheme'
-    },
-    {
-      'cases': [
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": "",
+            "teardown": "",
+            "type": "scheme",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           scm> (define (outer x y)
           ....   (define (inner z x)
           ....     (+ x (* y 2) (* z 3)))
@@ -196,11 +196,11 @@ test = {
           scm> ((outer-func 1 2) 1 10)
           17
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (define square (lambda (x) (* x x)))
           square
           scm> (define (sum-of-squares x y) (+ (square x) (square y)))
@@ -216,14 +216,14 @@ test = {
           scm> ((apply-twice double) 5)
           20
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': '',
-      'teardown': '',
-      'type': 'scheme'
-    }
-  ]
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": "",
+            "teardown": "",
+            "type": "scheme",
+        },
+    ],
 }

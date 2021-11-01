@@ -22,7 +22,9 @@ def limiter(raise_exception, lim, func, *args):
 
     def tracer(*args):
         if lim_is_set() if is_event else gettime() > end:
-            raise_exception(OperationCanceledException() if is_event else TimeLimitException())
+            raise_exception(
+                OperationCanceledException() if is_event else TimeLimitException()
+            )
         return tracer
 
     sys_tracer = sys.gettrace()

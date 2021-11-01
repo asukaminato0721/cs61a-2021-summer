@@ -1,11 +1,11 @@
 test = {
-  'name': 'wwsd-macros',
-  'points': 0,
-  'suites': [
-    {
-      'cases': [
+    "name": "wwsd-macros",
+    "points": 0,
+    "suites": [
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           scm> +
           #[+]
           scm> list
@@ -29,11 +29,11 @@ test = {
           scm> (f (quote (2 3 4)))
           7000
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (define-macro (g x) (+ x 2))
           g
           scm> (g 2)
@@ -45,11 +45,11 @@ test = {
           scm> (h (+ 2 3))
           7
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (define-macro (if-else-5 condition consequent) `(if ,condition ,consequent 5))
           if-else-5
           scm> (if-else-5 #t 2)
@@ -63,16 +63,16 @@ test = {
           scm> (if-else-5 (= 1 0) 2)
           5
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': False,
-      'setup': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": False,
+            "setup": r"""
       
       """,
-      'teardown': '',
-      'type': 'scheme'
-    }
-  ]
+            "teardown": "",
+            "type": "scheme",
+        }
+    ],
 }

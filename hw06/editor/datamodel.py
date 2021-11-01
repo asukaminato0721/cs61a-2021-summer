@@ -38,15 +38,16 @@ class Number(ValueHolder):
         return super().__repr__()
 
 
-
 class Pair(Expression):
     def __init__(self, first: Expression, rest: Expression):
         import log
+
         super().__init__()
         self.first = first
         if not log.logger.dotted and not isinstance(rest, (Pair, NilType, Promise)):
             raise TypeMismatchError(
-                f"Unable to construct a Pair with a cdr of {rest}, expected a Pair, Nil, or Promise.")
+                f"Unable to construct a Pair with a cdr of {rest}, expected a Pair, Nil, or Promise."
+            )
         self.rest = rest
 
     def __repr__(self):
@@ -72,6 +73,7 @@ class NilType(Expression):
 class UndefinedType(Expression):
     def __repr__(self):
         from log import logger
+
         if logger.strict_mode:
             return ""
         return "undefined"
@@ -90,11 +92,15 @@ class String(ValueHolder):
         super().__init__(value)
 
     def __repr__(self):
-        return "\"" + self.value.replace("\n", "\\n").replace("\"", "\\\"").replace("\'", "'") + "\""
+        return (
+            '"'
+            + self.value.replace("\n", "\\n").replace('"', '\\"').replace("'", "'")
+            + '"'
+        )
 
 
 class Promise(Expression):
-    def __init__(self, expr: Expression, frame: 'Frame'):
+    def __init__(self, expr: Expression, frame: "Frame"):
         super().__init__()
         self.forced = False
         self.force_i = None
@@ -106,8 +112,9 @@ class Promise(Expression):
     def __repr__(self):
         return "#[promise]"
 
-    def bind(self) -> 'Heap.HeapKey':
+    def bind(self) -> "Heap.HeapKey":
         import log
+
         if self.forced:
             target = ["promise", [self.force_i, log.logger.heap.record(self.expr)]]
         else:
@@ -117,6 +124,7 @@ class Promise(Expression):
 
     def force(self):
         import log
+
         self.forced = True
         self.force_i = log.logger.i
         for target in self.targets:

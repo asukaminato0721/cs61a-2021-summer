@@ -1,11 +1,11 @@
 test = {
-  'name': 'make-exp',
-  'points': 1,
-  'suites': [
-    {
-      'cases': [
+    "name": "make-exp",
+    "points": 1,
+    "suites": [
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           scm> (make-exp 2 4)
           16
           scm> (make-exp 'x 1)
@@ -25,18 +25,18 @@ test = {
           scm> (exp? 'x)
           #f
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': r"""
+                    "hidden": False,
+                    "locked": False,
+                }
+            ],
+            "scored": True,
+            "setup": r"""
       scm> (load-all ".")
       scm> (define x^2 (make-exp 'x 2))
       scm> (define x^3 (make-exp 'x 3))
       """,
-      'teardown': '',
-      'type': 'scheme'
-    }
-  ]
+            "teardown": "",
+            "type": "scheme",
+        }
+    ],
 }

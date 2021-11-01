@@ -1,79 +1,79 @@
 test = {
-  'name': 'Problem 6',
-  'points': 2,
-  'suites': [
-    {
-      'cases': [
+    "name": "Problem 6",
+    "points": 2,
+    "suites": [
         {
-          'answer': 'Ant',
-          'choices': [
-            'Ant',
-            'ThrowerAnt',
-            'HungryAnt',
-            'The WallAnt class does not inherit from any class'
-          ],
-          'hidden': False,
-          'locked': False,
-          'question': 'What class does WallAnt inherit from?'
-        },
-        {
-          'answer': 'A WallAnt takes no action each turn',
-          'choices': [
-            'A WallAnt takes no action each turn',
-            'A WallAnt increases its own health by 1 each turn',
-            'A WallAnt reduces its own health by 1 each turn',
-            'A WallAnt attacks all the Bees in its place each turn'
-          ],
-          'hidden': False,
-          'locked': False,
-          'question': "What is a WallAnt's action?"
-        },
-        {
-          'answer': 'Ant subclasses inherit the action method from the Insect class',
-          'choices': [
-            'Ant subclasses inherit the action method from the Insect class',
-            'Ant subclasses inherit the action method from the Ant class',
-            'Ant subclasses do not inherit the action method from any class'
-          ],
-          'hidden': False,
-          'locked': False,
-          'question': 'Where do Ant subclasses inherit the action method from?'
-        },
-        {
-          'answer': 'Nothing',
-          'choices': [
-            'Nothing',
-            'Throw a leaf at the nearest Bee',
-            'Move to the next place',
-            'Reduce the health of all Bees in its place'
-          ],
-          'hidden': False,
-          'locked': False,
-          'question': r"""
+            "cases": [
+                {
+                    "answer": "Ant",
+                    "choices": [
+                        "Ant",
+                        "ThrowerAnt",
+                        "HungryAnt",
+                        "The WallAnt class does not inherit from any class",
+                    ],
+                    "hidden": False,
+                    "locked": False,
+                    "question": "What class does WallAnt inherit from?",
+                },
+                {
+                    "answer": "A WallAnt takes no action each turn",
+                    "choices": [
+                        "A WallAnt takes no action each turn",
+                        "A WallAnt increases its own health by 1 each turn",
+                        "A WallAnt reduces its own health by 1 each turn",
+                        "A WallAnt attacks all the Bees in its place each turn",
+                    ],
+                    "hidden": False,
+                    "locked": False,
+                    "question": "What is a WallAnt's action?",
+                },
+                {
+                    "answer": "Ant subclasses inherit the action method from the Insect class",
+                    "choices": [
+                        "Ant subclasses inherit the action method from the Insect class",
+                        "Ant subclasses inherit the action method from the Ant class",
+                        "Ant subclasses do not inherit the action method from any class",
+                    ],
+                    "hidden": False,
+                    "locked": False,
+                    "question": "Where do Ant subclasses inherit the action method from?",
+                },
+                {
+                    "answer": "Nothing",
+                    "choices": [
+                        "Nothing",
+                        "Throw a leaf at the nearest Bee",
+                        "Move to the next place",
+                        "Reduce the health of all Bees in its place",
+                    ],
+                    "hidden": False,
+                    "locked": False,
+                    "question": r"""
           If a subclass of Ant does not override the action method, what is the
           default action?
-          """
+          """,
+                },
+                {
+                    "answer": "instance, all Ants keep track of their own health",
+                    "choices": [
+                        "class, all Ants of the same subclass have the same health",
+                        "class, all Ants have the same health no matter what type of Ant it is",
+                        "instance, all Ants keep track of their own health",
+                        "instance, all Ants have different default starting healths",
+                    ],
+                    "hidden": False,
+                    "locked": False,
+                    "question": "What type of attribute is health?",
+                },
+            ],
+            "scored": False,
+            "type": "concept",
         },
         {
-          'answer': 'instance, all Ants keep track of their own health',
-          'choices': [
-            'class, all Ants of the same subclass have the same health',
-            'class, all Ants have the same health no matter what type of Ant it is',
-            'instance, all Ants keep track of their own health',
-            'instance, all Ants have different default starting healths'
-          ],
-          'hidden': False,
-          'locked': False,
-          'question': 'What type of attribute is health?'
-        }
-      ],
-      'scored': False,
-      'type': 'concept'
-    },
-    {
-      'cases': [
-        {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           >>> # Testing WallAnt parameters
           >>> wall = WallAnt()
           >>> wall.name
@@ -86,11 +86,11 @@ test = {
           >>> WallAnt.food_cost
           4
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # Abstraction tests
           >>> original = Ant.__init__
           >>> Ant.__init__ = lambda self, health: print("init") #If this errors, you are not calling the parent constructor correctly.
@@ -99,11 +99,11 @@ test = {
           >>> Ant.__init__ = original
           >>> wall = WallAnt()
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # Testing WallAnt holds strong
           >>> beehive, layout = Hive(AssaultPlan()), dry_layout
           >>> gamestate = GameState(None, beehive, ant_types(), layout, (1, 9))
@@ -124,33 +124,33 @@ test = {
           >>> bee.place is place
           True
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": r"""
       >>> from ants import *
       """,
-      'teardown': '',
-      'type': 'doctest'
-    },
-    {
-      'cases': [
+            "teardown": "",
+            "type": "doctest",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           >>> from ants import *
           >>> WallAnt.implemented
           True
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': '',
-      'teardown': '',
-      'type': 'doctest'
-    }
-  ]
+                    "hidden": False,
+                    "locked": False,
+                }
+            ],
+            "scored": True,
+            "setup": "",
+            "teardown": "",
+            "type": "doctest",
+        },
+    ],
 }

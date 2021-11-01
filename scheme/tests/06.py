@@ -1,41 +1,41 @@
 test = {
-  'name': 'Problem 6',
-  'points': 1,
-  'suites': [
-    {
-      'cases': [
+    "name": "Problem 6",
+    "points": 1,
+    "suites": [
         {
-          'answer': 'fd4dd892ccea3adcf9446dc4a9738d47',
-          'choices': [
-            r"""
+            "cases": [
+                {
+                    "answer": "Pair(A, nil), where: A is the quoted expression",
+                    "choices": [
+                        r"""
             Pair('quote', Pair(A, nil)), where:
                 A is the quoted expression
             """,
-            r"""
+                        r"""
             [A], where:
                 A is the quoted expression
             """,
-            r"""
+                        r"""
             Pair(A, nil), where:
                 A is the quoted expression
             """,
-            r"""
+                        r"""
             A, where:
                 A is the quoted expression
-            """
-          ],
-          'hidden': False,
-          'locked': True,
-          'question': 'What is the structure of the expressions argument to do_quote_form?'
-        }
-      ],
-      'scored': False,
-      'type': 'concept'
-    },
-    {
-      'cases': [
+            """,
+                    ],
+                    "hidden": False,
+                    "locked": False,
+                    "question": "What is the structure of the expressions argument to do_quote_form?",
+                }
+            ],
+            "scored": False,
+            "type": "concept",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           >>> do_quote_form(Pair(3, nil), global_frame)
           3c7e8a3a2176a696c3a66418f78dff6b
           # locked
@@ -47,22 +47,22 @@ test = {
           2301ee746b57783004f00f39498fdaed
           # locked
           """,
-          'hidden': False,
-          'locked': True
-        }
-      ],
-      'scored': True,
-      'setup': r"""
+                    "hidden": False,
+                    "locked": True,
+                }
+            ],
+            "scored": True,
+            "setup": r"""
       >>> from scheme import *
       >>> global_frame = create_global_frame()
       """,
-      'teardown': '',
-      'type': 'doctest'
-    },
-    {
-      'cases': [
+            "teardown": "",
+            "type": "doctest",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           scm> ''hello
           f675ad62f5f67e5229145843fd6bbcaa
           # locked
@@ -86,19 +86,19 @@ test = {
           46beb7deeeb5e9af1c8d785b12558317
           # locked
           """,
-          'hidden': False,
-          'locked': True
-        }
-      ],
-      'scored': True,
-      'setup': '',
-      'teardown': '',
-      'type': 'scheme'
-    },
-    {
-      'cases': [
+                    "hidden": False,
+                    "locked": True,
+                }
+            ],
+            "scored": True,
+            "setup": "",
+            "teardown": "",
+            "type": "scheme",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           >>> read_line(" 'x ")
           d88f877a51ba10d1c3a834a690bb43e0
           # locked
@@ -114,11 +114,11 @@ test = {
           # choice: Pair('quote', Pair('a', 'b'))
           # choice: Pair('quote', Pair('a', Pair('b', nil)))
           """,
-          'hidden': False,
-          'locked': True
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": True,
+                },
+                {
+                    "code": r"""
           >>> read_line("(a (b 'c))")
           Pair('a', Pair(Pair('b', Pair(Pair('quote', Pair('c', nil)), nil)), nil))
           >>> read_line("(a (b '(c d)))")
@@ -128,11 +128,11 @@ test = {
           >>> read_line("'()")
           Pair('quote', Pair(nil, nil))
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> read_line("'('a)")
           Pair('quote', Pair(Pair(Pair('quote', Pair('a', nil)), nil), nil))
           >>> read_line("''a")
@@ -144,11 +144,11 @@ test = {
           >>> read_line("'('+ '(1 2) '3)")
           Pair('quote', Pair(Pair(Pair('quote', Pair('+', nil)), Pair(Pair('quote', Pair(Pair(1, Pair(2, nil)), nil)), Pair(Pair('quote', Pair(3, nil)), nil))), nil))
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> scheme_read(Buffer(tokenize_lines(["'hello"])))
           Pair('quote', Pair('hello', nil))
           >>> read_line("(car '(1 2))")
@@ -166,21 +166,21 @@ test = {
           >>> read_line("'('+ '(1 2) '3)")
           Pair('quote', Pair(Pair(Pair('quote', Pair('+', nil)), Pair(Pair('quote', Pair(Pair(1, Pair(2, nil)), nil)), Pair(Pair('quote', Pair(3, nil)), nil))), nil))
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": r"""
       >>> from scheme_reader import *
       """,
-      'teardown': '',
-      'type': 'doctest'
-    },
-    {
-      'cases': [
+            "teardown": "",
+            "type": "doctest",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           scm> (quote hello)
           hello
           scm> 'hello
@@ -196,14 +196,14 @@ test = {
           scm> (quote 3)
           3
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': '',
-      'teardown': '',
-      'type': 'scheme'
-    }
-  ]
+                    "hidden": False,
+                    "locked": False,
+                }
+            ],
+            "scored": True,
+            "setup": "",
+            "teardown": "",
+            "type": "scheme",
+        },
+    ],
 }

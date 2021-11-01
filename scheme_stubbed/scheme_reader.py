@@ -38,21 +38,22 @@ class Pair:
 
     def __init__(self, first, rest):
         from scheme_builtins import scheme_valid_cdrp, SchemeError
+
         self.first = first
         self.rest = rest
 
     def __repr__(self):
-        return 'Pair({0}, {1})'.format(repr(self.first), repr(self.rest))
+        return "Pair({0}, {1})".format(repr(self.first), repr(self.rest))
 
     def __str__(self):
-        s = '(' + repl_str(self.first)
+        s = "(" + repl_str(self.first)
         rest = self.rest
         while isinstance(rest, Pair):
-            s += ' ' + repl_str(rest.first)
+            s += " " + repl_str(rest.first)
             rest = rest.rest
         if rest is not nil:
-            s += ' . ' + repl_str(rest)
-        return s + ')'
+            s += " . " + repl_str(rest)
+        return s + ")"
 
     def __len__(self):
         n, rest = 1, self.rest
@@ -60,7 +61,7 @@ class Pair:
             n += 1
             rest = rest.rest
         if rest is not nil:
-            raise TypeError('length attempted on improper list')
+            raise TypeError("length attempted on improper list")
         return n
 
     def __eq__(self, p):
@@ -74,17 +75,17 @@ class Pair:
         if self.rest is nil or isinstance(self.rest, Pair):
             return Pair(mapped, self.rest.map(fn))
         else:
-            raise TypeError('ill-formed list (cdr is a promise)')
+            raise TypeError("ill-formed list (cdr is a promise)")
 
 
 class nil:
     """The empty list"""
 
     def __repr__(self):
-        return 'nil'
+        return "nil"
 
     def __str__(self):
-        return '()'
+        return "()"
 
     def __len__(self):
         return 0
@@ -98,9 +99,7 @@ nil = nil()  # Assignment hides the nil class; there is only one instance
 # Scheme list parser
 
 # Quotation markers
-quotes = {"'": 'quote',
-          '`': 'quasiquote',
-          ',': 'unquote'}
+quotes = {"'": "quote", "`": "quasiquote", ",": "unquote"}
 
 
 def scheme_read(src):
@@ -132,22 +131,23 @@ def read_tail(src):
     """
     try:
         if src.current() is None:
-            raise SyntaxError('unexpected end of file')
+            raise SyntaxError("unexpected end of file")
         # BEGIN PROBLEM 1
         "*** YOUR CODE HERE ***"
         # END PROBLEM 1
     except EOFError:
-        raise SyntaxError('unexpected end of file')
+        raise SyntaxError("unexpected end of file")
+
 
 # Convenience methods
 
 
-def buffer_input(prompt='scm> '):
+def buffer_input(prompt="scm> "):
     """Return a Buffer instance containing interactive input."""
     return Buffer(tokenize_lines(InputReader(prompt)))
 
 
-def buffer_lines(lines, prompt='scm> ', show_prompt=False):
+def buffer_lines(lines, prompt="scm> ", show_prompt=False):
     """Return a Buffer instance iterating through LINES."""
     if show_prompt:
         input_lines = lines
@@ -173,6 +173,7 @@ def repl_str(val):
         return repr(val)  # Python 2 compatibility
     return str(val)
 
+
 # Interactive loop
 
 
@@ -180,13 +181,13 @@ def read_print_loop():
     """Run a read-print loop for Scheme expressions."""
     while True:
         try:
-            src = buffer_input('read> ')
+            src = buffer_input("read> ")
             while src.more_on_line:
                 expression = scheme_read(src)
-                print('str :', expression)
-                print('repr:', repr(expression))
+                print("str :", expression)
+                print("repr:", repr(expression))
         except (SyntaxError, ValueError) as err:
-            print(type(err).__name__ + ':', err)
+            print(type(err).__name__ + ":", err)
         except (KeyboardInterrupt, EOFError):  # <Control>-D, etc.
             print()
             return
@@ -194,5 +195,5 @@ def read_print_loop():
 
 @main
 def main(*args):
-    if len(args) and '--repl' in args:
+    if len(args) and "--repl" in args:
         read_print_loop()

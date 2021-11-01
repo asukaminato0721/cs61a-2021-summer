@@ -44,9 +44,7 @@ class Pair(Expression):
 
         super().__init__()
         self.first = first
-        if not log.logger.dotted and not isinstance(
-            rest, (Pair, NilType, Promise)
-        ):
+        if not log.logger.dotted and not isinstance(rest, (Pair, NilType, Promise)):
             raise TypeMismatchError(
                 f"Unable to construct a Pair with a cdr of {rest}, expected a Pair, Nil, or Promise."
             )
@@ -96,9 +94,7 @@ class String(ValueHolder):
     def __repr__(self):
         return (
             '"'
-            + self.value.replace("\n", "\\n")
-            .replace('"', '\\"')
-            .replace("'", "'")
+            + self.value.replace("\n", "\\n").replace('"', '\\"').replace("'", "'")
             + '"'
         )
 

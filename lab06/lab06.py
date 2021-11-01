@@ -64,9 +64,9 @@ def non_decrease_subseqs(s: List[int]) -> List[List[int]]:
 
         return [x for x in gen(s, a)]
 
-    return insert_into_all(
-        non_decrease_subseqs(s[1:]), s[0]
-    ) + non_decrease_subseqs(s[1:])
+    return insert_into_all(non_decrease_subseqs(s[1:]), s[0]) + non_decrease_subseqs(
+        s[1:]
+    )
 
 
 # return subseq_helper(s, 0)
@@ -214,9 +214,7 @@ def add_trees(t1: List, t2: List) -> List:
         label(t1) + label(t2),
         [
             add_trees(x, y)
-            for x, y in zip_longest(
-                branches(t1), branches(t2), fillvalue=tree(0)
-            )
+            for x, y in zip_longest(branches(t1), branches(t2), fillvalue=tree(0))
         ],
     )
 

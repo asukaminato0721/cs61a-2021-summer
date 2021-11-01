@@ -1,11 +1,11 @@
 test = {
-  'name': 'Recursion',
-  'points': 0,
-  'suites': [
-    {
-      'cases': [
+    "name": "Recursion",
+    "points": 0,
+    "suites": [
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           >>> def f(a, b):
           ...     if a > b:
           ...         return f(a - 3, 2 * b)
@@ -22,12 +22,12 @@ test = {
           >>> f(-1, -3)
           Infinite
           """,
-          'hidden': False,
-          'locked': False
+                    "hidden": False,
+                    "locked": False,
+                }
+            ],
+            "scored": False,
+            "type": "wwpp",
         }
-      ],
-      'scored': False,
-      'type': 'wwpp'
-    }
-  ]
+    ],
 }

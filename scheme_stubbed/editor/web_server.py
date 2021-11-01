@@ -11,7 +11,7 @@ from scheme_exceptions import SchemeError
 app = Flask(__name__)
 
 
-@app.route('/')
+@app.route("/")
 def index():
     return render_template("index.html", start_data=json.dumps({}))
 
@@ -21,10 +21,18 @@ def lookup(code):
     val = database.load(code)
     if val is None:
         return index()
-    return render_template("index.html",
-                           start_data=repr(json.dumps({"code": eval(val[0]),
-                                                       "skip_tree": bool(val[1]),
-                                                       "hide_return_frames": bool(val[2])})))
+    return render_template(
+        "index.html",
+        start_data=repr(
+            json.dumps(
+                {
+                    "code": eval(val[0]),
+                    "skip_tree": bool(val[1]),
+                    "hide_return_frames": bool(val[2]),
+                }
+            )
+        ),
+    )
 
 
 @app.route("/process2", methods=["POST"])
@@ -45,11 +53,12 @@ def handle(code, skip_tree, skip_envs, hide_return_frames):
     except SchemeError as e:
         log.logger.out(e)
     except TimeLimitException:
-        log.logger.out("Time limit exceeded. Try disabling the substitution visualizer (top checkbox) for increased "
-                       "performance.")
+        log.logger.out(
+            "Time limit exceeded. Try disabling the substitution visualizer (top checkbox) for increased "
+            "performance."
+        )
     except Exception as e:
         log.logger.out(e)
 
     out = log.logger.export()
     return jsonify(out)
-

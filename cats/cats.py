@@ -326,12 +326,8 @@ def fastest_words(game) -> List[List[str]]:
     >>> fastest_words(game(['Just', 'have', 'fun'], [p0, p1]))
     [['have', 'fun'], ['Just']]
     """
-    player_indices = range(
-        len(get_times(game))
-    )  # contains an *index* for each player
-    word_indices = range(
-        len(get_words(game))
-    )  # contains an *index* for each word
+    player_indices = range(len(get_times(game)))  # contains an *index* for each player
+    word_indices = range(len(get_words(game)))  # contains an *index* for each word
     # BEGIN PROBLEM 10
     "*** YOUR CODE HERE ***"
     player_num = len(get_times(game))
@@ -349,12 +345,8 @@ def game(
     words: List[str], times: List[List[Union[int, float]]]
 ) -> List[Union[List[str], List[List[Union[int, float]]]]]:
     """A data abstraction containing all words typed and their times."""
-    assert all(
-        type(w) == str for w in words
-    ), "words should be a list of strings"
-    assert all(
-        type(t) == list for t in times
-    ), "times should be a list of lists"
+    assert all(type(w) == str for w in words), "words should be a list of strings"
+    assert all(type(t) == list for t in times), "times should be a list of lists"
     assert all(
         isinstance(i, (int, float)) for t in times for i in t
     ), "times lists should contain numbers"
@@ -413,10 +405,7 @@ def run_typing_test(topics: List[str]):
             print("No more paragraphs about", topics, "are available.")
             return
         print("Type the following paragraph and then press enter/return.")
-        print(
-            "If you only type part of it, you will be scored only on that "
-            "part.\n"
-        )
+        print("If you only type part of it, you will be scored only on that " "part.\n")
         print(reference)
         print()
 

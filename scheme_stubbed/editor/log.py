@@ -1,7 +1,17 @@
 from enum import Enum
 from typing import List, Union, Dict, Tuple, TYPE_CHECKING
 
-from datamodel import Expression, ValueHolder, Pair, Nil, Symbol, Undefined, Promise, NilType, UndefinedType
+from datamodel import (
+    Expression,
+    ValueHolder,
+    Pair,
+    Nil,
+    Symbol,
+    Undefined,
+    Promise,
+    NilType,
+    UndefinedType,
+)
 import evaluate_apply
 from helper import pair_to_list
 from log_utils import get_id
@@ -48,11 +58,13 @@ class VisualExpression:
 
         if base_expr is None:
             return
-        if isinstance(base_expr, ValueHolder) \
-                or isinstance(base_expr, evaluate_apply.Callable) \
-                or isinstance(base_expr, Promise) \
-                or base_expr == Nil \
-                or base_expr == Undefined:
+        if (
+            isinstance(base_expr, ValueHolder)
+            or isinstance(base_expr, evaluate_apply.Callable)
+            or isinstance(base_expr, Promise)
+            or base_expr == Nil
+            or base_expr == Undefined
+        ):
             self.value = base_expr
         elif isinstance(base_expr, Pair):
             try:
@@ -62,13 +74,17 @@ class VisualExpression:
         else:
             raise NotImplementedError(base_expr, type(base_expr))
 
-    def set_entries(self, expressions: Union[List[Expression], List['VisualExpression']]):
+    def set_entries(
+        self, expressions: Union[List[Expression], List["VisualExpression"]]
+    ):
         self.value = None
         self.children = [Holder(expression, self) for expression in expressions]
         if expressions and isinstance(expressions[0], VisualExpression):
             if self.id in logger.node_cache:
                 if logger.node_cache[self.id].transitions:
-                    curr_transition = HolderState[logger.node_cache[self.id].transitions[-1][-1]]
+                    curr_transition = HolderState[
+                        logger.node_cache[self.id].transitions[-1][-1]
+                    ]
                 else:
                     return self
                 logger.node_cache[self.id].modify(self, curr_transition)
@@ -82,7 +98,9 @@ class VisualExpression:
 
 class Holder:
     def __init__(self, expr: Expression, parent: VisualExpression):
-        self.expression: VisualExpression = VisualExpression(expr) if isinstance(expr, Expression) else expr
+        self.expression: VisualExpression = (
+            VisualExpression(expr) if isinstance(expr, Expression) else expr
+        )
         self.state = HolderState.UNEVALUATED
         self.parent = parent
 
@@ -118,6 +136,7 @@ def limited(f):
         if "force" in kwargs:
             del kwargs["force"]
         return f(*args, **kwargs)
+
     return g
 
 
@@ -129,21 +148,31 @@ class Logger:
         self.start = 0  # the step of the current expr
 
         self.f_delta = 0  # the index of the first frame to generate
-        self.frame_lookup: Dict[int, StoredFrame] = {}  # lookup of all previous frames TODO: use weakrefs or something
-        self.active_frames: List[StoredFrame] = []  # new frames to be added to the js frame store
+        self.frame_lookup: Dict[
+            int, StoredFrame
+        ] = {}  # lookup of all previous frames TODO: use weakrefs or something
+        self.active_frames: List[
+            StoredFrame
+        ] = []  # new frames to be added to the js frame store
         self.frame_updates = []  # when the env diagram is updated
         self.global_frame: StoredFrame = None
 
-        self.dotted = False  # Whether dotted lists are allowed (i.e. fa18 vs sp19 Scheme)
+        self.dotted = (
+            False  # Whether dotted lists are allowed (i.e. fa18 vs sp19 Scheme)
+        )
         self.strict_mode = False  # legacy - used for okpy testing of the interpreter
-        self.fragile = False  # flag for if new assignments prohibited, like in previewing
+        self.fragile = (
+            False  # flag for if new assignments prohibited, like in previewing
+        )
 
         self.autodraw = True
 
         self.show_thunks = True
 
         self.node_cache: Dict[str, Node] = {}  # a cache of visual expressions
-        self.export_states = []  # all the nodes generated in the current evaluation, in exported form
+        self.export_states = (
+            []
+        )  # all the nodes generated in the current evaluation, in exported form
         self.roots = []  # the root node of each expr we are currently evaluating
 
         self.eval_stack = []  # the eval stack for use in tracebacks
@@ -158,14 +187,20 @@ class Logger:
     def new_expr(self):
         self._out.append([])
         if Root.set and self.start != self.i:
-            self.export_states.append((self.start, self.i, {i: v.export() for i, v in self.node_cache.items()}))
+            self.export_states.append(
+                (
+                    self.start,
+                    self.i,
+                    {i: v.export() for i, v in self.node_cache.items()},
+                )
+            )
             self.roots.append(Root.root.expression.id)
         self.start = self.i
         self.node_cache = {}
         Root.set = True
         self.eval_stack = []
 
-    def new_query(self, global_frame: 'StoredFrame'=None, curr_i=0, curr_f=0):
+    def new_query(self, global_frame: "StoredFrame" = None, curr_i=0, curr_f=0):
         self.node_cache = {}
         self.i = curr_i
         self.f_delta = curr_f
@@ -179,7 +214,7 @@ class Logger:
         self.graphics_open = False
         self.op_count = 0
 
-    def get_canvas(self) -> 'graphics.Canvas':
+    def get_canvas(self) -> "graphics.Canvas":
         self.graphics_open = True
         return self.graphics_lookup[id(self.global_frame.base)]
 
@@ -201,13 +236,17 @@ class Logger:
             "states": self.export_states,
             "out": ["".join(["".join(x) for x in self._out])],
             "active_frames": [id(f.base) for f in self.active_frames],
-            "frame_lookup": {id(f.base): self.frame_lookup[id(f.base)].export()
-                             for f in [self.global_frame] + self.active_frames},
+            "frame_lookup": {
+                id(f.base): self.frame_lookup[id(f.base)].export()
+                for f in [self.global_frame] + self.active_frames
+            },
             "graphics_open": self.graphics_open,
             "graphics": self.get_canvas().export(),
-            "globalFrameID": id(self.active_frames[0].base) if self.active_frames else -1,
+            "globalFrameID": id(self.active_frames[0].base)
+            if self.active_frames
+            else -1,
             "heap": self.heap.export(),
-            "frameUpdates": sorted(set(self.frame_updates))
+            "frameUpdates": sorted(set(self.frame_updates)),
         }
 
     def out(self, val, end="\n"):
@@ -220,13 +259,15 @@ class Logger:
             self._out = [[val]]
 
     @limited
-    def frame_create(self, frame: 'evaluate_apply.Frame'):
-        self.frame_lookup[id(frame)] = stored = StoredFrame(len(self.active_frames), frame)
+    def frame_create(self, frame: "evaluate_apply.Frame"):
+        self.frame_lookup[id(frame)] = stored = StoredFrame(
+            len(self.active_frames), frame
+        )
         self.active_frames.append(stored)
         frame.id = stored.name
 
     @limited
-    def frame_store(self, frame: 'evaluate_apply.Frame', name: str, value: Expression):
+    def frame_store(self, frame: "evaluate_apply.Frame", name: str, value: Expression):
         self.frame_lookup[id(frame)].bind(name, value)
 
     def new_node(self, expr: VisualExpression, transition_type: HolderState):
@@ -263,8 +304,14 @@ class Node:
 
         if expr.value is None:
             self.children.append(
-                (logger.i,
-                 [logger.new_node(child.expression, child.state) for child in expr.children]))
+                (
+                    logger.i,
+                    [
+                        logger.new_node(child.expression, child.state)
+                        for child in expr.children
+                    ],
+                )
+            )
         else:
             self.children.append((logger.i, []))
 
@@ -280,12 +327,12 @@ class Node:
             "transitions": self.transitions,
             "strs": self.str,
             "parent_strs": self.base_str,
-            "children": [(i, [x for x in y]) for i, y in self.children]
+            "children": [(i, [x for x in y]) for i, y in self.children],
         }
 
 
 class StoredFrame:
-    def __init__(self, i, base: 'evaluate_apply.Frame'):
+    def __init__(self, i, base: "evaluate_apply.Frame"):
         i += logger.f_delta
         if i == -1:
             name = "Builtins"
@@ -315,15 +362,17 @@ class StoredFrame:
     def export(self):
         if id(self.parent) not in logger.frame_lookup:
             return None
-        return {"name": self.name,
-                "label": self.label,
-                "parent": logger.frame_lookup[id(self.parent)].name,
-                "bindings": self.bindings}
+        return {
+            "name": self.name,
+            "label": self.label,
+            "parent": logger.frame_lookup[id(self.parent)].name,
+            "bindings": self.bindings,
+        }
 
 
 class Heap:
     HeapKey = Tuple[bool, Union[int, str]]  # the bool means that I'm NOT a pointer!
-    HeapObject = Union[List['HeapObject'], HeapKey]
+    HeapObject = Union[List["HeapObject"], HeapKey]
 
     def __init__(self):
         self.prev: Dict[str, Heap.HeapObject] = {}
@@ -341,7 +390,7 @@ class Heap:
             self.curr[id] = self.prev[id]
         logger.frame_updates.append(logger.i)
 
-    def record(self, expr: Expression) -> 'Heap.HeapKey':
+    def record(self, expr: Expression) -> "Heap.HeapKey":
         if isinstance(expr, evaluate_apply.Thunk):
             return False, "thunk"
         if expr.id is None:

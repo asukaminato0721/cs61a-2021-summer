@@ -1,11 +1,11 @@
 test = {
-  'name': 'relations',
-  'points': 1,
-  'suites': [
-    {
-      'cases': [
+    "name": "relations",
+    "points": 1,
+    "suites": [
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           sqlite> SELECT * FROM non_parents;
           fillmore|barack
           eisenhower|barack
@@ -26,17 +26,17 @@ test = {
           barack|eisenhower
           barack|fillmore
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'ordered': True,
-      'scored': True,
-      'setup': r"""
+                    "hidden": False,
+                    "locked": False,
+                }
+            ],
+            "ordered": True,
+            "scored": True,
+            "setup": r"""
       sqlite> .read hw07.sql
       """,
-      'teardown': '',
-      'type': 'sqlite'
-    }
-  ]
+            "teardown": "",
+            "type": "sqlite",
+        }
+    ],
 }

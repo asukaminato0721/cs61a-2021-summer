@@ -42,9 +42,7 @@ def db_init():
 
 
 def create_multiplayer_server():
-    State = namedtuple(
-        "State", ["queue", "game_lookup", "game_data", "progress"]
-    )
+    State = namedtuple("State", ["queue", "game_lookup", "game_data", "progress"])
     State = State({}, {}, {}, defaultdict(list))
 
     @route
@@ -120,9 +118,7 @@ def create_multiplayer_server():
     @forward_to_server
     def request_progress(targets):
         now = {t: State.progress[t][-1] for t in targets}
-        elapsed = [
-            [now[t][0], now[t][1] - State.progress[t][0][1]] for t in targets
-        ]
+        elapsed = [[now[t][0], now[t][1] - State.progress[t][0][1]] for t in targets]
         return elapsed
 
     @route

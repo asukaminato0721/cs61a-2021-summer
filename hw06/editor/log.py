@@ -45,9 +45,7 @@ fake_obj = FakeObj()
 
 
 class VisualExpression:
-    def __init__(
-        self, base_expr: Expression = None, true_base_expr: Expression = None
-    ):
+    def __init__(self, base_expr: Expression = None, true_base_expr: Expression = None):
         self.display_value = base_expr
         self.base_expr = base_expr if true_base_expr is None else true_base_expr
         self.value: Expression = None
@@ -162,9 +160,7 @@ class Logger:
         self.dotted = (
             False  # Whether dotted lists are allowed (i.e. fa18 vs sp19 Scheme)
         )
-        self.strict_mode = (
-            False  # legacy - used for okpy testing of the interpreter
-        )
+        self.strict_mode = False  # legacy - used for okpy testing of the interpreter
         self.fragile = (
             False  # flag for if new assignments prohibited, like in previewing
         )
@@ -177,9 +173,7 @@ class Logger:
         self.export_states = (
             []
         )  # all the nodes generated in the current evaluation, in exported form
-        self.roots = (
-            []
-        )  # the root node of each expr we are currently evaluating
+        self.roots = []  # the root node of each expr we are currently evaluating
 
         self.eval_stack = []  # the eval stack for use in tracebacks
 
@@ -273,16 +267,12 @@ class Logger:
         frame.id = stored.name
 
     @limited
-    def frame_store(
-        self, frame: "evaluate_apply.Frame", name: str, value: Expression
-    ):
+    def frame_store(self, frame: "evaluate_apply.Frame", name: str, value: Expression):
         self.frame_lookup[id(frame)].bind(name, value)
 
     def new_node(self, expr: VisualExpression, transition_type: HolderState):
         if expr.id in self.node_cache:
-            return self.node_cache[expr.id].modify(
-                expr, transition_type, force=True
-            )
+            return self.node_cache[expr.id].modify(expr, transition_type, force=True)
         node = Node(expr, transition_type)
         self.node_cache[node.id] = node
         return node.id
@@ -304,10 +294,7 @@ class Node:
 
     @limited
     def modify(self, expr: VisualExpression, transition_type: HolderState):
-        if (
-            not self.transitions
-            or self.transitions[-1][1] != transition_type.name
-        ):
+        if not self.transitions or self.transitions[-1][1] != transition_type.name:
             self.transitions.append((logger.i, transition_type.name))
         if not self.str or self.str[-1][1] != repr(expr):
             self.str.append((logger.i, repr(expr)))
@@ -384,9 +371,7 @@ class StoredFrame:
 
 
 class Heap:
-    HeapKey = Tuple[
-        bool, Union[int, str]
-    ]  # the bool means that I'm NOT a pointer!
+    HeapKey = Tuple[bool, Union[int, str]]  # the bool means that I'm NOT a pointer!
     HeapObject = Union[List["HeapObject"], HeapKey]
 
     def __init__(self):

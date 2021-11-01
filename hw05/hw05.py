@@ -73,9 +73,7 @@ class VendingMachine:
                 ans.append(f"Here is your ${self.funds}.")
         if self.product_number > 0:
             if self.funds < self.price:
-                ans.append(
-                    f"You must add ${self.price - self.funds} more funds."
-                )
+                ans.append(f"You must add ${self.price - self.funds} more funds.")
             if self.price == self.funds:
                 ans.append(f"Here is your {self.product}.")
                 self.funds = 0
@@ -127,7 +125,7 @@ def store_digits(n: int):
     while pseudo_n >= 10:
         pseudo_n = pseudo_n // 10
         count += 1
-    full_link = Link(pseudo_n, store_digits(n % (10**count)))
+    full_link = Link(pseudo_n, store_digits(n % (10 ** count)))
     return full_link
 
 

@@ -5,7 +5,6 @@ class State:
         """Create a new gamestate"""
         self.gs = {}
 
-
     def getState(self, key=None):
         if key:
             return self.gs[key]
@@ -13,5 +12,3 @@ class State:
 
     def updateState(self, key, val):
         self.gs[key] = val
-
-

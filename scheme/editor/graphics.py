@@ -90,9 +90,7 @@ class Canvas:
     @graphics_fragile
     def pixel(self, x: float, y: float, color: str):
         pixel_move = Move(color, color)
-        pixel_move.seq.append(
-            make_action(ABSOLUTE_MOVE, x * self.size, y * self.size)
-        )
+        pixel_move.seq.append(make_action(ABSOLUTE_MOVE, x * self.size, y * self.size))
         pixel_move.seq.append(make_action(RELATIVE_LINE, self.size, 0))
         pixel_move.seq.append(make_action(RELATIVE_LINE, 0, self.size))
         pixel_move.seq.append(make_action(RELATIVE_LINE, -self.size, 0))
@@ -156,9 +154,9 @@ class Canvas:
         def polar_to_cartesian(center_x, center_y, radius, angle_in_degrees):
             angle_in_radians = (angle_in_degrees - 90) * math.pi / 180
 
-            return center_x + (
-                radius * math.cos(angle_in_radians)
-            ), center_y + (radius * math.sin(angle_in_radians))
+            return center_x + (radius * math.cos(angle_in_radians)), center_y + (
+                radius * math.sin(angle_in_radians)
+            )
 
         def draw_arc(x, y, radius, start_angle, end_angle):
             end_x, end_y = polar_to_cartesian(x, y, radius, end_angle)
@@ -236,17 +234,11 @@ class Canvas:
 
 
 def make_color(expression: Expression) -> str:
-    if not isinstance(expression, String) and not isinstance(
-        expression, Symbol
-    ):
-        raise OperandDeduceError(
-            f"Expected a String or Symbol, received {expression}."
-        )
+    if not isinstance(expression, String) and not isinstance(expression, Symbol):
+        raise OperandDeduceError(f"Expected a String or Symbol, received {expression}.")
     color = expression.value.lower()
     # regex from https://stackoverflow.com/questions/30241375/python-how-to-check-if-string-is-a-hex-color-code
-    if color not in COLORS and not re.search(
-        r"^#(?:[0-9a-fA-F]{3}){1,2}$", color
-    ):
+    if color not in COLORS and not re.search(r"^#(?:[0-9a-fA-F]{3}){1,2}$", color):
         raise OperandDeduceError(
             f"Expected a valid CSS or hex color code, received {expression}."
         )
@@ -259,18 +251,14 @@ def make_color(expression: Expression) -> str:
 class Backward(SingleOperandPrimitive):
     def execute_simple(self, operand: Expression) -> Expression:
         if not isinstance(operand, Number):
-            raise OperandDeduceError(
-                f"Expected operand to be Number, not {operand}"
-            )
+            raise OperandDeduceError(f"Expected operand to be Number, not {operand}")
         log.logger.get_canvas().forward(-operand.value)
         return Undefined
 
 
 @global_attr("begin_fill")
 class BeginFill(BuiltIn):
-    def execute_evaluated(
-        self, operands: List[Expression], frame: Frame
-    ) -> Expression:
+    def execute_evaluated(self, operands: List[Expression], frame: Frame) -> Expression:
         verify_exact_callable_length(self, 0, len(operands))
         log.logger.get_canvas().begin_fill()
         return Undefined
@@ -285,20 +273,14 @@ class BGColor(SingleOperandPrimitive):
 
 @global_attr("circle")
 class Circle(BuiltIn):
-    def execute_evaluated(
-        self, operands: List[Expression], frame: Frame
-    ) -> Expression:
+    def execute_evaluated(self, operands: List[Expression], frame: Frame) -> Expression:
         verify_min_callable_length(self, 1, len(operands))
         if len(operands) > 2:
             verify_exact_callable_length(self, 2, len(operands))
         if not isinstance(operands[0], Number):
-            raise OperandDeduceError(
-                f"Expected radius to be Number, not {operands[0]}"
-            )
+            raise OperandDeduceError(f"Expected radius to be Number, not {operands[0]}")
         if len(operands) > 2 and not isinstance(operands[1], Number):
-            raise OperandDeduceError(
-                f"Expected angle to be Number, not {operands[1]}"
-            )
+            raise OperandDeduceError(f"Expected angle to be Number, not {operands[1]}")
         degs = 360 if len(operands) == 1 else operands[1].value
         log.logger.get_canvas().arc(operands[0].value, degs)
         log.logger.get_canvas().rotate(degs)
@@ -307,9 +289,7 @@ class Circle(BuiltIn):
 
 @global_attr("clear")
 class Clear(BuiltIn):
-    def execute_evaluated(
-        self, operands: List[Expression], frame: Frame
-    ) -> Expression:
+    def execute_evaluated(self, operands: List[Expression], frame: Frame) -> Expression:
         verify_exact_callable_length(self, 0, len(operands))
         log.logger.get_canvas().reset()
         return Undefined
@@ -324,9 +304,7 @@ class Color(SingleOperandPrimitive):
 
 @global_attr("end_fill")
 class EndFill(BuiltIn):
-    def execute_evaluated(
-        self, operands: List[Expression], frame: Frame
-    ) -> Expression:
+    def execute_evaluated(self, operands: List[Expression], frame: Frame) -> Expression:
         verify_exact_callable_length(self, 0, len(operands))
         log.logger.get_canvas().end_fill()
         return Undefined
@@ -334,9 +312,7 @@ class EndFill(BuiltIn):
 
 @global_attr("exitonclick")
 class ExitOnClick(BuiltIn):
-    def execute_evaluated(
-        self, operands: List[Expression], frame: Frame
-    ) -> Expression:
+    def execute_evaluated(self, operands: List[Expression], frame: Frame) -> Expression:
         verify_exact_callable_length(self, 0, len(operands))
         return Undefined
 
@@ -346,9 +322,7 @@ class ExitOnClick(BuiltIn):
 class Forward(SingleOperandPrimitive):
     def execute_simple(self, operand: Expression) -> Expression:
         if not isinstance(operand, Number):
-            raise OperandDeduceError(
-                f"Expected operand to be Number, not {operand}"
-            )
+            raise OperandDeduceError(f"Expected operand to be Number, not {operand}")
         log.logger.get_canvas().forward(operand.value)
         return Undefined
 
@@ -356,9 +330,7 @@ class Forward(SingleOperandPrimitive):
 @global_attr("hideturtle")
 @global_attr("ht")
 class HideTurtle(BuiltIn):
-    def execute_evaluated(
-        self, operands: List[Expression], frame: Frame
-    ) -> Expression:
+    def execute_evaluated(self, operands: List[Expression], frame: Frame) -> Expression:
         verify_exact_callable_length(self, 0, len(operands))
         log.logger.get_canvas().hide_turtle()
         return Undefined
@@ -369,9 +341,7 @@ class HideTurtle(BuiltIn):
 class Left(SingleOperandPrimitive):
     def execute_simple(self, operand: Expression) -> Expression:
         if not isinstance(operand, Number):
-            raise OperandDeduceError(
-                f"Expected operand to be Number, not {operand}"
-            )
+            raise OperandDeduceError(f"Expected operand to be Number, not {operand}")
         log.logger.get_canvas().rotate(operand.value)
         return Undefined
 
@@ -379,9 +349,7 @@ class Left(SingleOperandPrimitive):
 @global_attr("pendown")
 @global_attr("pd")
 class PenDown(BuiltIn):
-    def execute_evaluated(
-        self, operands: List[Expression], frame: Frame
-    ) -> Expression:
+    def execute_evaluated(self, operands: List[Expression], frame: Frame) -> Expression:
         verify_exact_callable_length(self, 0, len(operands))
         log.logger.get_canvas().pendown()
         return Undefined
@@ -390,9 +358,7 @@ class PenDown(BuiltIn):
 @global_attr("penup")
 @global_attr("pu")
 class PenUp(BuiltIn):
-    def execute_evaluated(
-        self, operands: List[Expression], frame: Frame
-    ) -> Expression:
+    def execute_evaluated(self, operands: List[Expression], frame: Frame) -> Expression:
         verify_exact_callable_length(self, 0, len(operands))
         log.logger.get_canvas().penup()
         return Undefined
@@ -400,9 +366,7 @@ class PenUp(BuiltIn):
 
 @global_attr("pixel")
 class Pixel(BuiltIn):
-    def execute_evaluated(
-        self, operands: List[Expression], frame: Frame
-    ) -> Expression:
+    def execute_evaluated(self, operands: List[Expression], frame: Frame) -> Expression:
         verify_exact_callable_length(self, 3, len(operands))
         (
             x,
@@ -411,9 +375,7 @@ class Pixel(BuiltIn):
         ) = operands
         for v in x, y:
             if not isinstance(v, Number):
-                raise OperandDeduceError(
-                    f"Expected operand to be Number, not {v}"
-                )
+                raise OperandDeduceError(f"Expected operand to be Number, not {v}")
         log.logger.get_canvas().pixel(x.value, y.value, make_color(c))
         return Undefined
 
@@ -422,18 +384,14 @@ class Pixel(BuiltIn):
 class PixelSize(SingleOperandPrimitive):
     def execute_simple(self, operand: Expression) -> Expression:
         if not isinstance(operand, Number):
-            raise OperandDeduceError(
-                f"Expected operand to be Number, not {operand}"
-            )
+            raise OperandDeduceError(f"Expected operand to be Number, not {operand}")
         log.logger.get_canvas().set_pixel_size(operand.value)
         return Undefined
 
 
 @global_attr("rgb")
 class RGB(BuiltIn):
-    def execute_evaluated(
-        self, operands: List[Expression], frame: Frame
-    ) -> Expression:
+    def execute_evaluated(self, operands: List[Expression], frame: Frame) -> Expression:
         verify_exact_callable_length(self, 3, len(operands))
         for operand in operands:
             if not isinstance(operand, Number):
@@ -454,9 +412,7 @@ class RGB(BuiltIn):
 class Right(SingleOperandPrimitive):
     def execute_simple(self, operand: Expression) -> Expression:
         if not isinstance(operand, Number):
-            raise OperandDeduceError(
-                f"Expected operand to be Number, not {operand}"
-            )
+            raise OperandDeduceError(f"Expected operand to be Number, not {operand}")
         log.logger.get_canvas().rotate(-operand.value)
         return Undefined
 
@@ -464,9 +420,7 @@ class Right(SingleOperandPrimitive):
 @global_attr("screen_width")
 @global_attr("screen_height")
 class ScreenSize(BuiltIn):
-    def execute_evaluated(
-        self, operands: List[Expression], frame: Frame
-    ) -> Expression:
+    def execute_evaluated(self, operands: List[Expression], frame: Frame) -> Expression:
         verify_exact_callable_length(self, 0, len(operands))
         return Number(log.logger.get_canvas().SIZE)
 
@@ -476,9 +430,7 @@ class ScreenSize(BuiltIn):
 class SetHeading(SingleOperandPrimitive):
     def execute_simple(self, operand: Expression) -> Expression:
         if not isinstance(operand, Number):
-            raise OperandDeduceError(
-                f"Expected operand to be Number, not {operand}"
-            )
+            raise OperandDeduceError(f"Expected operand to be Number, not {operand}")
         log.logger.get_canvas().abs_rotate(90 - operand.value)
         return Undefined
 
@@ -501,9 +453,7 @@ class SetPosition(BuiltIn):
 @global_attr("showturtle")
 @global_attr("st")
 class ShowTurtle(BuiltIn):
-    def execute_evaluated(
-        self, operands: List[Expression], frame: Frame
-    ) -> Expression:
+    def execute_evaluated(self, operands: List[Expression], frame: Frame) -> Expression:
         verify_exact_callable_length(self, 0, len(operands))
         log.logger.get_canvas().show_turtle()
         return Undefined
@@ -513,7 +463,5 @@ class ShowTurtle(BuiltIn):
 class Speed(SingleOperandPrimitive):
     def execute_simple(self, operand: Expression) -> Expression:
         if not isinstance(operand, Number):
-            raise OperandDeduceError(
-                f"Expected operand to be Number, not {operand}"
-            )
+            raise OperandDeduceError(f"Expected operand to be Number, not {operand}")
         return Undefined

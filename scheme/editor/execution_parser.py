@@ -63,9 +63,7 @@ def get_expression(buffer: TokenBuffer) -> Union[Expression, None]:
     elif token == ",":
         if buffer.get_next_token() == "@":
             buffer.pop_next_token()
-            return make_list(
-                [Symbol("unquote-splicing"), get_expression(buffer)]
-            )
+            return make_list([Symbol("unquote-splicing"), get_expression(buffer)])
         else:
             return make_list([Symbol("unquote"), get_expression(buffer)])
     elif token == "`":

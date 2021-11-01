@@ -1,67 +1,67 @@
 test = {
-  'name': 'Problem 5',
-  'points': 3,
-  'suites': [
-    {
-      'cases': [
+    "name": "Problem 5",
+    "points": 3,
+    "suites": [
         {
-          'answer': 'By accessing the place instance attribute, which is a Place object',
-          'choices': [
-            'By accessing the place instance attribute, which is a Place object',
-            r"""
+            "cases": [
+                {
+                    "answer": "By accessing the place instance attribute, which is a Place object",
+                    "choices": [
+                        "By accessing the place instance attribute, which is a Place object",
+                        r"""
             By accessing the place instance attribute, which is the name of
             some Place object
             """,
-            'By calling the Place constructor, passing in the FireAnt instance',
-            'By calling the FireAnt constructor'
-          ],
-          'hidden': False,
-          'locked': False,
-          'question': 'How can you obtain the current place of a FireAnt?'
-        },
-        {
-          'answer': 'By accessing the bees instance attribute, which is a list of Bee objects',
-          'choices': [
-            r"""
+                        "By calling the Place constructor, passing in the FireAnt instance",
+                        "By calling the FireAnt constructor",
+                    ],
+                    "hidden": False,
+                    "locked": False,
+                    "question": "How can you obtain the current place of a FireAnt?",
+                },
+                {
+                    "answer": "By accessing the bees instance attribute, which is a list of Bee objects",
+                    "choices": [
+                        r"""
             By accessing the bees instance attribute, which is a list of Bee
             objects
             """,
-            r"""
+                        r"""
             By accessing the bees instance attribute, which is a dictionary of
             Bee objects
             """,
-            'By calling the add_insect method on the place instance',
-            'By calling the Bee constructor, passing in the place instance'
-          ],
-          'hidden': False,
-          'locked': False,
-          'question': 'How can you obtain all of the Bees currently in a given place?'
-        },
-        {
-          'answer': 'Yes, but you should iterate over a copy of the list to avoid skipping elements',
-          'choices': [
-            r"""
+                        "By calling the add_insect method on the place instance",
+                        "By calling the Bee constructor, passing in the place instance",
+                    ],
+                    "hidden": False,
+                    "locked": False,
+                    "question": "How can you obtain all of the Bees currently in a given place?",
+                },
+                {
+                    "answer": "Yes, but you should iterate over a copy of the list to avoid skipping elements",
+                    "choices": [
+                        r"""
             Yes, but you should iterate over a copy of the list to avoid skipping
             elements
             """,
-            'Yes, you can mutate a list while iterating over it with no problems',
-            r"""
+                        "Yes, you can mutate a list while iterating over it with no problems",
+                        r"""
             No, Python doesn't allow list mutation on a list that is being
             iterated through
-            """
-          ],
-          'hidden': False,
-          'locked': False,
-          'question': 'Can you iterate over a list while mutating it?'
-        }
-      ],
-      'scored': False,
-      'type': 'concept'
-    },
-    {
-      'cases': [
+            """,
+                    ],
+                    "hidden": False,
+                    "locked": False,
+                    "question": "Can you iterate over a list while mutating it?",
+                },
+            ],
+            "scored": False,
+            "type": "concept",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           >>> # Testing FireAnt parameters
           >>> fire = FireAnt()
           >>> FireAnt.food_cost
@@ -69,11 +69,11 @@ test = {
           >>> fire.health
           3
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # Abstraction tests
           >>> original = Ant.__init__
           >>> Ant.__init__ = lambda self, health: print("init") #If this errors, you are not calling the parent constructor correctly.
@@ -89,11 +89,11 @@ test = {
           reduced
           >>> Ant.reduce_health = original
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # Testing fire does damage to all Bees in its Place
           >>> place = gamestate.places['tunnel_0_4']
           >>> fire = FireAnt(health=1)
@@ -112,11 +112,11 @@ test = {
           >>> place.bees[0].health           # What is the health of the remaining Bee?
           1
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> place = gamestate.places['tunnel_0_4']
           >>> ant = FireAnt(health=1)           # Create a FireAnt with 1 health
           >>> place.add_insect(ant)      # Add a FireAnt to place
@@ -126,11 +126,11 @@ test = {
           >>> ant.place is place         # Is the ant's place still that place?
           False
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # Testing fire damage when the fire ant does not die
           >>> place = gamestate.places['tunnel_0_4']
           >>> bee = Bee(5)
@@ -143,11 +143,11 @@ test = {
           >>> bee.health
           4
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # Testing no hardcoded 3
           >>> place = gamestate.places['tunnel_0_4']
           >>> bee = Bee(100)
@@ -161,11 +161,11 @@ test = {
           >>> bee.health
           50
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # Testing fire damage when the fire ant does die
           >>> place = gamestate.places['tunnel_0_4']
           >>> bee = Bee(5)
@@ -178,11 +178,11 @@ test = {
           >>> bee.health
           1
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # Testing fire does damage to all Bees in its Place
           >>> place = gamestate.places['tunnel_0_4']
           >>> place.add_insect(FireAnt(1))
@@ -192,11 +192,11 @@ test = {
           >>> len(place.bees)               # How many bees are left?
           0
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # Testing fire damage is instance attribute
           >>> place = gamestate.places['tunnel_0_4']
           >>> bee = Bee(900)
@@ -208,11 +208,11 @@ test = {
           >>> bee.health  # is damage an instance attribute?
           399
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # General FireAnt Test
           >>> place = gamestate.places['tunnel_0_4']
           >>> bee = Bee(10)
@@ -232,11 +232,11 @@ test = {
           >>> bee.place.name        # Bee should not have been blocked
           'tunnel_0_3'
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # General FireAnt Test
           >>> place = gamestate.places['tunnel_0_4']
           >>> bee = Bee(10)
@@ -251,11 +251,11 @@ test = {
           >>> place.ant is ant      # The FireAnt should still be at place
           True
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # test proper call to death callback
           >>> original_death_callback = Insect.death_callback
           >>> Insect.death_callback = lambda x: print("insect died")
@@ -271,37 +271,37 @@ test = {
           insect died
           >>> Insect.death_callback = original_death_callback
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": r"""
       >>> from ants import *
       >>> beehive, layout = Hive(AssaultPlan()), dry_layout
       >>> dimensions = (1, 9)
       >>> gamestate = GameState(None, beehive, ant_types(), layout, dimensions)
       >>> #
       """,
-      'teardown': '',
-      'type': 'doctest'
-    },
-    {
-      'cases': [
+            "teardown": "",
+            "type": "doctest",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           >>> from ants import *
           >>> FireAnt.implemented
           True
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': '',
-      'teardown': '',
-      'type': 'doctest'
-    }
-  ]
+                    "hidden": False,
+                    "locked": False,
+                }
+            ],
+            "scored": True,
+            "setup": "",
+            "teardown": "",
+            "type": "doctest",
+        },
+    ],
 }

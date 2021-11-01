@@ -1,11 +1,11 @@
 test = {
-  'name': 'Problem 9 (EC)',
-  'points': 1,
-  'suites': [
-    {
-      'cases': [
+    "name": "Problem 9 (EC)",
+    "points": 1,
+    "suites": [
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           scm> (define-macro (for formal iterable body)
           ....               (list 'map (list 'lambda (list formal) body) iterable))
           for
@@ -15,11 +15,11 @@ test = {
           ....          i))
           (0 2 3)
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (define (cadr s) (car (cdr s)))
           cadr
           scm> (define (cars s) (map car s))
@@ -38,11 +38,11 @@ test = {
           scm> (hyp 3 4)
           5.0
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (define-macro wat?)
           SchemeError
           scm> (define-macro woah okay)
@@ -56,19 +56,19 @@ test = {
           scm> (name)
           SchemeError
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": r"""
       scm> (define (map f lst)
       ....         (if (null? lst)
       ....             nil
       ....             (cons (f (car lst)) (map f (cdr lst)))))
       """,
-      'teardown': '',
-      'type': 'scheme'
-    }
-  ]
+            "teardown": "",
+            "type": "scheme",
+        }
+    ],
 }

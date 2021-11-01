@@ -1,48 +1,48 @@
 test = {
-  'name': 'pow',
-  'points': 1,
-  'suites': [
-    {
-      'cases': [
+    "name": "pow",
+    "points": 1,
+    "suites": [
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           scm> (pow 2 5)
           32
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (pow 10 3)
           1000
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (pow 3 3)
           27
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (pow 1 100000000000000) ; make sure this doesn't run forever!
           1
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": r"""
       scm> (load-all ".")
       """,
-      'teardown': '',
-      'type': 'scheme'
-    }
-  ]
+            "teardown": "",
+            "type": "scheme",
+        }
+    ],
 }

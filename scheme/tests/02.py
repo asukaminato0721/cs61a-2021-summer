@@ -1,54 +1,44 @@
 test = {
-  'name': 'Problem 2',
-  'points': 1,
-  'suites': [
-    {
-      'cases': [
+    "name": "Problem 2",
+    "points": 1,
+    "suites": [
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           >>> global_frame = create_global_frame()
           >>> global_frame.define("x", 3)
           >>> global_frame.parent is None
-          b1796eff8a8e977439f97b5c6881a282
-          # locked
+          True
           >>> global_frame.lookup("x")
-          3c7e8a3a2176a696c3a66418f78dff6b
-          # locked
+          3
           >>> global_frame.define("x", 2)
           >>> global_frame.lookup("x")
-          2b7cdec3904f986982cbd24a0bc12887
-          # locked
+          2
           >>> global_frame.lookup("foo")
-          ec908af60f03727428c7ee3f22ec3cd8
-          # locked
-          # choice: None
-          # choice: SchemeError
-          # choice: 3
+          SchemeError
           """,
-          'hidden': False,
-          'locked': True
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> first_frame = create_global_frame()
           >>> first_frame.define("x", 3)
           >>> first_frame.define("y", False)
           >>> second_frame = Frame(first_frame)
           >>> second_frame.parent == first_frame
-          b1796eff8a8e977439f97b5c6881a282
-          # locked
+          True
           >>> second_frame.lookup("x")
-          3c7e8a3a2176a696c3a66418f78dff6b
-          # locked
+          3
           >>> second_frame.lookup("y")
-          96ae38315990d5fb27de4225d8b470ba
-          # locked
+          False
           """,
-          'hidden': False,
-          'locked': True
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> first_frame = create_global_frame()
           >>> first_frame.define("x", 3)
           >>> second_frame = Frame(first_frame)
@@ -66,11 +56,11 @@ test = {
           >>> fourth_frame.lookup("y")
           2
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> first_frame = create_global_frame()
           >>> first_frame.define("x", 1)
           >>> second_frame = Frame(first_frame)
@@ -97,21 +87,21 @@ test = {
           >>> third_frame.lookup("x")
           2
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": r"""
       >>> from scheme import *
       """,
-      'teardown': '',
-      'type': 'doctest'
-    },
-    {
-      'cases': [
+            "teardown": "",
+            "type": "doctest",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           scm> +
           #[+]
           scm> display
@@ -119,14 +109,14 @@ test = {
           scm> hello
           SchemeError
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': '',
-      'teardown': '',
-      'type': 'scheme'
-    }
-  ]
+                    "hidden": False,
+                    "locked": False,
+                }
+            ],
+            "scored": True,
+            "setup": "",
+            "teardown": "",
+            "type": "scheme",
+        },
+    ],
 }

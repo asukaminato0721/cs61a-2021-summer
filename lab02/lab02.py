@@ -65,9 +65,7 @@ def count_cond(condition: Callable[[int, int], bool]) -> Callable[[int], int]:
     return inner
 
 
-def compose1(
-    f: Callable[[int], int], g: Callable[[int], int]
-) -> Callable[[int], int]:
+def compose1(f: Callable[[int], int], g: Callable[[int], int]) -> Callable[[int], int]:
     """Return the composition function which given x, computes f(g(x)).
 
     >>> add_one = lambda x: x + 1        # adds one to x

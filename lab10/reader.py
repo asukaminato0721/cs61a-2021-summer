@@ -110,14 +110,10 @@ def read_expr(src: Buffer) -> Union[LambdaExpr, CallExpr]:
         src.expect(")")
         return read_call_expr(src, inner_expr)
     else:
-        raise SyntaxError(
-            "'{}' is not the start of an expression".format(token)
-        )
+        raise SyntaxError("'{}' is not the start of an expression".format(token))
 
 
-def read_comma_separated(
-    src: Buffer, reader: Callable[[Buffer], str]
-) -> List[str]:
+def read_comma_separated(src: Buffer, reader: Callable[[Buffer], str]) -> List[str]:
     if src.current() in (":", ")"):
         return []
     else:

@@ -89,9 +89,7 @@ class Handler(server.BaseHTTPRequestHandler):
                 save(code, filename)
             self.wfile.write(
                 bytes(
-                    json.dumps(
-                        {"result": "success", "stripped": strip_comments(code)}
-                    ),
+                    json.dumps({"result": "success", "stripped": strip_comments(code)}),
                     "utf-8",
                 )
             )
@@ -199,9 +197,7 @@ class Handler(server.BaseHTTPRequestHandler):
         if path == "editor/static/":
             path = "editor/static/index.html"
         try:
-            with open(
-                path, "rb"
-            ) as f:  # lol better make sure that port is closed
+            with open(path, "rb") as f:  # lol better make sure that port is closed
                 self.wfile.write(
                     f.read().replace(
                         b"<START_DATA>",
@@ -240,15 +236,11 @@ def cancelable_subprocess_call(cancellation_event, *args, **kwargs):
                 for sink in sinks:
                     sink.write(s)
 
-        reader_thread = threading.Thread(
-            target=pipeline, args=(proc.stdout, buffered)
-        )
+        reader_thread = threading.Thread(target=pipeline, args=(proc.stdout, buffered))
         reader_thread.daemon = True
         reader_thread.start()
         try:
-            poll_interval = (
-                socketserver.BaseServer.serve_forever.__defaults__[0] / 8
-            )
+            poll_interval = socketserver.BaseServer.serve_forever.__defaults__[0] / 8
             while proc.poll() is None:
                 if cancellation_event.wait(poll_interval):
                     proc.terminate()
@@ -280,9 +272,7 @@ def handle(
             global_frame.base if global_frame_id != -1 else None,
         )
     except OperationCanceledException:
-        return json.dumps(
-            {"success": False, "out": [str("operation was canceled")]}
-        )
+        return json.dumps({"success": False, "out": [str("operation was canceled")]})
     except ParseError as e:
         return json.dumps({"success": False, "out": [str(e)]})
 
@@ -355,9 +345,7 @@ def start(file_args, port, open_browser):
         try:
             httpd = ThreadedHTTPServer(("127.0.0.1", port), Handler)
         except OSError as e:
-            print(
-                f"Port {port} is currently in use, trying a different port..."
-            )
+            print(f"Port {port} is currently in use, trying a different port...")
         else:
             PORT = port
             url = f"http://127.0.0.1:{PORT}"
@@ -365,9 +353,7 @@ def start(file_args, port, open_browser):
     else:
         if supports_color():
             print("\033[91m", end="")
-        print(
-            f"Unable to connect to any candidate ports, printing debug information:"
-        )
+        print(f"Unable to connect to any candidate ports, printing debug information:")
         print(e)
         if supports_color():
             print("\033[0m", end="")

@@ -21,9 +21,7 @@ def make_formode():
             @wraps(func)
             def error(self, *args, **kwargs):
                 raise RuntimeError(
-                    "Handler not available for mode: {}".format(
-                        self._BaseTurtle__mode
-                    )
+                    "Handler not available for mode: {}".format(self._BaseTurtle__mode)
                 )
 
             prev = handlers.get(func.__name__, error)

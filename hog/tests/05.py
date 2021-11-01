@@ -1,61 +1,61 @@
 test = {
-  'name': 'Question 5',
-  'points': 4,
-  'suites': [
-    {
-      'cases': [
+    "name": "Question 5",
+    "points": 4,
+    "suites": [
         {
-          'answer': 'While score0 and score1 are both less than goal',
-          'choices': [
-            'While score0 and score1 are both less than goal',
-            'While at least one of score0 or score1 is less than goal',
-            'While score0 is less than goal',
-            'While score1 is less than goal'
-          ],
-          'hidden': False,
-          'locked': False,
-          'question': r"""
+            "cases": [
+                {
+                    "answer": "While score0 and score1 are both less than goal",
+                    "choices": [
+                        "While score0 and score1 are both less than goal",
+                        "While at least one of score0 or score1 is less than goal",
+                        "While score0 is less than goal",
+                        "While score1 is less than goal",
+                    ],
+                    "hidden": False,
+                    "locked": False,
+                    "question": r"""
           The variables score0 and score1 are the scores for Player 0
           and Player 1, respectively. Under what conditions should the
           game continue?
-          """
-        },
-        {
-          'answer': 'A function that returns the number of dice a player will roll',
-          'choices': [
-            'The number of dice a player will roll',
-            'A function that returns the number of dice a player will roll',
-            "A player's desired turn outcome"
-          ],
-          'hidden': False,
-          'locked': False,
-          'question': 'What is a strategy in the context of this game?'
-        },
-        {
-          'answer': 'strategy1(score1, score0)',
-          'choices': [
-            'strategy1(score1, score0)',
-            'strategy1(score0, score1)',
-            'strategy1(score1)',
-            'strategy1(score0)'
-          ],
-          'hidden': False,
-          'locked': False,
-          'question': r"""
+          """,
+                },
+                {
+                    "answer": "A function that returns the number of dice a player will roll",
+                    "choices": [
+                        "The number of dice a player will roll",
+                        "A function that returns the number of dice a player will roll",
+                        "A player's desired turn outcome",
+                    ],
+                    "hidden": False,
+                    "locked": False,
+                    "question": "What is a strategy in the context of this game?",
+                },
+                {
+                    "answer": "strategy1(score1, score0)",
+                    "choices": [
+                        "strategy1(score1, score0)",
+                        "strategy1(score0, score1)",
+                        "strategy1(score1)",
+                        "strategy1(score0)",
+                    ],
+                    "hidden": False,
+                    "locked": False,
+                    "question": r"""
           If strategy1 is Player 1's strategy function, score0 is
           Player 0's current score, and score1 is Player 1's current
           score, then which of the following demonstrates correct
           usage of strategy1?
-          """
-        }
-      ],
-      'scored': False,
-      'type': 'concept'
-    },
-    {
-      'cases': [
+          """,
+                },
+            ],
+            "scored": False,
+            "type": "concept",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           >>> #
           >>> # Play function stops at goal
           >>> s0, s1 = hog.play(always(5), always(3), score0=91, score1=10, dice=always_three)
@@ -64,11 +64,11 @@ test = {
           >>> s1
           10
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> #
           >>> # Goal score is not hardwired
           >>> s0, s1 = hog.play(always(5), always(5), goal=10, dice=always_three)
@@ -77,11 +77,11 @@ test = {
           >>> s1
           0
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> #
           >>> # Extra turn from more boar
           >>> s0, s1 = hog.play(always(4), always(3), goal=25, dice=always_three)
@@ -90,11 +90,11 @@ test = {
           >>> s1
           27
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> #
           >>> # Goal score is not hardwired
           >>> s0, s1 = hog.play(always(5), always(5), goal=15, dice=always_three)
@@ -103,23 +103,23 @@ test = {
           >>> s1
           0
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": r"""
       >>> import hog
       >>> always_three = hog.make_test_dice(3)
       >>> always = hog.always_roll
       """,
-      'teardown': '',
-      'type': 'doctest'
-    },
-    {
-      'cases': [
+            "teardown": "",
+            "type": "doctest",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           >>> #
           >>> # Use strategies
           >>> # We recommend working this out turn-by-turn on a piece of paper (use Python for difficult calculations).
@@ -131,23 +131,23 @@ test = {
           >>> s1
           108
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': r"""
+                    "hidden": False,
+                    "locked": False,
+                }
+            ],
+            "scored": True,
+            "setup": r"""
       >>> import hog
       >>> always_three = hog.make_test_dice(3)
       >>> always_seven = hog.make_test_dice(7)
       """,
-      'teardown': '',
-      'type': 'doctest'
-    },
-    {
-      'cases': [
+            "teardown": "",
+            "type": "doctest",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           >>> #
           >>> # Player 0 win
           >>> s0, s1 = hog.play(always(4), always(4), score0=88, score1=87, dice=always_three)
@@ -156,11 +156,11 @@ test = {
           >>> s1
           87
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> #
           >>> # Piggy points refers to correct opponent score
           >>> s0, s1 = hog.play(always(0), always(0), score0=5, score1=96, dice=always_three)
@@ -169,11 +169,11 @@ test = {
           >>> s1
           101
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> #
           >>> # Handle multiple turns with stacking extra turns
           >>> s0, s1 = hog.play(always(1), always(1), goal=25, dice=hog.make_test_dice(5, 22, 8, 1, 2, 6, 3))
@@ -182,25 +182,25 @@ test = {
           >>> s1
           25
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": r"""
       >>> import hog
       >>> always_one = hog.make_test_dice(1)
       >>> always_two = hog.make_test_dice(2)
       >>> always_three = hog.make_test_dice(3)
       >>> always = hog.always_roll
       """,
-      'teardown': '',
-      'type': 'doctest'
-    },
-    {
-      'cases': [
+            "teardown": "",
+            "type": "doctest",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=45891, score0=47, score1=53, goal=54)
           >>> print(turns[0])
           Start scores = (47, 53).
@@ -213,11 +213,11 @@ test = {
           >>> print(turns[2])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=5192, score0=43, score1=12, goal=47)
           >>> print(turns[0])
           Start scores = (43, 12).
@@ -250,11 +250,11 @@ test = {
           >>> print(turns[7])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=95816, score0=15, score1=45, goal=50)
           >>> print(turns[0])
           Start scores = (15, 45).
@@ -279,11 +279,11 @@ test = {
           >>> print(turns[5])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=25365, score0=3, score1=8, goal=34)
           >>> print(turns[0])
           Start scores = (3, 8).
@@ -308,11 +308,11 @@ test = {
           >>> print(turns[5])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=11863, score0=55, score1=5, goal=56)
           >>> print(turns[0])
           Start scores = (55, 5).
@@ -321,11 +321,11 @@ test = {
           >>> print(turns[1])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=59465, score0=61, score1=16, goal=88)
           >>> print(turns[0])
           Start scores = (61, 16).
@@ -358,11 +358,11 @@ test = {
           >>> print(turns[7])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=4714, score0=9, score1=3, goal=20)
           >>> print(turns[0])
           Start scores = (9, 3).
@@ -375,11 +375,11 @@ test = {
           >>> print(turns[2])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=10742, score0=4, score1=25, goal=57)
           >>> print(turns[0])
           Start scores = (4, 25).
@@ -400,11 +400,11 @@ test = {
           >>> print(turns[4])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=5480, score0=5, score1=8, goal=77)
           >>> print(turns[0])
           Start scores = (5, 8).
@@ -473,11 +473,11 @@ test = {
           >>> print(turns[16])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=5014, score0=56, score1=59, goal=64)
           >>> print(turns[0])
           Start scores = (56, 59).
@@ -494,11 +494,11 @@ test = {
           >>> print(turns[3])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=50496, score0=4, score1=15, goal=19)
           >>> print(turns[0])
           Start scores = (4, 15).
@@ -519,11 +519,11 @@ test = {
           >>> print(turns[4])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=97617, score0=16, score1=27, goal=35)
           >>> print(turns[0])
           Start scores = (16, 27).
@@ -536,11 +536,11 @@ test = {
           >>> print(turns[2])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=19709, score0=27, score1=6, goal=85)
           >>> print(turns[0])
           Start scores = (27, 6).
@@ -601,11 +601,11 @@ test = {
           >>> print(turns[14])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=33634, score0=48, score1=74, goal=92)
           >>> print(turns[0])
           Start scores = (48, 74).
@@ -618,11 +618,11 @@ test = {
           >>> print(turns[2])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=22855, score0=12, score1=22, goal=98)
           >>> print(turns[0])
           Start scores = (12, 22).
@@ -671,11 +671,11 @@ test = {
           >>> print(turns[11])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=49015, score0=12, score1=5, goal=82)
           >>> print(turns[0])
           Start scores = (12, 5).
@@ -712,11 +712,11 @@ test = {
           >>> print(turns[8])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=50497, score0=46, score1=5, goal=51)
           >>> print(turns[0])
           Start scores = (46, 5).
@@ -729,11 +729,11 @@ test = {
           >>> print(turns[2])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=42297, score0=6, score1=22, goal=25)
           >>> print(turns[0])
           Start scores = (6, 22).
@@ -762,11 +762,11 @@ test = {
           >>> print(turns[6])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=1726, score0=19, score1=5, goal=52)
           >>> print(turns[0])
           Start scores = (19, 5).
@@ -783,11 +783,11 @@ test = {
           >>> print(turns[3])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=17218, score0=19, score1=10, goal=50)
           >>> print(turns[0])
           Start scores = (19, 10).
@@ -828,11 +828,11 @@ test = {
           >>> print(turns[9])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=88988, score0=15, score1=95, goal=100)
           >>> print(turns[0])
           Start scores = (15, 95).
@@ -877,11 +877,11 @@ test = {
           >>> print(turns[10])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=8964, score0=79, score1=56, goal=83)
           >>> print(turns[0])
           Start scores = (79, 56).
@@ -902,11 +902,11 @@ test = {
           >>> print(turns[4])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=24932, score0=12, score1=0, goal=14)
           >>> print(turns[0])
           Start scores = (12, 0).
@@ -923,11 +923,11 @@ test = {
           >>> print(turns[3])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=76726, score0=40, score1=73, goal=93)
           >>> print(turns[0])
           Start scores = (40, 73).
@@ -972,11 +972,11 @@ test = {
           >>> print(turns[10])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=85393, score0=3, score1=0, goal=44)
           >>> print(turns[0])
           Start scores = (3, 0).
@@ -1041,11 +1041,11 @@ test = {
           >>> print(turns[15])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=35702, score0=10, score1=13, goal=14)
           >>> print(turns[0])
           Start scores = (10, 13).
@@ -1054,11 +1054,11 @@ test = {
           >>> print(turns[1])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=75713, score0=62, score1=6, goal=63)
           >>> print(turns[0])
           Start scores = (62, 6).
@@ -1067,11 +1067,11 @@ test = {
           >>> print(turns[1])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=14879, score0=24, score1=8, goal=29)
           >>> print(turns[0])
           Start scores = (24, 8).
@@ -1088,11 +1088,11 @@ test = {
           >>> print(turns[3])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=62742, score0=9, score1=5, goal=11)
           >>> print(turns[0])
           Start scores = (9, 5).
@@ -1101,11 +1101,11 @@ test = {
           >>> print(turns[1])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=99168, score0=34, score1=40, goal=95)
           >>> print(turns[0])
           Start scores = (34, 40).
@@ -1194,11 +1194,11 @@ test = {
           >>> print(turns[21])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=98804, score0=37, score1=45, goal=47)
           >>> print(turns[0])
           Start scores = (37, 45).
@@ -1211,11 +1211,11 @@ test = {
           >>> print(turns[2])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=27518, score0=87, score1=16, goal=92)
           >>> print(turns[0])
           Start scores = (87, 16).
@@ -1252,11 +1252,11 @@ test = {
           >>> print(turns[8])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=75062, score0=43, score1=5, goal=97)
           >>> print(turns[0])
           Start scores = (43, 5).
@@ -1341,11 +1341,11 @@ test = {
           >>> print(turns[20])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=578, score0=7, score1=24, goal=30)
           >>> print(turns[0])
           Start scores = (7, 24).
@@ -1358,11 +1358,11 @@ test = {
           >>> print(turns[2])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=93942, score0=42, score1=41, goal=43)
           >>> print(turns[0])
           Start scores = (42, 41).
@@ -1371,11 +1371,11 @@ test = {
           >>> print(turns[1])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=48161, score0=15, score1=55, goal=83)
           >>> print(turns[0])
           Start scores = (15, 55).
@@ -1428,11 +1428,11 @@ test = {
           >>> print(turns[12])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=52136, score0=2, score1=14, goal=15)
           >>> print(turns[0])
           Start scores = (2, 14).
@@ -1445,11 +1445,11 @@ test = {
           >>> print(turns[2])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=30971, score0=11, score1=12, goal=25)
           >>> print(turns[0])
           Start scores = (11, 12).
@@ -1466,11 +1466,11 @@ test = {
           >>> print(turns[3])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=69948, score0=11, score1=19, goal=43)
           >>> print(turns[0])
           Start scores = (11, 19).
@@ -1499,11 +1499,11 @@ test = {
           >>> print(turns[6])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=33856, score0=9, score1=9, goal=19)
           >>> print(turns[0])
           Start scores = (9, 9).
@@ -1516,11 +1516,11 @@ test = {
           >>> print(turns[2])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=93176, score0=7, score1=37, goal=80)
           >>> print(turns[0])
           Start scores = (7, 37).
@@ -1613,11 +1613,11 @@ test = {
           >>> print(turns[22])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=85986, score0=35, score1=12, goal=74)
           >>> print(turns[0])
           Start scores = (35, 12).
@@ -1650,11 +1650,11 @@ test = {
           >>> print(turns[7])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=76820, score0=28, score1=14, goal=61)
           >>> print(turns[0])
           Start scores = (28, 14).
@@ -1691,11 +1691,11 @@ test = {
           >>> print(turns[8])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=83984, score0=64, score1=49, goal=78)
           >>> print(turns[0])
           Start scores = (64, 49).
@@ -1704,11 +1704,11 @@ test = {
           >>> print(turns[1])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=25773, score0=3, score1=17, goal=30)
           >>> print(turns[0])
           Start scores = (3, 17).
@@ -1737,11 +1737,11 @@ test = {
           >>> print(turns[6])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=6012, score0=30, score1=3, goal=85)
           >>> print(turns[0])
           Start scores = (30, 3).
@@ -1810,11 +1810,11 @@ test = {
           >>> print(turns[16])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=56692, score0=69, score1=40, goal=71)
           >>> print(turns[0])
           Start scores = (69, 40).
@@ -1831,11 +1831,11 @@ test = {
           >>> print(turns[3])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=11528, score0=6, score1=7, goal=17)
           >>> print(turns[0])
           Start scores = (6, 7).
@@ -1852,11 +1852,11 @@ test = {
           >>> print(turns[3])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=95684, score0=3, score1=1, goal=10)
           >>> print(turns[0])
           Start scores = (3, 1).
@@ -1881,11 +1881,11 @@ test = {
           >>> print(turns[5])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=81397, score0=45, score1=40, goal=52)
           >>> print(turns[0])
           Start scores = (45, 40).
@@ -1894,11 +1894,11 @@ test = {
           >>> print(turns[1])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=22637, score0=32, score1=11, goal=58)
           >>> print(turns[0])
           Start scores = (32, 11).
@@ -1907,11 +1907,11 @@ test = {
           >>> print(turns[1])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=11998, score0=16, score1=21, goal=67)
           >>> print(turns[0])
           Start scores = (16, 21).
@@ -1944,11 +1944,11 @@ test = {
           >>> print(turns[7])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=69783, score0=11, score1=13, goal=38)
           >>> print(turns[0])
           Start scores = (11, 13).
@@ -2005,11 +2005,11 @@ test = {
           >>> print(turns[13])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=37364, score0=29, score1=22, goal=35)
           >>> print(turns[0])
           Start scores = (29, 22).
@@ -2022,11 +2022,11 @@ test = {
           >>> print(turns[2])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=5143, score0=2, score1=15, goal=79)
           >>> print(turns[0])
           Start scores = (2, 15).
@@ -2079,11 +2079,11 @@ test = {
           >>> print(turns[12])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=82888, score0=26, score1=39, goal=87)
           >>> print(turns[0])
           Start scores = (26, 39).
@@ -2132,11 +2132,11 @@ test = {
           >>> print(turns[11])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=25835, score0=15, score1=64, goal=95)
           >>> print(turns[0])
           Start scores = (15, 64).
@@ -2205,11 +2205,11 @@ test = {
           >>> print(turns[16])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=85071, score0=86, score1=5, goal=89)
           >>> print(turns[0])
           Start scores = (86, 5).
@@ -2234,11 +2234,11 @@ test = {
           >>> print(turns[5])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=23577, score0=32, score1=23, goal=45)
           >>> print(turns[0])
           Start scores = (32, 23).
@@ -2263,11 +2263,11 @@ test = {
           >>> print(turns[5])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=663, score0=44, score1=13, goal=59)
           >>> print(turns[0])
           Start scores = (44, 13).
@@ -2280,11 +2280,11 @@ test = {
           >>> print(turns[2])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=6543, score0=65, score1=70, goal=87)
           >>> print(turns[0])
           Start scores = (65, 70).
@@ -2297,11 +2297,11 @@ test = {
           >>> print(turns[2])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=31919, score0=2, score1=16, goal=28)
           >>> print(turns[0])
           Start scores = (2, 16).
@@ -2314,11 +2314,11 @@ test = {
           >>> print(turns[2])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=67699, score0=24, score1=17, goal=28)
           >>> print(turns[0])
           Start scores = (24, 17).
@@ -2335,11 +2335,11 @@ test = {
           >>> print(turns[3])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=25815, score0=52, score1=11, goal=54)
           >>> print(turns[0])
           Start scores = (52, 11).
@@ -2356,11 +2356,11 @@ test = {
           >>> print(turns[3])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=41969, score0=38, score1=54, goal=78)
           >>> print(turns[0])
           Start scores = (38, 54).
@@ -2401,11 +2401,11 @@ test = {
           >>> print(turns[9])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=68309, score0=53, score1=40, goal=56)
           >>> print(turns[0])
           Start scores = (53, 40).
@@ -2414,11 +2414,11 @@ test = {
           >>> print(turns[1])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=8243, score0=28, score1=23, goal=30)
           >>> print(turns[0])
           Start scores = (28, 23).
@@ -2427,11 +2427,11 @@ test = {
           >>> print(turns[1])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=43015, score0=53, score1=74, goal=77)
           >>> print(turns[0])
           Start scores = (53, 74).
@@ -2448,11 +2448,11 @@ test = {
           >>> print(turns[3])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=76012, score0=39, score1=36, goal=73)
           >>> print(turns[0])
           Start scores = (39, 36).
@@ -2493,11 +2493,11 @@ test = {
           >>> print(turns[9])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=9818, score0=11, score1=9, goal=64)
           >>> print(turns[0])
           Start scores = (11, 9).
@@ -2538,11 +2538,11 @@ test = {
           >>> print(turns[9])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=25916, score0=86, score1=24, goal=88)
           >>> print(turns[0])
           Start scores = (86, 24).
@@ -2559,11 +2559,11 @@ test = {
           >>> print(turns[3])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=15583, score0=11, score1=40, goal=55)
           >>> print(turns[0])
           Start scores = (11, 40).
@@ -2620,11 +2620,11 @@ test = {
           >>> print(turns[13])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=7242, score0=19, score1=46, goal=98)
           >>> print(turns[0])
           Start scores = (19, 46).
@@ -2705,11 +2705,11 @@ test = {
           >>> print(turns[19])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=74122, score0=18, score1=14, goal=32)
           >>> print(turns[0])
           Start scores = (18, 14).
@@ -2726,11 +2726,11 @@ test = {
           >>> print(turns[3])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=59593, score0=27, score1=9, goal=40)
           >>> print(turns[0])
           Start scores = (27, 9).
@@ -2751,11 +2751,11 @@ test = {
           >>> print(turns[4])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=8128, score0=17, score1=8, goal=29)
           >>> print(turns[0])
           Start scores = (17, 8).
@@ -2764,11 +2764,11 @@ test = {
           >>> print(turns[1])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=22810, score0=7, score1=0, goal=43)
           >>> print(turns[0])
           Start scores = (7, 0).
@@ -2797,11 +2797,11 @@ test = {
           >>> print(turns[6])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=59348, score0=95, score1=84, goal=97)
           >>> print(turns[0])
           Start scores = (95, 84).
@@ -2810,11 +2810,11 @@ test = {
           >>> print(turns[1])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=88169, score0=23, score1=40, goal=79)
           >>> print(turns[0])
           Start scores = (23, 40).
@@ -2847,11 +2847,11 @@ test = {
           >>> print(turns[7])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=70467, score0=61, score1=74, goal=97)
           >>> print(turns[0])
           Start scores = (61, 74).
@@ -2896,11 +2896,11 @@ test = {
           >>> print(turns[10])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=8714, score0=38, score1=19, goal=57)
           >>> print(turns[0])
           Start scores = (38, 19).
@@ -2941,11 +2941,11 @@ test = {
           >>> print(turns[9])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=13230, score0=65, score1=56, goal=77)
           >>> print(turns[0])
           Start scores = (65, 56).
@@ -2966,11 +2966,11 @@ test = {
           >>> print(turns[4])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=96667, score0=2, score1=3, goal=13)
           >>> print(turns[0])
           Start scores = (2, 3).
@@ -2983,11 +2983,11 @@ test = {
           >>> print(turns[2])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=27904, score0=23, score1=39, goal=92)
           >>> print(turns[0])
           Start scores = (23, 39).
@@ -3052,11 +3052,11 @@ test = {
           >>> print(turns[15])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=36152, score0=49, score1=25, goal=52)
           >>> print(turns[0])
           Start scores = (49, 25).
@@ -3081,11 +3081,11 @@ test = {
           >>> print(turns[5])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=97165, score0=13, score1=4, goal=42)
           >>> print(turns[0])
           Start scores = (13, 4).
@@ -3122,11 +3122,11 @@ test = {
           >>> print(turns[8])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=7964, score0=0, score1=12, goal=30)
           >>> print(turns[0])
           Start scores = (0, 12).
@@ -3139,11 +3139,11 @@ test = {
           >>> print(turns[2])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=87291, score0=59, score1=15, goal=87)
           >>> print(turns[0])
           Start scores = (59, 15).
@@ -3172,11 +3172,11 @@ test = {
           >>> print(turns[6])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=2481, score0=32, score1=79, goal=98)
           >>> print(turns[0])
           Start scores = (32, 79).
@@ -3245,11 +3245,11 @@ test = {
           >>> print(turns[16])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=57878, score0=4, score1=13, goal=29)
           >>> print(turns[0])
           Start scores = (4, 13).
@@ -3278,11 +3278,11 @@ test = {
           >>> print(turns[6])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=27303, score0=31, score1=3, goal=39)
           >>> print(turns[0])
           Start scores = (31, 3).
@@ -3299,11 +3299,11 @@ test = {
           >>> print(turns[3])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=98514, score0=46, score1=42, goal=60)
           >>> print(turns[0])
           Start scores = (46, 42).
@@ -3324,11 +3324,11 @@ test = {
           >>> print(turns[4])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=64395, score0=3, score1=18, goal=52)
           >>> print(turns[0])
           Start scores = (3, 18).
@@ -3357,11 +3357,11 @@ test = {
           >>> print(turns[6])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=13464, score0=27, score1=4, goal=47)
           >>> print(turns[0])
           Start scores = (27, 4).
@@ -3374,11 +3374,11 @@ test = {
           >>> print(turns[2])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=92338, score0=64, score1=67, goal=69)
           >>> print(turns[0])
           Start scores = (64, 67).
@@ -3387,11 +3387,11 @@ test = {
           >>> print(turns[1])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=55414, score0=9, score1=19, goal=32)
           >>> print(turns[0])
           Start scores = (9, 19).
@@ -3412,11 +3412,11 @@ test = {
           >>> print(turns[4])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=2412, score0=90, score1=38, goal=94)
           >>> print(turns[0])
           Start scores = (90, 38).
@@ -3441,11 +3441,11 @@ test = {
           >>> print(turns[5])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=43957, score0=35, score1=51, goal=100)
           >>> print(turns[0])
           Start scores = (35, 51).
@@ -3470,11 +3470,11 @@ test = {
           >>> print(turns[5])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=36287, score0=42, score1=52, goal=100)
           >>> print(turns[0])
           Start scores = (42, 52).
@@ -3491,11 +3491,11 @@ test = {
           >>> print(turns[3])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> turns = tests.play_utils.describe_game(hog, test_number=36008, score0=3, score1=9, goal=11)
           >>> print(turns[0])
           Start scores = (3, 9).
@@ -3516,12 +3516,12 @@ test = {
           >>> print(turns[4])
           Game Over
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": r"""
       >>> # Fuzz Testing
       >>> # Plays a lot of random games, and calculates a secret value.
       >>> # Failing this test means something is wrong, but you should
@@ -3532,10 +3532,10 @@ test = {
       >>> # importlib.reload(hog)
       >>> import tests.play_utils
       """,
-      'teardown': r"""
+            "teardown": r"""
       
       """,
-      'type': 'doctest'
-    }
-  ]
+            "type": "doctest",
+        },
+    ],
 }

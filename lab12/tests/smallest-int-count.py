@@ -1,11 +1,11 @@
 test = {
-  'name': 'smallest-int-count',
-  'points': 0,
-  'suites': [
-    {
-      'cases': [
+    "name": "smallest-int-count",
+    "points": 0,
+    "suites": [
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           sqlite> SELECT * FROM smallest_int_count LIMIT 50;
           1|67
           2|9
@@ -52,17 +52,17 @@ test = {
           177013|1
           inf|2
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'ordered': False,
-      'scored': True,
-      'setup': r"""
+                    "hidden": False,
+                    "locked": False,
+                }
+            ],
+            "ordered": False,
+            "scored": True,
+            "setup": r"""
       sqlite> .read lab12.sql
       """,
-      'teardown': '',
-      'type': 'sqlite'
-    }
-  ]
+            "teardown": "",
+            "type": "sqlite",
+        }
+    ],
 }

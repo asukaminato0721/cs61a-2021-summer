@@ -25,18 +25,14 @@ class Abstract:
         if isinstance(other, type(self)):
             return other is self
         raise AbstractionViolation(
-            "Can't use == on {} object and {}".format(
-                datatype(self), datatype(other)
-            )
+            "Can't use == on {} object and {}".format(datatype(self), datatype(other))
         )
 
     def __ne__(self, other):
         if isinstance(other, type(self)):
             return other is not self
         raise AbstractionViolation(
-            "Can't use != on {} object and {}".format(
-                datatype(self), datatype(other)
-            )
+            "Can't use != on {} object and {}".format(datatype(self), datatype(other))
         )
 
     def __bool__(self):
@@ -60,9 +56,7 @@ class Abstract:
         )
 
     def __iter__(self):
-        raise AbstractionViolation(
-            "Can't iterate on {} object".format(datatype(self))
-        )
+        raise AbstractionViolation("Can't iterate on {} object".format(datatype(self)))
 
     def __len__(self):
         raise AbstractionViolation(
@@ -75,9 +69,7 @@ class Abstract:
         )
 
     def __call__(self, *args, **kwargs):
-        raise AbstractionViolation(
-            "Can't call {} object".format(datatype(self))
-        )
+        raise AbstractionViolation("Can't call {} object".format(datatype(self)))
 
     def __hash__(self):
         return id(self)
@@ -124,6 +116,4 @@ def swap_implementations(impl):
 
 
 def restore_implementations(impl):
-    impl.game, impl.word_at, impl.get_words, impl.get_times, impl.time = old[
-        "game"
-    ]
+    impl.game, impl.word_at, impl.get_words, impl.get_times, impl.time = old["game"]

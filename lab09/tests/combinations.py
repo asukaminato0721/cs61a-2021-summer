@@ -1,11 +1,11 @@
 test = {
-  'name': 'What Would Scheme Display?',
-  'points': 1,
-  'suites': [
-    {
-      'cases': [
+    "name": "What Would Scheme Display?",
+    "points": 1,
+    "suites": [
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           scm> (- 10 4)
           6
           scm> (* 7 6)
@@ -19,11 +19,11 @@ test = {
           scm> (modulo 29 5)
           4
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (= 1 3)                    ; Scheme uses '=' instead of '==' for comparison
           #f
           scm> (< 1 3)
@@ -35,11 +35,11 @@ test = {
           scm> (not #t)
           #f
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (define x 3)
           x
           scm> x
@@ -53,11 +53,11 @@ test = {
           scm> (x y)
           14
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (if (not (print 1)) (print 2) (print 3))
           1
           3
@@ -71,16 +71,16 @@ test = {
           scm> ((lambda (a) (print 'a)) 100)
           a
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": r"""
       
       """,
-      'teardown': '',
-      'type': 'scheme'
-    }
-  ]
+            "teardown": "",
+            "type": "scheme",
+        }
+    ],
 }

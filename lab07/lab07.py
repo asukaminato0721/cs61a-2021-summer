@@ -17,7 +17,7 @@ def naturals():
         i += 1
 
 
-def scale(it:List, multiplier):
+def scale(it: List, multiplier):
     """Yield elements of the iterable it multiplied by a number multiplier.
 
     >>> m = scale([1, 5, 2], 5)
@@ -36,7 +36,7 @@ def scale(it:List, multiplier):
 
 def hailstone(n):
     """Yields the elements of the hailstone sequence starting at n.
-    
+
     >>> for num in hailstone(10):
     ...     print(num)
     ...

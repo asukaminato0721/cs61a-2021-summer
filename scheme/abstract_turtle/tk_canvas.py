@@ -74,13 +74,9 @@ class TkCanvas(Canvas):
             left_up = (x - radius, y - radius)
             right_down = (x + radius, y + radius)
             box = [left_up, right_down]
-            turtle.getcanvas().create_oval(
-                box, fill=self.tr_color(color), width=0
-            )
+            turtle.getcanvas().create_oval(box, fill=self.tr_color(color), width=0)
         else:
-            sx, sy = center.x + radius * cos(start), center.y + radius * sin(
-                start
-            )
+            sx, sy = center.x + radius * cos(start), center.y + radius * sin(start)
             theta = start + pi / 2
             self._goto_invisible((sx, sy))
             self._setheading(theta)

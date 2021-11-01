@@ -1,6 +1,14 @@
 from typing import Union
 
-from datamodel import Expression, Symbol, Number, Nil, SingletonTrue, SingletonFalse, String
+from datamodel import (
+    Expression,
+    Symbol,
+    Number,
+    Nil,
+    SingletonTrue,
+    SingletonFalse,
+    String,
+)
 from helper import make_list
 from lexer import TokenBuffer, SPECIALS
 from log import logger
@@ -65,7 +73,7 @@ def get_expression(buffer: TokenBuffer) -> Union[Expression, None]:
             raise ParseError(f"Unexpected token: '{token}'")
         else:
             return make_list([Symbol("variadic"), get_expression(buffer)])
-    elif token == "\"":
+    elif token == '"':
         return get_string(buffer)
     elif token in SPECIALS:
         raise ParseError(f"Unexpected token: '{token}'")
@@ -101,7 +109,7 @@ def get_string(buffer: TokenBuffer) -> String:
             escaping = True
         else:
             out.append(char)
-    if buffer.pop_next_token() != "\"":
+    if buffer.pop_next_token() != '"':
         raise ParseError("String not terminated correctly!")
     return String("".join(out))
 
@@ -118,7 +126,9 @@ def get_rest_of_list(buffer: TokenBuffer, end_paren: str) -> Expression:
             buffer.pop_next_token()
             last = get_expression(buffer)
             if buffer.pop_next_token() != end_paren:
-                raise ParseError(f"Only one expression may follow a dot in a dotted list.")
+                raise ParseError(
+                    f"Only one expression may follow a dot in a dotted list."
+                )
             break
         expr = get_expression(buffer)
         out.append(expr)

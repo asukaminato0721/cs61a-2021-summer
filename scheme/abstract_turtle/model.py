@@ -65,12 +65,9 @@ class DrawnTurtle(
             (dx * self.stretch_len, dy * self.stretch_wid)
             for dx, dy in unadjusted_points
         ]
-        rotated_points = [
-            rotate(*dxy, self.heading) for dxy in stretched_points
-        ]
+        rotated_points = [rotate(*dxy, self.heading) for dxy in stretched_points]
         moved_points = [
-            Position(self.pos.x + dx, self.pos.y + dy)
-            for dx, dy in rotated_points
+            Position(self.pos.x + dx, self.pos.y + dy) for dx, dy in rotated_points
         ]
         return moved_points
 
@@ -118,9 +115,7 @@ class LineTo(Path, namedtuple("LineTo", ["position"])):
         return ["line", self.position]
 
 
-class Arc(
-    Path, namedtuple("Arc", ["center", "radius", "start_angle", "end_angle"])
-):
+class Arc(Path, namedtuple("Arc", ["center", "radius", "start_angle", "end_angle"])):
     """
     CENTER is the center of the arc
     START_ANGLE and END_ANGLE are the starting and ending angles of the arc measured in radians CCW from the x-axis

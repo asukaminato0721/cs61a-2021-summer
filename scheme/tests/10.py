@@ -1,11 +1,11 @@
 test = {
-  'name': 'Problem 10',
-  'points': 2,
-  'suites': [
-    {
-      'cases': [
+    "name": "Problem 10",
+    "points": 2,
+    "suites": [
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           >>> formals = Pair('a', Pair('b', Pair('c', nil)))
           >>> vals = Pair(1, Pair(2, Pair(3, nil)))
           >>> frame = global_frame.make_child_frame(formals, vals)
@@ -22,60 +22,60 @@ test = {
           3c7e8a3a2176a696c3a66418f78dff6b
           # locked
           """,
-          'hidden': False,
-          'locked': True
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": True,
+                },
+                {
+                    "code": r"""
           >>> frame = global_frame.make_child_frame(nil, nil)
           >>> frame.parent is global_frame
           b1796eff8a8e977439f97b5c6881a282
           # locked
           """,
-          'hidden': False,
-          'locked': True
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": True,
+                },
+                {
+                    "code": r"""
           >>> first = Frame(global_frame)
           >>> second = first.make_child_frame(nil, nil)
           >>> second.parent is first
           True
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": r"""
       >>> from scheme import *
       >>> global_frame = create_global_frame()
       """,
-      'teardown': '',
-      'type': 'doctest'
-    },
-    {
-      'cases': [
+            "teardown": "",
+            "type": "doctest",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           >>> # More argument values than formal parameters
           >>> global_frame.make_child_frame(Pair('a', nil), Pair(1, Pair(2, Pair(3, nil))))
           SchemeError
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # More formal parameters than argument values
           >>> global_frame.make_child_frame(Pair('a', Pair('b', Pair('c', nil))), Pair(1, nil))
           SchemeError
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # Values can be pairs.
           >>> formals = Pair('a', Pair('b', nil))
           >>> values = Pair(Pair(1, nil), Pair(Pair(2, nil), nil))
@@ -92,17 +92,17 @@ test = {
           >>> values # Ensure that values was not mutated
           Pair(Pair(1, nil), Pair(Pair(2, nil), nil))
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": r"""
       >>> from scheme import *
       >>> global_frame = create_global_frame()
       """,
-      'teardown': '',
-      'type': 'doctest'
-    }
-  ]
+            "teardown": "",
+            "type": "doctest",
+        },
+    ],
 }

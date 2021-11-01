@@ -1,92 +1,87 @@
 test = {
-  'name': 'Problem EC',
-  'points': 2,
-  'suites': [
-    {
-      'cases': [
+    "name": "Problem EC",
+    "points": 2,
+    "suites": [
         {
-          'answer': 'ScubaThrower',
-          'choices': [
-            'ScubaThrower',
-            'Ant',
-            'Insect',
-            'GameState'
-          ],
-          'hidden': False,
-          'locked': False,
-          'question': 'What class does QueenAnt inherit from?'
-        },
-        {
-          'answer': 'The first QueenAnt that is instantiated',
-          'choices': [
-            'The first QueenAnt that is instantiated',
-            'The second QueenAnt that is instantiated',
-            'The most recent QueenAnt that is instantiated',
-            'All QueenAnt instances are true QueenAnts'
-          ],
-          'hidden': False,
-          'locked': False,
-          'question': 'Which QueenAnt instance is the true QueenAnt?'
-        },
-        {
-          'answer': 'Its health is reduced to 0 upon taking its first action',
-          'choices': [
-            'Its health is reduced to 0 upon taking its first action',
-            'Nothing, the game ends',
-            'The health of the first QueenAnt is reduced to 0',
-            'It doubles the damage of all the ants behind it'
-          ],
-          'hidden': False,
-          'locked': False,
-          'question': r"""
+            "cases": [
+                {
+                    "answer": "ScubaThrower",
+                    "choices": ["ScubaThrower", "Ant", "Insect", "GameState"],
+                    "hidden": False,
+                    "locked": False,
+                    "question": "What class does QueenAnt inherit from?",
+                },
+                {
+                    "answer": "The first QueenAnt that is instantiated",
+                    "choices": [
+                        "The first QueenAnt that is instantiated",
+                        "The second QueenAnt that is instantiated",
+                        "The most recent QueenAnt that is instantiated",
+                        "All QueenAnt instances are true QueenAnts",
+                    ],
+                    "hidden": False,
+                    "locked": False,
+                    "question": "Which QueenAnt instance is the true QueenAnt?",
+                },
+                {
+                    "answer": "Its health is reduced to 0 upon taking its first action",
+                    "choices": [
+                        "Its health is reduced to 0 upon taking its first action",
+                        "Nothing, the game ends",
+                        "The health of the first QueenAnt is reduced to 0",
+                        "It doubles the damage of all the ants behind it",
+                    ],
+                    "hidden": False,
+                    "locked": False,
+                    "question": r"""
           What happens to any QueenAnt instance that is instantiated after the
           first one?
-          """
-        },
-        {
-          'answer': "Attacks the nearest bee and doubles the damage of all the ants behind her (that haven't already been doubled)",
-          'choices': [
-            r"""
+          """,
+                },
+                {
+                    "answer": "Attacks the nearest bee and doubles the damage of all the ants behind her (that haven't already been doubled)",
+                    "choices": [
+                        r"""
             Attacks the nearest bee and doubles the damage of all the ants
             behind her (that haven't already been doubled)
             """,
-            r"""
+                        r"""
             Doubles the damage of all the ants behind her (that haven't
             already been doubled)
             """,
-            r"""
+                        r"""
             Doubles the damage of all the ants in front of her (that haven't
             already been doubled)
             """,
-            r"""
+                        r"""
             Doubles the damage of all the ants in the colony (that haven't
             already been doubled)
-            """
-          ],
-          'hidden': False,
-          'locked': False,
-          'question': 'What does the true QueenAnt do each turn?'
+            """,
+                    ],
+                    "hidden": False,
+                    "locked": False,
+                    "question": "What does the true QueenAnt do each turn?",
+                },
+                {
+                    "answer": "If a Bee reaches the end of a tunnel or the true QueenAnt dies",
+                    "choices": [
+                        "If a Bee reaches the end of a tunnel or the true QueenAnt dies",
+                        "If there are no ants left in the colony",
+                        "If an imposter QueenAnt is placed in the colony",
+                        "If a Bee attacks the true QueenAnt",
+                    ],
+                    "hidden": False,
+                    "locked": False,
+                    "question": "Under what circumstances do Bees win the game?",
+                },
+            ],
+            "scored": False,
+            "type": "concept",
         },
         {
-          'answer': 'If a Bee reaches the end of a tunnel or the true QueenAnt dies',
-          'choices': [
-            'If a Bee reaches the end of a tunnel or the true QueenAnt dies',
-            'If there are no ants left in the colony',
-            'If an imposter QueenAnt is placed in the colony',
-            'If a Bee attacks the true QueenAnt'
-          ],
-          'hidden': False,
-          'locked': False,
-          'question': 'Under what circumstances do Bees win the game?'
-        }
-      ],
-      'scored': False,
-      'type': 'concept'
-    },
-    {
-      'cases': [
-        {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           >>> # Testing QueenAnt parameters
           >>> QueenAnt.food_cost
           7
@@ -94,11 +89,11 @@ test = {
           >>> queen.health
           1
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # Abstraction tests
           >>> original = ScubaThrower.__init__
           >>> ScubaThrower.__init__ = lambda self, health: print("init") #If this errors, you are not calling the parent constructor correctly.
@@ -107,21 +102,21 @@ test = {
           >>> ScubaThrower.__init__ = original
           >>> queen = QueenAnt()
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": r"""
       >>> from ants import *
       """,
-      'teardown': '',
-      'type': 'doctest'
-    },
-    {
-      'cases': [
+            "teardown": "",
+            "type": "doctest",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           >>> # QueenAnt Placement
           >>> queen = ants.QueenAnt()
           >>> impostor = ants.QueenAnt()
@@ -149,11 +144,11 @@ test = {
           >>> front_ant.damage
           1
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # QueenAnt Removal
           >>> queen = ants.QueenAnt()
           >>> impostor = ants.QueenAnt()
@@ -167,11 +162,11 @@ test = {
           >>> place.ant is queen        # True queen cannot be removed
           True
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # QueenAnt knows how to swim
           >>> queen = ants.QueenAnt()
           >>> water = ants.Water('Water')
@@ -179,11 +174,11 @@ test = {
           >>> queen.health
           1
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # Testing damage multiplier
           >>> queen_tunnel, side_tunnel = [[gamestate.places['tunnel_{0}_{1}'.format(i, j)]
           ...         for j in range(9)] for i in range(2)]
@@ -222,12 +217,12 @@ test = {
           >>> side_bee.health
           9
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": r"""
       >>> import ants, importlib
       >>> importlib.reload(ants)
       >>> beehive = ants.Hive(ants.AssaultPlan())
@@ -236,13 +231,13 @@ test = {
       ...         ants.dry_layout, dimensions)
       >>> ants.bees_win = lambda: None
       """,
-      'teardown': '',
-      'type': 'doctest'
-    },
-    {
-      'cases': [
+            "teardown": "",
+            "type": "doctest",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           >>> # Testing game over
           >>> queen = ants.QueenAnt()
           >>> impostor = ants.QueenAnt()
@@ -257,11 +252,11 @@ test = {
           >>> bee.action(gamestate)            # Game should end
           BeesWinException
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # Testing if queen will not crash with no one to buff
           >>> queen = ants.QueenAnt()
           >>> gamestate.places['tunnel_0_2'].add_insect(queen)
@@ -273,11 +268,11 @@ test = {
           >>> bee.health # Queen should still hit the bee
           2
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # Testing QueenAnt action method
           >>> queen = ants.QueenAnt()
           >>> impostor = ants.QueenAnt()
@@ -305,11 +300,11 @@ test = {
           >>> impostor.health  # Short-lived impostor
           0
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # Extensive damage doubling tests
           >>> queen_tunnel, side_tunnel = [[gamestate.places['tunnel_{0}_{1}'.format(i, j)]
           ...         for j in range(9)] for i in range(2)]
@@ -389,11 +384,11 @@ test = {
           >>> (thrower1.damage, thrower2.damage)
           (20002, 20004)
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # Adding/Removing QueenAnt with Container
           >>> place = gamestate.places['tunnel_0_3']
           >>> queen = ants.QueenAnt()
@@ -418,11 +413,11 @@ test = {
           True
           >>> queen.action(gamestate) # should not error
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # test proper call to death callback
           >>> original_death_callback = ants.Insect.death_callback
           >>> ants.Insect.death_callback = lambda x: print("insect died")
@@ -434,21 +429,21 @@ test = {
           insect died
           >>> ants.Insect.death_callback = original_death_callback
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> from ants import *
           >>> QueenAnt.implemented
           True
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": r"""
       >>> import ants, importlib
       >>> importlib.reload(ants)
       >>> beehive = ants.Hive(ants.AssaultPlan())
@@ -457,8 +452,8 @@ test = {
       ...         ants.dry_layout, dimensions)
       >>> #
       """,
-      'teardown': '',
-      'type': 'doctest'
-    }
-  ]
+            "teardown": "",
+            "type": "doctest",
+        },
+    ],
 }

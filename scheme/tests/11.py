@@ -1,11 +1,11 @@
 test = {
-  'name': 'Problem 11',
-  'points': 1,
-  'suites': [
-    {
-      'cases': [
+    "name": "Problem 11",
+    "points": 1,
+    "suites": [
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           scm> (define (square x) (* x x))
           square
           scm> square
@@ -19,27 +19,27 @@ test = {
           scm> (square (square 21))
           194481
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> ((lambda (x) (list x (list (quote quote) x))) (quote (lambda (x) (list x (list (quote quote) x))))) ; if you're failing this test case and have checked your implementation of Q11, you may want to check your Q6 solution
           ((lambda (x) (list x (list (quote quote) x))) (quote (lambda (x) (list x (list (quote quote) x)))))
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': '',
-      'teardown': '',
-      'type': 'scheme'
-    },
-    {
-      'cases': [
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": "",
+            "teardown": "",
+            "type": "scheme",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           >>> double = do_lambda_form(read_line("((n) (* 2 n))"), env) # make double a LambdaProcedure that doubles a number
           >>> f1 = double.make_call_frame(Pair(10, nil), env)
           >>> f1.lookup('n')
@@ -52,33 +52,33 @@ test = {
           >>> f2.lookup('n') # Hint: make sure you're using self.env not env
           5
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> do_twice = do_lambda_form(read_line("((f x) (f (f x)))"), env) # make do_twice a LambdaProcedure that takes f, x, and returns f(f(x))
           >>> double = do_lambda_form(read_line("((x) (* 2 x))"), env) # make double a LambdaProcedure that doubles a number
           >>> call_frame = do_twice.make_call_frame(Pair(double, Pair(3, nil)), env) # Hint: make sure you're not evaluating args again in make_call_frame
           >>> call_frame.lookup('x') # Check that x is properly defined
           3
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": r"""
       >>> from scheme import *
       >>> env = create_global_frame()
       """,
-      'teardown': '',
-      'type': 'doctest'
-    },
-    {
-      'cases': [
+            "teardown": "",
+            "type": "doctest",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           scm> (define (outer x y)
           ....   (define (inner z x)
           ....     (+ x (* y 2) (* z 3)))
@@ -98,11 +98,11 @@ test = {
           5d3ec98dabcf5b4a06694ccc93722cfb
           # locked
           """,
-          'hidden': False,
-          'locked': True
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": True,
+                },
+                {
+                    "code": r"""
           scm> (define square (lambda (x) (* x x)))
           square
           scm> (define (sum-of-squares x y) (+ (square x) (square y)))
@@ -118,14 +118,14 @@ test = {
           scm> ((apply-twice double) 5)
           20
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': '',
-      'teardown': '',
-      'type': 'scheme'
-    }
-  ]
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": "",
+            "teardown": "",
+            "type": "scheme",
+        },
+    ],
 }

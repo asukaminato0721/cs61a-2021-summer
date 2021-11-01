@@ -5,9 +5,7 @@ from scheme_exceptions import ParseError
 
 
 class FormatList:
-    def __init__(
-        self, contents: List["Formatted"], close_paren, prefix: str = ""
-    ):
+    def __init__(self, contents: List["Formatted"], close_paren, prefix: str = ""):
         self.contents = contents
         self.open_paren = "(" if close_paren == ")" else "["
         self.close_paren = close_paren

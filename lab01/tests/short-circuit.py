@@ -1,11 +1,11 @@
 test = {
-  'name': 'Veritasiness',
-  'points': 0,
-  'suites': [
-    {
-      'cases': [
+    "name": "Veritasiness",
+    "points": 0,
+    "suites": [
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           >>> True and 13
           13
           >>> False or 0
@@ -15,11 +15,11 @@ test = {
           >>> not None
           True
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> True and 1 / 0 and False  # If this errors, just type Error.
           Error
           >>> True or 1 / 0 or False  # If this errors, just type Error.
@@ -35,17 +35,17 @@ test = {
           >>> 0 or False or 2 or 1 / 0  # If this errors, just type Error.
           2
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': False,
-      'type': 'wwpp'
-    },
-    {
-      'cases': [
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": False,
+            "type": "wwpp",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           >>> not 0
           True
           >>> (1 + 1) and 1  # If this errors, just type Error. If this is blank, just type Nothing.
@@ -55,12 +55,12 @@ test = {
           >>> (True or False) and False  # If this errors, just type Error. If this is blank, just type Nothing.
           False
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': False,
-      'type': 'wwpp'
-    }
-  ]
+                    "hidden": False,
+                    "locked": False,
+                }
+            ],
+            "scored": False,
+            "type": "wwpp",
+        },
+    ],
 }

@@ -1,11 +1,11 @@
 test = {
-  'name': 'Problem Optional 3',
-  'points': 0,
-  'suites': [
-    {
-      'cases': [
+    "name": "Problem Optional 3",
+    "points": 0,
+    "suites": [
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           >>> laser = LaserAnt()
           >>> ant = HarvesterAnt(2)
           >>> bee1 = Bee(2)
@@ -30,37 +30,37 @@ test = {
           >>> bee3.health
           1.5
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': r"""
+                    "hidden": False,
+                    "locked": False,
+                }
+            ],
+            "scored": True,
+            "setup": r"""
       >>> from ants import *
       >>> beehive, layout = Hive(AssaultPlan()), dry_layout
       >>> dimensions = (1, 9)
       >>> gamestate = GameState(None, beehive, ant_types(), layout, dimensions)
       """,
-      'teardown': '',
-      'type': 'doctest'
-    },
-    {
-      'cases': [
+            "teardown": "",
+            "type": "doctest",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           >>> from ants import *
           >>> LaserAnt.implemented
           c7a88a0ffd3aef026b98eef6e7557da3
           # locked
           """,
-          'hidden': False,
-          'locked': True
-        }
-      ],
-      'scored': True,
-      'setup': '',
-      'teardown': '',
-      'type': 'doctest'
-    }
-  ]
+                    "hidden": False,
+                    "locked": True,
+                }
+            ],
+            "scored": True,
+            "setup": "",
+            "teardown": "",
+            "type": "doctest",
+        },
+    ],
 }

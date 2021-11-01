@@ -1,11 +1,11 @@
 test = {
-  'name': 'quasiquote',
-  'points': 0,
-  'suites': [
-    {
-      'cases': [
+    "name": "quasiquote",
+    "points": 0,
+    "suites": [
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           scm> '(1 x 3)
           (1 x 3)
           scm> (define x 2)
@@ -31,16 +31,16 @@ test = {
           scm> `(1 ,(cons x (list y 4)) 5)
           (1 (2 3 4) 5)
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': False,
-      'setup': r"""
+                    "hidden": False,
+                    "locked": False,
+                }
+            ],
+            "scored": False,
+            "setup": r"""
       
       """,
-      'teardown': '',
-      'type': 'scheme'
-    }
-  ]
+            "teardown": "",
+            "type": "scheme",
+        }
+    ],
 }

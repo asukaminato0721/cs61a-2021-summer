@@ -1,28 +1,28 @@
 test = {
-  'name': 'Question 6',
-  'points': 2,
-  'suites': [
-    {
-      'cases': [
+    "name": "Question 6",
+    "points": 2,
+    "suites": [
         {
-          'answer': 'Another commentary function.',
-          'choices': [
-            'Another commentary function.',
-            'An integer representing the score.',
-            'None.'
-          ],
-          'hidden': False,
-          'locked': False,
-          'question': 'What does a commentary function return?'
-        }
-      ],
-      'scored': False,
-      'type': 'concept'
-    },
-    {
-      'cases': [
+            "cases": [
+                {
+                    "answer": "Another commentary function.",
+                    "choices": [
+                        "Another commentary function.",
+                        "An integer representing the score.",
+                        "None.",
+                    ],
+                    "hidden": False,
+                    "locked": False,
+                    "question": "What does a commentary function return?",
+                }
+            ],
+            "scored": False,
+            "type": "concept",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           >>> #
           >>> def echo(s0, s1):
           ...     print(s0, s1)
@@ -32,11 +32,11 @@ test = {
           3 3
           6 3
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> def count(n):
           ...     def say(s0, s1):
           ...         print(n, s0)
@@ -47,11 +47,11 @@ test = {
           2 5
           3 10
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> #
           >>> def echo(s0, s1):
           ...     print(s0, s1)
@@ -64,11 +64,11 @@ test = {
           9 12
           9 24
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> #
           >>> # Ensure that say is properly updated within the body of play
           >>> def total(s0, s1):
@@ -83,11 +83,11 @@ test = {
           4 5
           14
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> #
           >>> # Ensure that say is properly updated within the body of play even with extra turns
           >>> def total(s0, s1):
@@ -103,22 +103,22 @@ test = {
           20
           26 2
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": r"""
       >>> from hog import play, always_roll
       >>> from dice import make_test_dice
       """,
-      'teardown': '',
-      'type': 'doctest'
-    },
-    {
-      'cases': [
+            "teardown": "",
+            "type": "doctest",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           >>> #
           >>> def echo_0(s0, s1):
           ...     print('*', s0)
@@ -134,11 +134,11 @@ test = {
           * 4
           ** 2
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> #
           >>> s0, s1 = play(always_roll(3), always_roll(3), dice=make_test_dice(1, 2, 3, 3), goal=8, say=both(say_scores, announce_lead_changes()))
           Player 0 now has 1 and Player 1 now has 0
@@ -149,17 +149,17 @@ test = {
           Player 0 now has 2 and Player 1 now has 9
           Player 1 takes the lead by 7
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": r"""
       >>> from hog import play, always_roll, both, announce_lead_changes, say_scores
       >>> from dice import make_test_dice
       """,
-      'teardown': '',
-      'type': 'doctest'
-    }
-  ]
+            "teardown": "",
+            "type": "doctest",
+        },
+    ],
 }

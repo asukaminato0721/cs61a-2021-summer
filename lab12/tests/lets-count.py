@@ -1,11 +1,11 @@
 test = {
-  'name': 'lets-count',
-  'points': 1,
-  'suites': [
-    {
-      'cases': [
+    "name": "lets-count",
+    "points": 1,
+    "suites": [
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           sqlite> SELECT * from favpets;
           dog|27
           cat|25
@@ -32,17 +32,17 @@ test = {
           7|Image 4|20
           7|Image 5|12
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'ordered': False,
-      'scored': True,
-      'setup': r"""
+                    "hidden": False,
+                    "locked": False,
+                }
+            ],
+            "ordered": False,
+            "scored": True,
+            "setup": r"""
       sqlite> .read lab12.sql
       """,
-      'teardown': '',
-      'type': 'sqlite'
-    }
-  ]
+            "teardown": "",
+            "type": "sqlite",
+        }
+    ],
 }

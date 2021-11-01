@@ -17,14 +17,18 @@ import string
 import sys
 import tokenize
 
-_NUMERAL_STARTS = set(string.digits) | set('+-.')
-_SYMBOL_CHARS = (set('!$%&*/:<=>?@^_~') | set(string.ascii_lowercase) |
-                 set(string.ascii_uppercase) | _NUMERAL_STARTS)
+_NUMERAL_STARTS = set(string.digits) | set("+-.")
+_SYMBOL_CHARS = (
+    set("!$%&*/:<=>?@^_~")
+    | set(string.ascii_lowercase)
+    | set(string.ascii_uppercase)
+    | _NUMERAL_STARTS
+)
 _STRING_DELIMS = set('"')
-_WHITESPACE = set(' \t\n\r')
+_WHITESPACE = set(" \t\n\r")
 _SINGLE_CHAR_TOKENS = set("()[]'`")
-_TOKEN_END = _WHITESPACE | _SINGLE_CHAR_TOKENS | _STRING_DELIMS | {',', ',@'}
-DELIMITERS = _SINGLE_CHAR_TOKENS | {'.', ',', ',@'}
+_TOKEN_END = _WHITESPACE | _SINGLE_CHAR_TOKENS | _STRING_DELIMS | {",", ",@"}
+DELIMITERS = _SINGLE_CHAR_TOKENS | {".", ",", ",@"}
 
 
 def valid_symbol(s):
@@ -44,24 +48,26 @@ def next_candidate_token(line, k):
     (None, len(line)) when there are no more tokens."""
     while k < len(line):
         c = line[k]
-        if c == ';':
+        if c == ";":
             return None, len(line)
         elif c in _WHITESPACE:
             k += 1
         elif c in _SINGLE_CHAR_TOKENS:
-            if c == ']': c = ')'
-            if c == '[': c = '('
+            if c == "]":
+                c = ")"
+            if c == "[":
+                c = "("
             return c, k + 1
-        elif c == '#':  # Boolean values #t and #f
-            return line[k:k + 2], min(k + 2, len(line))
-        elif c == ',':  # Unquote; check for @
-            if k + 1 < len(line) and line[k + 1] == '@':
-                return ',@', k + 2
+        elif c == "#":  # Boolean values #t and #f
+            return line[k : k + 2], min(k + 2, len(line))
+        elif c == ",":  # Unquote; check for @
+            if k + 1 < len(line) and line[k + 1] == "@":
+                return ",@", k + 2
             return c, k + 1
         elif c in _STRING_DELIMS:
             if k + 1 < len(line) and line[k + 1] == c:  # No triple quotes in Scheme
                 return c + c, k + 2
-            line_bytes = (bytes(line[k:], encoding='utf-8'),)
+            line_bytes = (bytes(line[k:], encoding="utf-8"),)
             gen = tokenize.tokenize(iter(line_bytes).__next__)
             next(gen)  # Throw away encoding token
             token = next(gen)
@@ -83,11 +89,11 @@ def tokenize_line(line):
     while text is not None:
         if text in DELIMITERS:
             result.append(text)
-        elif text == '#t' or text.lower() == 'true':
+        elif text == "#t" or text.lower() == "true":
             result.append(True)
-        elif text == '#f' or text.lower() == 'false':
+        elif text == "#f" or text.lower() == "false":
             result.append(False)
-        elif text == 'nil':
+        elif text == "nil":
             result.append(text)
         elif text[0] in _SYMBOL_CHARS:
             number = False
@@ -130,9 +136,14 @@ def count_tokens(input):
 @main
 def run(*args):
     import argparse
-    parser = argparse.ArgumentParser(description='Count Scheme tokens.')
-    parser.add_argument('file', nargs='?',
-                        type=argparse.FileType('r'), default=sys.stdin,
-                        help='input file to be counted')
+
+    parser = argparse.ArgumentParser(description="Count Scheme tokens.")
+    parser.add_argument(
+        "file",
+        nargs="?",
+        type=argparse.FileType("r"),
+        default=sys.stdin,
+        help="input file to be counted",
+    )
     args = parser.parse_args()
-    print('counted', count_tokens(args.file), 'tokens')
+    print("counted", count_tokens(args.file), "tokens")

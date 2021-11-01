@@ -18,7 +18,11 @@ def search(query):
         query = query.strip().lower()
 
         contents = str(f.read())
-        contents = re.sub(r"<a class='builtin-header' id='.*?'>\*\*(.*?)\*\*</a>", r"### **\1**", contents)
+        contents = re.sub(
+            r"<a class='builtin-header' id='.*?'>\*\*(.*?)\*\*</a>",
+            r"### **\1**",
+            contents,
+        )
 
         divider = "##"
         elements = [divider + elem for elem in contents.split(divider)]

@@ -1,11 +1,11 @@
 test = {
-  'name': 'matchmaker',
-  'points': 1,
-  'suites': [
-    {
-      'cases': [
+    "name": "matchmaker",
+    "points": 1,
+    "suites": [
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           sqlite> SELECT * FROM matchmaker LIMIT 10;
           dog|money machine|yellow|blue
           dog|money machine|yellow|black
@@ -18,17 +18,17 @@ test = {
           dog|Never Be Like You|gold|cyan
           dog|Never Be Like You|gold|purple
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'ordered': False,
-      'scored': True,
-      'setup': r"""
+                    "hidden": False,
+                    "locked": False,
+                }
+            ],
+            "ordered": False,
+            "scored": True,
+            "setup": r"""
       sqlite> .read lab12.sql
       """,
-      'teardown': '',
-      'type': 'sqlite'
-    }
-  ]
+            "teardown": "",
+            "type": "sqlite",
+        }
+    ],
 }

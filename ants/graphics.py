@@ -23,9 +23,7 @@ class Canvas:
 
     _instance = None
 
-    def __init__(
-        self, width=1100, height=768, title="", color="White", tk=None
-    ):
+    def __init__(self, width=1100, height=768, title="", color="White", tk=None):
         # Singleton enforcement
         if Canvas._instance is not None:
             raise Exception("Only one canvas can be instantiated.")
@@ -108,9 +106,7 @@ class Canvas:
         x1, y1 = end
         return self._canvas.create_line(x0, y0, x1, y1, fill=color, width=width)
 
-    def draw_image(
-        self, pos, image_file=None, scale=1, anchor=tkinter.NW, behind=0
-    ):
+    def draw_image(self, pos, image_file=None, scale=1, anchor=tkinter.NW, behind=0):
         """Draw an image from a file and return its tkinter id."""
         key = (image_file, scale)
         if key not in self._images:
@@ -145,9 +141,7 @@ class Canvas:
             x, y, fill=color, text=text, font=font, anchor=anchor
         )
 
-    def edit_text(
-        self, id, text=None, color=None, font=None, size=12, style="normal"
-    ):
+    def edit_text(self, id, text=None, color=None, font=None, size=12, style="normal"):
         """Edit the text, color, or font of an existing text object."""
         if color is not None:
             self._canvas.itemconfigure(id, fill=color)
@@ -268,6 +262,4 @@ def format_color(r, g, b):
 
     r, g, b -- integers from 0 to 255
     """
-    return "#{0:02x}{1:02x}{2:02x}".format(
-        int(r * 255), int(g * 255), int(b * 255)
-    )
+    return "#{0:02x}{1:02x}{2:02x}".format(int(r * 255), int(g * 255), int(b * 255))

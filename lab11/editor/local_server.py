@@ -22,7 +22,11 @@ from execution_parser import strip_comments
 from file_manager import get_scm_files, save, read_file, new_file
 from formatter import prettify
 from persistence import save_config, load_config
-from runtime_limiter import TimeLimitException, OperationCanceledException, scheme_limiter
+from runtime_limiter import (
+    TimeLimitException,
+    OperationCanceledException,
+    scheme_limiter,
+)
 from scheme_exceptions import SchemeError, ParseError, TerminatedError
 
 PORT = 8012
@@ -33,10 +37,12 @@ state = {}
 
 
 class Handler(server.BaseHTTPRequestHandler):
-    cancellation_event = threading.Event()  # Shared across all instances, because the threading mixin creates a new instance every time...
+    cancellation_event = (
+        threading.Event()
+    )  # Shared across all instances, because the threading mixin creates a new instance every time...
 
     def do_POST(self):
-        content_length = int(self.headers['Content-Length'])
+        content_length = int(self.headers["Content-Length"])
         raw_data = self.rfile.read(content_length)
         data = urllib.parse.parse_qs(raw_data.decode("ascii"))
         path = urllib.parse.unquote(self.path)
@@ -61,9 +67,19 @@ class Handler(server.BaseHTTPRequestHandler):
             curr_f = int(data["curr_f"][0])
             global_frame_id = int(data["globalFrameID"][0])
             visualize_tail_calls = data["tailViz"][0] == "true"
-            self.wfile.write(bytes(handle(code, curr_i, curr_f, global_frame_id, visualize_tail_calls,
-                                          cancellation_event=self.cancellation_event),
-                                   "utf-8"))
+            self.wfile.write(
+                bytes(
+                    handle(
+                        code,
+                        curr_i,
+                        curr_f,
+                        global_frame_id,
+                        visualize_tail_calls,
+                        cancellation_event=self.cancellation_event,
+                    ),
+                    "utf-8",
+                )
+            )
 
         elif path == "/save":
             code = data["code[]"]
@@ -71,7 +87,12 @@ class Handler(server.BaseHTTPRequestHandler):
             do_save = data["do_save"][0] == "true"
             if do_save:
                 save(code, filename)
-            self.wfile.write(bytes(json.dumps({"result": "success", "stripped": strip_comments(code)}), "utf-8"))
+            self.wfile.write(
+                bytes(
+                    json.dumps({"result": "success", "stripped": strip_comments(code)}),
+                    "utf-8",
+                )
+            )
 
         elif path == "/instant":
             code = data["code[]"]
@@ -81,11 +102,26 @@ class Handler(server.BaseHTTPRequestHandler):
         elif path == "/reformat":
             code = data["code[]"]
             javastyle = data["javastyle"][0] == "true"
-            self.wfile.write(bytes(json.dumps({"result": "success", "formatted": prettify(code, javastyle)}), "utf-8"))
+            self.wfile.write(
+                bytes(
+                    json.dumps(
+                        {"result": "success", "formatted": prettify(code, javastyle)}
+                    ),
+                    "utf-8",
+                )
+            )
 
         elif path == "/test":
             self.cancellation_event.clear()  # Make sure we don't have lingering cancellation requests from before
-            output = cancelable_subprocess_call(self.cancellation_event, (sys.argv[0], os.path.splitext(ok_interface.__file__)[0] + ".py"), -1, sys.executable, subprocess.PIPE, subprocess.PIPE, None)
+            output = cancelable_subprocess_call(
+                self.cancellation_event,
+                (sys.argv[0], os.path.splitext(ok_interface.__file__)[0] + ".py"),
+                -1,
+                sys.executable,
+                subprocess.PIPE,
+                subprocess.PIPE,
+                None,
+            )
             self.wfile.write(output.split(ok_interface.BEGIN_OUTPUT)[1])
 
         elif path == "/list_files":
@@ -97,7 +133,9 @@ class Handler(server.BaseHTTPRequestHandler):
 
         elif path == "/new_file":
             filename = data["filename"][0]
-            self.wfile.write(bytes(json.dumps({"success": new_file(filename)}), "utf-8"))
+            self.wfile.write(
+                bytes(json.dumps({"success": new_file(filename)}), "utf-8")
+            )
 
         elif path == "/save_state":
             global state
@@ -129,7 +167,6 @@ class Handler(server.BaseHTTPRequestHandler):
             else:
                 self.wfile.write(bytes(json.dumps(state["settings"]), "utf-8"))
 
-
         elif path == "/documentation":
             query = data.get("query", [""])[0]
             self.wfile.write(bytes(json.dumps(search(query)), "utf-8"))
@@ -155,10 +192,12 @@ class Handler(server.BaseHTTPRequestHandler):
             path = "editor/static/index.html"
         try:
             with open(path, "rb") as f:  # lol better make sure that port is closed
-                self.wfile.write(f.read()
-                                 .replace(b"<START_DATA>",
-                                          bytes(repr(json.dumps({"files": main_files})),
-                                                "utf-8")))
+                self.wfile.write(
+                    f.read().replace(
+                        b"<START_DATA>",
+                        bytes(repr(json.dumps({"files": main_files})), "utf-8"),
+                    )
+                )
         except Exception as e:
             print(e)
             # raise
@@ -180,37 +219,47 @@ def cancelable_subprocess_call(cancellation_event, *args, **kwargs):
     buffered = io.BytesIO()
     with subprocess.Popen(*args, **kwargs) as proc:
         proc.stdin.close()
-        def pipeline(source, *sinks):  # We need this extra thread because there's no cross-platform way to poll a process's stdout
+
+        def pipeline(
+            source, *sinks
+        ):  # We need this extra thread because there's no cross-platform way to poll a process's stdout
             while True:
                 s = source.readline()
-                if not s: break
+                if not s:
+                    break
                 for sink in sinks:
                     sink.write(s)
+
         reader_thread = threading.Thread(target=pipeline, args=(proc.stdout, buffered))
         reader_thread.daemon = True
         reader_thread.start()
         try:
-          poll_interval = socketserver.BaseServer.serve_forever.__defaults__[0] / 8
-          while proc.poll() is None:
-              if cancellation_event.wait(poll_interval):
-                  proc.terminate()
-                  break
+            poll_interval = socketserver.BaseServer.serve_forever.__defaults__[0] / 8
+            while proc.poll() is None:
+                if cancellation_event.wait(poll_interval):
+                    proc.terminate()
+                    break
         finally:
             proc.terminate()  # Make sure subprocess is terminated no matter what (although it shouldn't be alive at this point)
             reader_thread.join()
     return buffered.getvalue()
 
 
-def handle(code, curr_i, curr_f, global_frame_id, visualize_tail_calls, cancellation_event):
+def handle(
+    code, curr_i, curr_f, global_frame_id, visualize_tail_calls, cancellation_event
+):
 
     try:
         global_frame = log.logger.frame_lookup.get(global_frame_id, None)
         log.logger.new_query(global_frame, curr_i, curr_f)
-        scheme_limiter(cancellation_event,
-                       execution.string_exec,
-                       code, log.logger.out,
-                       visualize_tail_calls,
-                       global_frame.base if global_frame_id != -1 else None)
+        scheme_limiter(
+            cancellation_event,
+            execution.string_exec,
+            code,
+            log.logger.out,
+            visualize_tail_calls,
+            global_frame.base if global_frame_id != -1 else None,
+        )
     except OperationCanceledException:
         return json.dumps({"success": False, "out": [str("operation was canceled")]})
     except ParseError as e:
@@ -225,7 +274,9 @@ def instant(code, global_frame_id):
     log.logger.new_query(global_frame)
     try:
         log.logger.preview_mode(True)
-        scheme_limiter(0.3, execution.string_exec, code, log.logger.out, False, global_frame.base)
+        scheme_limiter(
+            0.3, execution.string_exec, code, log.logger.out, False, global_frame.base
+        )
     except (SchemeError, ZeroDivisionError) as e:
         log.logger.out(e)
     except TimeLimitException:
@@ -244,10 +295,11 @@ def supports_color():
     otherwise.
     """
     plat = sys.platform
-    supported_platform = plat != 'Pocket PC' and (plat != 'win32' or
-                                                  'ANSICON' in os.environ)
+    supported_platform = plat != "Pocket PC" and (
+        plat != "win32" or "ANSICON" in os.environ
+    )
     # isatty is not always implemented, #6223.
-    is_a_tty = hasattr(sys.stdout, 'isatty') and sys.stdout.isatty()
+    is_a_tty = hasattr(sys.stdout, "isatty") and sys.stdout.isatty()
     if not supported_platform or not is_a_tty:
         return False
     return True
@@ -266,7 +318,7 @@ def start(file_args, port, open_browser):
 
     e = None
     for port in range(PORT, PORT + 10):
-        request = Request(f"http://127.0.0.1:{port}/kill", method='POST')
+        request = Request(f"http://127.0.0.1:{port}/kill", method="POST")
         try:
             urlopen(request, timeout=2)
             print("Killing existing editor process...")
@@ -301,16 +353,19 @@ def start(file_args, port, open_browser):
         print(" - Ctrl+C pressed")
         print("Shutting down server - all unsaved work may be lost")
         print(
-'''
+            """
       _____   _______    ____    _____  
      / ____| |__   __|  / __ \  |  __ \ 
     | (___      | |    | |  | | | |__) |
      \___ \     | |    | |  | | |  ___/ 
      ____) |    | |    | |__| | | |     
     |_____/     |_|     \____/  |_|     
-''')
+"""
+        )
         if supports_color():
             print("\033[91m" + "\033[1m" + "\033[4m", end="")
-        print("Remember that you should run python ok in a separate terminal window, to avoid stopping the editor process.")
+        print(
+            "Remember that you should run python ok in a separate terminal window, to avoid stopping the editor process."
+        )
         if supports_color():
             print("\033[0m" * 3, end="")

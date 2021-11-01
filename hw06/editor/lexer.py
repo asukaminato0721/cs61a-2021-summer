@@ -2,7 +2,7 @@ from typing import Union, List
 
 from scheme_exceptions import ParseError
 
-SPECIALS = ["(", ")", "[", "]", "'", "`", ",", "@", "\"", ";"]
+SPECIALS = ["(", ")", "[", "]", "'", "`", ",", "@", '"', ";"]
 
 
 class Token:
@@ -37,7 +37,9 @@ class TokenBuffer:
 
     def get_next_token(self) -> Token:
         if self.done:
-            raise ParseError("Incomplete expression, probably due to unmatched parentheses.")
+            raise ParseError(
+                "Incomplete expression, probably due to unmatched parentheses."
+            )
         return self.tokens[self.i]
 
     def pop_next_token(self) -> Token:
@@ -59,7 +61,7 @@ def tokenize(string, do_comments, ignore_brackets) -> List[Token]:
         nonlocal i
         if i == len(string):
             return
-        if string[i] == "\"":
+        if string[i] == '"':
             tokens.append(Token(string[i]))
             i += 1
             _get_string()
@@ -69,13 +71,19 @@ def tokenize(string, do_comments, ignore_brackets) -> List[Token]:
             i += 1
             _get_comment()
 
-        elif string[i] in SPECIALS and not (ignore_brackets and string[i] in ["[", "]"]):
+        elif string[i] in SPECIALS and not (
+            ignore_brackets and string[i] in ["[", "]"]
+        ):
             tokens.append(Token(string[i]))
             i += 1
 
         else:
             curr = ""
-            while i != len(string) and not string[i].isspace() and string[i] not in SPECIALS:
+            while (
+                i != len(string)
+                and not string[i].isspace()
+                and string[i] not in SPECIALS
+            ):
                 curr += string[i]
                 i += 1
             if curr:
@@ -94,14 +102,16 @@ def tokenize(string, do_comments, ignore_brackets) -> List[Token]:
         """Starts just after an opening quotation mark"""
         nonlocal i
         curr = ""
-        while i != len(string) and string[i] != "\"":
+        while i != len(string) and string[i] != '"':
             char = string[i]
             if char == "\n":
                 raise ParseError("Multiline strings not supported!")
             if char == "\\":
                 curr += char
                 if i + 1 == len(string):
-                    raise ParseError("String not terminated correctly (try escaping the backslash?)")
+                    raise ParseError(
+                        "String not terminated correctly (try escaping the backslash?)"
+                    )
                 curr += string[i + 1]
                 i += 2
             else:

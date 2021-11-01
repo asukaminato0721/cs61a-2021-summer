@@ -1,5 +1,6 @@
 from hog import GOAL_SCORE
 
+
 def check_strategy_roll(score, opponent_score, num_rolls):
     """Raises an error with a helpful message if NUM_ROLLS is an invalid
     strategy output. All strategy outputs must be integers from 0 to 10.
@@ -19,10 +20,9 @@ def check_strategy_roll(score, opponent_score, num_rolls):
      ...
     AssertionError: strategy(0, 0) returned None (not an integer)
     """
-    msg = 'strategy({}, {}) returned {}'.format(
-        score, opponent_score, num_rolls)
-    assert type(num_rolls) == int, msg + ' (not an integer)'
-    assert 0 <= num_rolls <= 10, msg + ' (invalid number of rolls)'
+    msg = "strategy({}, {}) returned {}".format(score, opponent_score, num_rolls)
+    assert type(num_rolls) == int, msg + " (not an integer)"
+    assert 0 <= num_rolls <= 10, msg + " (invalid number of rolls)"
 
 
 def check_strategy(strategy, goal=GOAL_SCORE):

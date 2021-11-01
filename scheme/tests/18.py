@@ -1,11 +1,11 @@
 test = {
-  'name': 'Problem 18',
-  'points': 2,
-  'suites': [
-    {
-      'cases': [
+    "name": "Problem 18",
+    "points": 2,
+    "suites": [
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           scm> (let-to-lambda 1)
           1
           scm> (let-to-lambda 'a)
@@ -17,31 +17,31 @@ test = {
           ....                (+ a b)))
           ((lambda (a b) (+ a b)) 1 2)
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> '(quoted expressions remain the same)
           (quoted expressions remain the same)
           scm> (let-to-lambda '(quote (let ((a 1) (b 2)) (+ a b))))
           (quote (let ((a 1) (b 2)) (+ a b)))
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": r"""
       scm> (load 'questions)
       """,
-      'teardown': '',
-      'type': 'scheme'
-    },
-    {
-      'cases': [
+            "teardown": "",
+            "type": "scheme",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           scm> '(lambda parameters not affected but body affected)
           (lambda parameters not affected but body affected)
           scm> (let-to-lambda '(lambda (let a b) (+ let a b)))
@@ -49,11 +49,11 @@ test = {
           scm> (let-to-lambda '(lambda (x) a (let ((a x)) a)))
           (lambda (x) a ((lambda (a) a) x))
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (let-to-lambda '(let ((a (let ((a 2)) a))
           ....                 (b 2))
           ....                (+ a b)))
@@ -65,16 +65,16 @@ test = {
           scm> (let-to-lambda '(+ 1 (let ((a 1)) a)))
           (+ 1 ((lambda (a) a) 1))
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": r"""
       scm> (load 'questions)
       """,
-      'teardown': '',
-      'type': 'scheme'
-    }
-  ]
+            "teardown": "",
+            "type": "scheme",
+        },
+    ],
 }

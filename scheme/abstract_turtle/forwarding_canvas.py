@@ -1,17 +1,20 @@
-
 from .canvas import Canvas
+
 
 def _forward(method):
     def func(self, *args, **kwargs):
         # pylint: disable=W0212
         return getattr(self._canvas, method)(*args, **kwargs)
+
     func.name = method
     return func
+
 
 class ForwardingCanvas(Canvas):
     """
     Canvas that dispatches all calls to a contained canvas
     """
+
     def __init__(self, canvas):
         super().__init__(canvas.width, canvas.height)
         self._canvas = canvas

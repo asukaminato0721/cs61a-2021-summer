@@ -134,9 +134,7 @@ class FormatSeq:
             elif isinstance(pos, _ChangeIndent):
                 indent_level += pos.level
             else:
-                raise NotImplementedError(
-                    "unable to stringify " + str(type(pos))
-                )
+                raise NotImplementedError("unable to stringify " + str(type(pos)))
             pos = pos.next
         return "".join(out)
 
@@ -239,9 +237,7 @@ class SpecialFormFormatter(Formatter, ABC):
 class AlignedCondFormatter(SpecialFormFormatter):
     class Clause(Formatter):
         @staticmethod
-        def format(
-            expr: Formatted, remaining: int, max_pred_len: int = 0
-        ) -> FormatSeq:
+        def format(expr: Formatted, remaining: int, max_pred_len: int = 0) -> FormatSeq:
             if isinstance(expr, FormatComment):
                 return CommentFormatter.format(expr)
             else:
@@ -418,9 +414,7 @@ class InlineFormatter(Formatter):
         if SpecialFormFormatter.is_multiline(expr):
             raise WeakMatchFailure("Cannot inline-format a multiline expr")
 
-        formatted_exprs = [
-            InlineFormatter.format(elem) for elem in expr.contents
-        ]
+        formatted_exprs = [InlineFormatter.format(elem) for elem in expr.contents]
 
         out = Token(expr.prefix) + Token(expr.open_paren)
         for formatted_expr in formatted_exprs:

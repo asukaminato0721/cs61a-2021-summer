@@ -10,6 +10,7 @@ from scheme_reader import Pair, nil, repl_str
 class SchemeError(Exception):
     """Exception indicating an error in a Scheme program."""
 
+
 #######################
 # Built-In Procedures #
 #######################
@@ -22,10 +23,12 @@ BUILTINS = []
 
 def builtin(*names):
     """An annotation to convert a Python function into a BuiltinProcedure."""
+
     def add(fn):
         for name in names:
             BUILTINS.append((name, fn, names[0]))
         return fn
+
     return add
 
 
@@ -91,36 +94,39 @@ def scheme_eqp(x, y):
 
 @builtin("pair?")
 def scheme_pairp(x):
-    return type(x).__name__ == 'Pair'
+    return type(x).__name__ == "Pair"
 
 
 @builtin("scheme-valid-cdr?")
 def scheme_valid_cdrp(x):
     return scheme_pairp(x) or scheme_nullp(x) or scheme_promisep(x)
 
+
 # Streams
 
 
 @builtin("promise?")
 def scheme_promisep(x):
-    return type(x).__name__ == 'Promise'
+    return type(x).__name__ == "Promise"
 
 
 @builtin("force")
 def scheme_force(x):
-    validate_type(x, scheme_promisep, 0, 'promise')
+    validate_type(x, scheme_promisep, 0, "promise")
     return x.evaluate()
 
 
 @builtin("cdr-stream")
 def scheme_cdr_stream(x):
-    validate_type(x, lambda x: scheme_pairp(x) and scheme_promisep(x.rest), 0, 'cdr-stream')
+    validate_type(
+        x, lambda x: scheme_pairp(x) and scheme_promisep(x.rest), 0, "cdr-stream"
+    )
     return scheme_force(x.rest)
 
 
 @builtin("null?")
 def scheme_nullp(x):
-    return type(x).__name__ == 'nil'
+    return type(x).__name__ == "nil"
 
 
 @builtin("list?")
@@ -135,7 +141,7 @@ def scheme_listp(x):
 
 @builtin("length")
 def scheme_length(x):
-    validate_type(x, scheme_listp, 0, 'length')
+    validate_type(x, scheme_listp, 0, "length")
     if x is nil:
         return 0
     return len(x)
@@ -148,28 +154,29 @@ def scheme_cons(x, y):
 
 @builtin("car")
 def scheme_car(x):
-    validate_type(x, scheme_pairp, 0, 'car')
+    validate_type(x, scheme_pairp, 0, "car")
     return x.first
 
 
 @builtin("cdr")
 def scheme_cdr(x):
-    validate_type(x, scheme_pairp, 0, 'cdr')
+    validate_type(x, scheme_pairp, 0, "cdr")
     return x.rest
+
 
 # Mutation extras
 
 
 @builtin("set-car!")
 def scheme_set_car(x, y):
-    validate_type(x, scheme_pairp, 0, 'set-car!')
+    validate_type(x, scheme_pairp, 0, "set-car!")
     x.first = y
 
 
 @builtin("set-cdr!")
 def scheme_set_cdr(x, y):
-    validate_type(x, scheme_pairp, 0, 'set-cdr!')
-    validate_type(y, scheme_valid_cdrp, 1, 'set-cdr!')
+    validate_type(x, scheme_pairp, 0, "set-cdr!")
+    validate_type(y, scheme_valid_cdrp, 1, "set-cdr!")
     x.rest = y
 
 
@@ -189,7 +196,7 @@ def scheme_append(*vals):
     for i in range(len(vals) - 2, -1, -1):
         v = vals[i]
         if v is not nil:
-            validate_type(v, scheme_pairp, i, 'append')
+            validate_type(v, scheme_pairp, i, "append")
             r = p = Pair(v.first, result)
             v = v.rest
             while scheme_pairp(v):
@@ -318,21 +325,47 @@ def scheme_remainder(val0, val1):
 def number_fn(module, name, fallback=None):
     """A Scheme built-in procedure that calls the numeric Python function named
     MODULE.FN."""
-    py_fn = getattr(module, name) if fallback is None else getattr(module, name, fallback)
+    py_fn = (
+        getattr(module, name) if fallback is None else getattr(module, name, fallback)
+    )
 
     def scheme_fn(*vals):
         _check_nums(*vals)
         return py_fn(*vals)
+
     return scheme_fn
 
 
 # Add number functions in the math module as built-in procedures in Scheme
-for _name in ["acos", "acosh", "asin", "asinh", "atan", "atan2", "atanh",
-              "ceil", "copysign", "cos", "cosh", "degrees", "floor", "log",
-              "log10", "log1p", "radians", "sin", "sinh", "sqrt",
-              "tan", "tanh", "trunc"]:
+for _name in [
+    "acos",
+    "acosh",
+    "asin",
+    "asinh",
+    "atan",
+    "atan2",
+    "atanh",
+    "ceil",
+    "copysign",
+    "cos",
+    "cosh",
+    "degrees",
+    "floor",
+    "log",
+    "log10",
+    "log1p",
+    "radians",
+    "sin",
+    "sinh",
+    "sqrt",
+    "tan",
+    "tanh",
+    "trunc",
+]:
     builtin(_name)(number_fn(math, _name))
-builtin("log2")(number_fn(math, "log2", lambda x: math.log(x, 2)))  # Python 2 compatibility
+builtin("log2")(
+    number_fn(math, "log2", lambda x: math.log(x, 2))
+)  # Python 2 compatibility
 
 
 def _numcomp(op, x, y):
@@ -382,6 +415,7 @@ def scheme_zerop(x):
     _check_nums(x)
     return x == 0
 
+
 ##
 # Other operations
 ##
@@ -389,8 +423,13 @@ def scheme_zerop(x):
 
 @builtin("atom?")
 def scheme_atomp(x):
-    return (scheme_booleanp(x) or scheme_numberp(x) or scheme_symbolp(x) or
-            scheme_nullp(x) or scheme_stringp(x))
+    return (
+        scheme_booleanp(x)
+        or scheme_numberp(x)
+        or scheme_symbolp(x)
+        or scheme_nullp(x)
+        or scheme_stringp(x)
+    )
 
 
 @builtin("display")
@@ -427,6 +466,7 @@ def scheme_error(msg=None):
 def scheme_exit():
     raise EOFError
 
+
 ##
 # Turtle graphics (non-standard)
 ##
@@ -437,6 +477,7 @@ turtle = CANVAS = None
 
 def _title():
     import turtle as _nativeturtle
+
     _nativeturtle.title("Scheme Turtles")
 
 
@@ -444,7 +485,9 @@ def attempt_install_tk_turtle():
     try:
         from abstract_turtle import turtle
     except ImportError:
-        raise SchemeError("Could not find abstract_turtle. This should never happen in student-facing situations. If you are a student, please file a bug on Piazza.")
+        raise SchemeError(
+            "Could not find abstract_turtle. This should never happen in student-facing situations. If you are a student, please file a bug on Piazza."
+        )
     return turtle
 
 
@@ -452,11 +495,16 @@ def attempt_create_tk_canvas():
     try:
         import tkinter as _
     except:
-        raise SchemeError("\n".join([
-            "Could not import tkinter, so the tk-turtle will not work.",
-            "Either install python with tkinter support or run in pillow-turtle mode"
-        ]))
+        raise SchemeError(
+            "\n".join(
+                [
+                    "Could not import tkinter, so the tk-turtle will not work.",
+                    "Either install python with tkinter support or run in pillow-turtle mode",
+                ]
+            )
+        )
     from abstract_turtle import TkCanvas
+
     return TkCanvas(1000, 1000, init_hook=_title)
 
 
@@ -465,13 +513,18 @@ def attempt_create_pillow_canvas():
         import PIL as _
         import numpy as _
     except:
-        raise SchemeError("\n".join([
-            "Could not import abstract_turtle[pillow_canvas]'s dependencies.",
-            "To install these packages, run",
-            "    python3 -m pip install 'abstract_turtle[pillow_canvas]'",
-            "You can also run in tk-turtle mode by removing the flag `--pillow-turtle`"
-        ]))
+        raise SchemeError(
+            "\n".join(
+                [
+                    "Could not import abstract_turtle[pillow_canvas]'s dependencies.",
+                    "To install these packages, run",
+                    "    python3 -m pip install 'abstract_turtle[pillow_canvas]'",
+                    "You can also run in tk-turtle mode by removing the flag `--pillow-turtle`",
+                ]
+            )
+        )
     from abstract_turtle import PillowCanvas
+
     return PillowCanvas(1000, 1000)
 
 

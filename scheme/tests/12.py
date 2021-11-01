@@ -1,11 +1,11 @@
 test = {
-  'name': 'Problem 12',
-  'points': 2,
-  'suites': [
-    {
-      'cases': [
+    "name": "Problem 12",
+    "points": 2,
+    "suites": [
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           scm> (and)
           c65729b823194bffbccc4a162f8653bd
           # locked
@@ -31,11 +31,11 @@ test = {
           c65729b823194bffbccc4a162f8653bd
           # locked
           """,
-          'hidden': False,
-          'locked': True
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": True,
+                },
+                {
+                    "code": r"""
           scm> (not (and #f))
           #t
           scm> (and 3 2 #f)
@@ -55,11 +55,11 @@ test = {
           scm> (and x #t)
           #f
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (define x 0)
           x
           scm> (and (define x (+ x 1))
@@ -80,11 +80,11 @@ test = {
           scm> x
           11
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (define (no-mutation) (and #t #t #t #t))
           no-mutation
           scm> no-mutation
@@ -94,19 +94,19 @@ test = {
           scm> no-mutation ; `and` should not cause mutation
           (lambda () (and #t #t #t #t))
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': '',
-      'teardown': '',
-      'type': 'scheme'
-    },
-    {
-      'cases': [
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": "",
+            "teardown": "",
+            "type": "scheme",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           scm> (or)
           da859b61586947ca44e824712fd6fca4
           # locked
@@ -126,11 +126,11 @@ test = {
           46beb7deeeb5e9af1c8d785b12558317
           # locked
           """,
-          'hidden': False,
-          'locked': True
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": True,
+                },
+                {
+                    "code": r"""
           scm> (or 5 2 1)
           5
           scm> (or 0 1 2)
@@ -148,11 +148,11 @@ test = {
           scm> (or (false-fn) 'yay)
           yay
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (define x 0)
           x
           scm> (or (begin (define x (+ x 1)) #f)
@@ -173,11 +173,11 @@ test = {
           scm> x
           11
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (define (no-mutation) (or #f #f #f #f))
           no-mutation
           scm> no-mutation
@@ -187,11 +187,11 @@ test = {
           scm> no-mutation ; `or` should not cause mutation
           (lambda () (or #f #f #f #f))
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (define (greater-than-5 x) (if (> x 5) #t #f))
           greater-than-5
           scm> (define (other y) (or (greater-than-5 y) #f))
@@ -207,14 +207,14 @@ test = {
           scm> (other 6) ; test for mutation
           #t
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': '',
-      'teardown': '',
-      'type': 'scheme'
-    }
-  ]
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": "",
+            "teardown": "",
+            "type": "scheme",
+        },
+    ],
 }

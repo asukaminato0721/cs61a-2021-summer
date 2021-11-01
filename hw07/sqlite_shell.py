@@ -38,9 +38,7 @@ if msvcrt:
         ctypes.c_void_p,
         ctypes.c_uint,
     )
-    GetConsoleCP = ctypes.WINFUNCTYPE(UINT)(
-        ("GetConsoleCP", ctypes.windll.kernel32)
-    )
+    GetConsoleCP = ctypes.WINFUNCTYPE(UINT)(("GetConsoleCP", ctypes.windll.kernel32))
     SetConsoleCP = ctypes.WINFUNCTYPE(BOOL, UINT)(
         ("SetConsoleCP", ctypes.windll.kernel32)
     )
@@ -168,9 +166,7 @@ def exception_encode(ex, codec):
         ex = reduced[0](
             *tuple(
                 map(
-                    lambda arg: codec.decode(arg)[0]
-                    if isinstance(arg, bytes)
-                    else arg,
+                    lambda arg: codec.decode(arg)[0] if isinstance(arg, bytes) else arg,
                     reduced[1],
                 )
             )
@@ -195,9 +191,7 @@ def sql_commands(read_line):
                     and i == j
                     and all(map(lambda chunk_: len(chunk_) == 0, concat))
                 )
-                line = read_line(
-                    counter - 1, not_in_the_middle_of_any_input, prev_line
-                )
+                line = read_line(counter - 1, not_in_the_middle_of_any_input, prev_line)
                 empty_string = line[:0] if line is not None else line
                 prev_line = line
                 if not line:
@@ -283,10 +277,7 @@ class WindowsConsoleIOMixin(object):
         return False
 
     def readable(self):
-        return (
-            GetNumberOfConsoleInputEvents(self.handle, ctypes.byref(DWORD(0)))
-            != 0
-        )
+        return GetNumberOfConsoleInputEvents(self.handle, ctypes.byref(DWORD(0))) != 0
 
     def writable(self):
         n = DWORD(0)
@@ -321,9 +312,7 @@ class WindowsConsoleIOMixin(object):
 
     def writewchars(self, buf, n):
         nw = DWORD(n)
-        if not WriteConsoleW(
-            self.handle, buf, nw, ctypes.byref(nw), ctypes.c_void_p()
-        ):
+        if not WriteConsoleW(self.handle, buf, nw, ctypes.byref(nw), ctypes.c_void_p()):
             raise ctypes.WinError()
         return nw.value
 
@@ -331,16 +320,11 @@ class WindowsConsoleIOMixin(object):
 class WindowsConsoleRawIO(WindowsConsoleIOMixin, io.RawIOBase):
     def readinto(self, b):
         wordsize = ctypes.sizeof(ctypes.c_wchar)
-        return (
-            self.readwcharsinto(getbuffer(b, True), len(b) // wordsize)
-            * wordsize
-        )
+        return self.readwcharsinto(getbuffer(b, True), len(b) // wordsize) * wordsize
 
     def write(self, b):
         wordsize = ctypes.sizeof(ctypes.c_wchar)
-        return (
-            self.writewchars(getbuffer(b, False), len(b) // wordsize) * wordsize
-        )
+        return self.writewchars(getbuffer(b, False), len(b) // wordsize) * wordsize
 
 
 class WindowsConsoleTextIO(WindowsConsoleIOMixin, io.TextIOBase):
@@ -371,9 +355,7 @@ class WindowsConsoleTextIO(WindowsConsoleIOMixin, io.TextIOBase):
                 self.buffered.find(
                     newline,
                     istart,
-                    min(istart + nchars, len(self.buffered))
-                    if nchars >= 0
-                    else None,
+                    min(istart + nchars, len(self.buffered)) if nchars >= 0 else None,
                 )
                 if newline is not None
                 else nchars
@@ -470,9 +452,7 @@ def wrap_unicode_stdio(
             "line_buffering",
             "write_through",
         ]:
-            value = getattr(
-                stream, "newlines" if key == "newline" else key, none
-            )
+            value = getattr(stream, "newlines" if key == "newline" else key, none)
             if value is not none:
                 kwargs[key] = value
         kwargs["encoding"] = encoding
@@ -482,9 +462,7 @@ def wrap_unicode_stdio(
         and str == bytes
         and stream in (sys.stdin, sys.stdout, sys.stderr)
     ):
-        result = (codecs.getwriter if is_writer else codecs.getreader)(
-            encoding
-        )(stream)
+        result = (codecs.getwriter if is_writer else codecs.getreader)(encoding)(stream)
     else:
         result = stream
     return result
@@ -547,9 +525,7 @@ class Database(object):
 def isatty(file_or_fd):
     result = True
     method = (
-        getattr(file_or_fd, "isatty", None)
-        if not isinstance(file_or_fd, int)
-        else None
+        getattr(file_or_fd, "isatty", None) if not isinstance(file_or_fd, int) else None
     )  # this check is just an optimization
     if method is not None:
         try:
@@ -558,9 +534,7 @@ def isatty(file_or_fd):
             tty = None
         result = result and tty is not None and tty
     method = (
-        getattr(file_or_fd, "fileno", None)
-        if not isinstance(file_or_fd, int)
-        else None
+        getattr(file_or_fd, "fileno", None) if not isinstance(file_or_fd, int) else None
     )  # this check is just an optimization
     if method is not None:
         try:
@@ -573,10 +547,7 @@ def isatty(file_or_fd):
             and os.isatty(fd)
             and (
                 not msvcrt
-                or GetConsoleMode(
-                    msvcrt.get_osfhandle(fd), ctypes.byref(DWORD(0))
-                )
-                != 0
+                or GetConsoleMode(msvcrt.get_osfhandle(fd), ctypes.byref(DWORD(0))) != 0
             )
         )
     return result
@@ -655,14 +626,10 @@ class StdIOProxy(object):
     def _do_readline(stream, allow_set_code_page, *args):
         new_code_page = CP_UTF8
         old_code_page = (
-            GetConsoleCP()
-            if msvcrt and GetConsoleCP and isatty(stream)
-            else None
+            GetConsoleCP() if msvcrt and GetConsoleCP and isatty(stream) else None
         )
         if old_code_page == new_code_page:
-            old_code_page = (
-                None  # Don't change code page if it's already correct...
-            )
+            old_code_page = None  # Don't change code page if it's already correct...
         if old_code_page is not None:
             if not SetConsoleCP(new_code_page):
                 old_code_page = None
@@ -682,9 +649,7 @@ class StdIOProxy(object):
             else None
         )
         if old_code_page == new_code_page:
-            old_code_page = (
-                None  # Don't change code page if it's already correct...
-            )
+            old_code_page = None  # Don't change code page if it's already correct...
         if old_code_page is not None:
             if not SetConsoleOutputCP(new_code_page):
                 old_code_page = None
@@ -792,39 +757,25 @@ class bytes_comparable_with_unicode(
         return value
 
     def __hash__(self):
-        return super(
-            bytes_comparable_with_unicode, self
-        ).__hash__()  # To avoid warning
+        return super(bytes_comparable_with_unicode, self).__hash__()  # To avoid warning
 
     def __eq__(self, other):
-        return super(bytes_comparable_with_unicode, self).__eq__(
-            self.coerce(other)
-        )
+        return super(bytes_comparable_with_unicode, self).__eq__(self.coerce(other))
 
     def __ne__(self, other):
-        return super(bytes_comparable_with_unicode, self).__ne__(
-            self.coerce(other)
-        )
+        return super(bytes_comparable_with_unicode, self).__ne__(self.coerce(other))
 
     def __lt__(self, other):
-        return super(bytes_comparable_with_unicode, self).__lt__(
-            self.coerce(other)
-        )
+        return super(bytes_comparable_with_unicode, self).__lt__(self.coerce(other))
 
     def __gt__(self, other):
-        return super(bytes_comparable_with_unicode, self).__gt__(
-            self.coerce(other)
-        )
+        return super(bytes_comparable_with_unicode, self).__gt__(self.coerce(other))
 
     def __le__(self, other):
-        return super(bytes_comparable_with_unicode, self).__le__(
-            self.coerce(other)
-        )
+        return super(bytes_comparable_with_unicode, self).__le__(self.coerce(other))
 
     def __ge__(self, other):
-        return super(bytes_comparable_with_unicode, self).__ge__(
-            self.coerce(other)
-        )
+        return super(bytes_comparable_with_unicode, self).__ge__(self.coerce(other))
 
     def __getitem__(self, index):
         return self.coerce(
@@ -833,17 +784,13 @@ class bytes_comparable_with_unicode(
 
     def __add__(self, other):
         return self.coerce(
-            super(bytes_comparable_with_unicode, self).__add__(
-                self.coerce(other)
-            ),
+            super(bytes_comparable_with_unicode, self).__add__(self.coerce(other)),
             True,
         )
 
     def __iadd__(self, other):
         return self.coerce(
-            super(bytes_comparable_with_unicode, self).__iadd__(
-                self.coerce(other)
-            ),
+            super(bytes_comparable_with_unicode, self).__iadd__(self.coerce(other)),
             True,
         )
 
@@ -857,16 +804,12 @@ class bytes_comparable_with_unicode(
 
     def join(self, others):
         return self.coerce(
-            super(bytes_comparable_with_unicode, self).join(
-                map(self.coerce, others)
-            ),
+            super(bytes_comparable_with_unicode, self).join(map(self.coerce, others)),
             True,
         )
 
     def startswith(self, other):
-        return super(bytes_comparable_with_unicode, self).startswith(
-            self.coerce(other)
-        )
+        return super(bytes_comparable_with_unicode, self).startswith(self.coerce(other))
 
     def __str__(self):
         return self.codec.decode(self)[0]
@@ -964,9 +907,7 @@ def main(
         kwargs.pop("stderr", sys.stderr),
     )
     parsed_args = argparser.parse_args(args)
-    codec = codecs.lookup(
-        parsed_args.encoding or argparser.get_default("encoding")
-    )
+    codec = codecs.lookup(parsed_args.encoding or argparser.get_default("encoding"))
     if parsed_args.self_test:
         self_test(codec)
     if parsed_args.cross_test:
@@ -1021,9 +962,7 @@ def main(
                         lambda *args: (lambda s: (s) or None)(f.readline())
                     )
                 ):
-                    result = exec_command(
-                        db, command, False and ignore_io_errors
-                    )
+                    result = exec_command(db, command, False and ignore_io_errors)
                     if result is not None:
                         return result
         except IOError as ex:
@@ -1073,9 +1012,9 @@ def main(
                 elif args[0] == ".dump":
                     if len(args) != 1:
                         raise_invalid_command_error(command)
-                    foreign_keys = db.cursor.execute(
-                        "PRAGMA foreign_keys;"
-                    ).fetchone()[0]
+                    foreign_keys = db.cursor.execute("PRAGMA foreign_keys;").fetchone()[
+                        0
+                    ]
                     if foreign_keys in (0, "0", "off", "OFF"):
                         stdio.outputln("PRAGMA foreign_keys=OFF;", flush=False)
                     for line in db.connection.iterdump():
@@ -1086,9 +1025,7 @@ def main(
                         raise_invalid_command_error(command)
                     filename = args[-1]
                     for option in args[+1:-1]:
-                        raise ValueError(
-                            "option %s not supported" % (repr(option),)
-                        )
+                        raise ValueError("option %s not supported" % (repr(option),))
                     try:
                         db.__init__(filename)
                     except sqlite3.OperationalError as ex:
@@ -1116,11 +1053,7 @@ def main(
                         query_parameters["pattern"] = pattern
                     query = (
                         "SELECT sql || ';' FROM sqlite_master WHERE type = :type"
-                        + (
-                            " AND name LIKE :pattern"
-                            if pattern is not None
-                            else ""
-                        )
+                        + (" AND name LIKE :pattern" if pattern is not None else "")
                         + ";"
                     )
                 elif args[0] == ".show":
@@ -1136,11 +1069,7 @@ def main(
                         query_parameters["pattern"] = pattern
                     query = (
                         "SELECT name FROM sqlite_master WHERE type = :type"
-                        + (
-                            " AND name LIKE :pattern"
-                            if pattern is not None
-                            else ""
-                        )
+                        + (" AND name LIKE :pattern" if pattern is not None else "")
                         + ";"
                     )
                 else:
@@ -1164,9 +1093,7 @@ def main(
         if results is not None:
             for row in results:
                 stdio.outputln(
-                    *tuple(
-                        map(lambda item: item if item is not None else "", row)
-                    ),
+                    *tuple(map(lambda item: item if item is not None else "", row)),
                     sep="|",
                     flush=False
                 )
@@ -1247,9 +1174,7 @@ def test_query():
     data2 = b"\x01\x02\xFF\x01\xFF\xFE\xFD"
     values = [data1, data2]
     query_bytes = b"SELECT %s;" % (
-        b", ".join(
-            map(lambda b: b"X'%s'" % (hexcodec.encode(b)[0].upper(),), values)
-        ),
+        b", ".join(map(lambda b: b"X'%s'" % (hexcodec.encode(b)[0].upper(),), values)),
     )
     expected_bytes = b"%s\n" % (b"|".join(values),)
     return query_bytes, expected_bytes
@@ -1257,9 +1182,7 @@ def test_query():
 
 def cross_test(sqlite_cmdline, codec):
     (query_bytes, expected_bytes) = test_query()
-    (official_output, official_error) = call_program(
-        sqlite_cmdline, query_bytes
-    )
+    (official_output, official_error) = call_program(sqlite_cmdline, query_bytes)
     # We can't use os.linesep here since binaries may belong to different platforms (Win32/MinGW vs. MSYS/Cygwin vs. WSL...)
     official_output = official_output.replace(b"\r\n", b"\n")
     official_error = official_error.replace(b"\r\n", b"\n")
@@ -1269,9 +1192,7 @@ def cross_test(sqlite_cmdline, codec):
             % (repr(official_output), repr(expected_bytes))
         )
     if official_error:
-        raise sqlite3.ProgrammingError(
-            "did not expect errors from official binary"
-        )
+        raise sqlite3.ProgrammingError("did not expect errors from official binary")
 
 
 def self_test(codec):

@@ -9,7 +9,11 @@ from environment import global_attr
 from evaluate_apply import Frame
 from helper import verify_exact_callable_length, verify_min_callable_length
 from primitives import SingleOperandPrimitive, BuiltIn
-from scheme_exceptions import OperandDeduceError, IrreversibleOperationError, TurtleDrawingError
+from scheme_exceptions import (
+    OperandDeduceError,
+    IrreversibleOperationError,
+    TurtleDrawingError,
+)
 
 ABSOLUTE_MOVE = "M"
 RELATIVE_MOVE = "m"
@@ -123,8 +127,10 @@ class Canvas:
 
     @graphics_fragile
     def forward(self, dist: float):
-        self.move(self.x + dist * math.cos(self.angle / 360 * 2 * math.pi),
-                  self.y + dist * math.sin(self.angle / 360 * 2 * math.pi))
+        self.move(
+            self.x + dist * math.cos(self.angle / 360 * 2 * math.pi),
+            self.y + dist * math.sin(self.angle / 360 * 2 * math.pi),
+        )
 
     @graphics_fragile
     def pendown(self):
@@ -148,8 +154,9 @@ class Canvas:
         def polar_to_cartesian(center_x, center_y, radius, angle_in_degrees):
             angle_in_radians = (angle_in_degrees - 90) * math.pi / 180
 
-            return center_x + (radius * math.cos(angle_in_radians)), \
-                center_y + (radius * math.sin(angle_in_radians))
+            return center_x + (radius * math.cos(angle_in_radians)), center_y + (
+                radius * math.sin(angle_in_radians)
+            )
 
         def draw_arc(x, y, radius, start_angle, end_angle):
             end_x, end_y = polar_to_cartesian(x, y, radius, end_angle)
@@ -157,16 +164,31 @@ class Canvas:
             large_arc_flag = int(abs(degrees) > 180)
             sweep_flag = int((degrees < 0) != (signed_radius < 0))
 
-            return make_action(ABSOLUTE_ARC, radius, radius, 0, large_arc_flag, sweep_flag, end_x, end_y), \
-                end_x, \
-                end_y
+            return (
+                make_action(
+                    ABSOLUTE_ARC,
+                    radius,
+                    radius,
+                    0,
+                    large_arc_flag,
+                    sweep_flag,
+                    end_x,
+                    end_y,
+                ),
+                end_x,
+                end_y,
+            )
 
-        center_x, center_y = polar_to_cartesian(self.x, self.y, signed_radius, self.angle)
+        center_x, center_y = polar_to_cartesian(
+            self.x, self.y, signed_radius, self.angle
+        )
 
         degree_start = self.angle + 180
         degree_end = degree_start - degrees
 
-        arc_action, end_x, end_y = draw_arc(center_x, center_y, abs(signed_radius), degree_start, degree_end)
+        arc_action, end_x, end_y = draw_arc(
+            center_x, center_y, abs(signed_radius), degree_start, degree_end
+        )
 
         self.moves[-1].seq.append(arc_action)
         if self.fill_move:
@@ -216,8 +238,10 @@ def make_color(expression: Expression) -> str:
         raise OperandDeduceError(f"Expected a String or Symbol, received {expression}.")
     color = expression.value.lower()
     # regex from https://stackoverflow.com/questions/30241375/python-how-to-check-if-string-is-a-hex-color-code
-    if color not in COLORS and not re.search(r'^#(?:[0-9a-fA-F]{3}){1,2}$', color):
-        raise OperandDeduceError(f"Expected a valid CSS or hex color code, received {expression}.")
+    if color not in COLORS and not re.search(r"^#(?:[0-9a-fA-F]{3}){1,2}$", color):
+        raise OperandDeduceError(
+            f"Expected a valid CSS or hex color code, received {expression}."
+        )
     return color
 
 
@@ -344,7 +368,11 @@ class PenUp(BuiltIn):
 class Pixel(BuiltIn):
     def execute_evaluated(self, operands: List[Expression], frame: Frame) -> Expression:
         verify_exact_callable_length(self, 3, len(operands))
-        x, y, c, = operands
+        (
+            x,
+            y,
+            c,
+        ) = operands
         for v in x, y:
             if not isinstance(v, Number):
                 raise OperandDeduceError(f"Expected operand to be Number, not {v}")
@@ -367,10 +395,16 @@ class RGB(BuiltIn):
         verify_exact_callable_length(self, 3, len(operands))
         for operand in operands:
             if not isinstance(operand, Number):
-                raise OperandDeduceError(f"Expected operand to be Number, not {operand}")
+                raise OperandDeduceError(
+                    f"Expected operand to be Number, not {operand}"
+                )
             if not 0 <= operand.value <= 1:
-                raise OperandDeduceError(f"RGB values must be between 0 and 1, not {operand}")
-        return String("#" + "".join('{:02X}'.format(int(x.value * 255)) for x in operands))
+                raise OperandDeduceError(
+                    f"RGB values must be between 0 and 1, not {operand}"
+                )
+        return String(
+            "#" + "".join("{:02X}".format(int(x.value * 255)) for x in operands)
+        )
 
 
 @global_attr("right")
@@ -409,7 +443,9 @@ class SetPosition(BuiltIn):
         verify_exact_callable_length(self, 2, len(operands))
         for operand in operands:
             if not isinstance(operand, Number):
-                raise OperandDeduceError(f"Expected operand to be Number, not {operand}")
+                raise OperandDeduceError(
+                    f"Expected operand to be Number, not {operand}"
+                )
         log.logger.get_canvas().move(operands[0].value, -operands[1].value)
         return Undefined
 

@@ -1,32 +1,32 @@
 test = {
-  'name': 'Problem 9',
-  'points': 2,
-  'suites': [
-    {
-      'cases': [
+    "name": "Problem 9",
+    "points": 2,
+    "suites": [
         {
-          'answer': 'A TankAnt does damage to all Bees in its place each turn',
-          'choices': [
-            'A TankAnt does damage to all Bees in its place each turn',
-            'A TankAnt has greater health than a BodyguardAnt',
-            'A TankAnt can contain multiple ants',
-            'A TankAnt increases the damage of the ant it contains'
-          ],
-          'hidden': False,
-          'locked': False,
-          'question': r"""
+            "cases": [
+                {
+                    "answer": "A TankAnt does damage to all Bees in its place each turn",
+                    "choices": [
+                        "A TankAnt does damage to all Bees in its place each turn",
+                        "A TankAnt has greater health than a BodyguardAnt",
+                        "A TankAnt can contain multiple ants",
+                        "A TankAnt increases the damage of the ant it contains",
+                    ],
+                    "hidden": False,
+                    "locked": False,
+                    "question": r"""
           Besides costing more to place, what is the only difference between a
           TankAnt and a BodyguardAnt?
-          """
-        }
-      ],
-      'scored': False,
-      'type': 'concept'
-    },
-    {
-      'cases': [
+          """,
+                }
+            ],
+            "scored": False,
+            "type": "concept",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           >>> # Testing TankAnt parameters
           >>> TankAnt.food_cost
           6
@@ -36,11 +36,11 @@ test = {
           >>> tank.health
           2
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # Testing TankAnt action
           >>> tank = TankAnt()
           >>> place = gamestate.places['tunnel_0_1']
@@ -55,11 +55,11 @@ test = {
           >>> [bee.health for bee in other_place.bees]
           [3]
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # Testing TankAnt container methods
           >>> tank = TankAnt()
           >>> thrower = ThrowerAnt()
@@ -74,12 +74,12 @@ test = {
           >>> bee.health
           1
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": r"""
       >>> from ants_plans import *
       >>> from ants import *
       >>> beehive, layout = Hive(make_test_assault_plan()), dry_layout
@@ -87,13 +87,13 @@ test = {
       >>> gamestate = GameState(None, beehive, ant_types(), layout, dimensions)
       >>> #
       """,
-      'teardown': '',
-      'type': 'doctest'
-    },
-    {
-      'cases': [
+            "teardown": "",
+            "type": "doctest",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           >>> # Testing TankAnt action
           >>> tank = TankAnt()
           >>> place = gamestate.places['tunnel_0_1']
@@ -104,11 +104,11 @@ test = {
           >>> len(place.bees)  # Bees removed from places because of TankAnt damage
           0
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # Testing TankAnt.damage
           >>> tank = TankAnt()
           >>> tank.damage = 100
@@ -120,11 +120,11 @@ test = {
           >>> len(place.bees)
           0
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # Placement of ants
           >>> tank = TankAnt()
           >>> harvester = HarvesterAnt()
@@ -155,11 +155,11 @@ test = {
           >>> tank.ant_contained is harvester
           True
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # Placement of ants
           >>> tank = TankAnt()
           >>> harvester = HarvesterAnt()
@@ -190,11 +190,11 @@ test = {
           >>> tank.ant_contained is harvester
           True
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # Removing ants
           >>> tank = TankAnt()
           >>> test_ant = Ant()
@@ -212,21 +212,21 @@ test = {
           >>> tank.place is None
           True
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> tank = TankAnt()
           >>> place = Place('Test')
           >>> place.add_insect(tank)
           >>> tank.action(gamestate) # Action without ant_contained should not error
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> # test proper call to death callback
           >>> original_death_callback = Insect.death_callback
           >>> Insect.death_callback = lambda x: print("insect died")
@@ -244,12 +244,12 @@ test = {
           insect died
           >>> Insect.death_callback = original_death_callback
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": r"""
       >>> from ants_plans import *
       >>> from ants import *
       >>> beehive, layout = Hive(make_test_assault_plan()), dry_layout
@@ -257,22 +257,22 @@ test = {
       >>> gamestate = GameState(None, beehive, ant_types(), layout, dimensions)
       >>> #
       """,
-      'teardown': '',
-      'type': 'doctest'
-    },
-    {
-      'cases': [
+            "teardown": "",
+            "type": "doctest",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           >>> from ants import *
           >>> TankAnt.implemented
           True
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> from ants import *
           >>> # Abstraction tests
           >>> original = Ant.__init__
@@ -282,14 +282,14 @@ test = {
           >>> Ant.__init__ = original
           >>> tank = TankAnt()
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': '',
-      'teardown': '',
-      'type': 'doctest'
-    }
-  ]
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": "",
+            "teardown": "",
+            "type": "doctest",
+        },
+    ],
 }

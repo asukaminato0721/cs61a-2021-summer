@@ -1,5 +1,5 @@
-
 from math import sin, cos, pi, atan2
+
 try:
     import turtle
     import tkinter
@@ -14,6 +14,7 @@ class TkCanvas(Canvas):
     """
     Draw the given results on a pillow canvas.
     """
+
     def __init__(self, width, height, init_hook=lambda: None):
         super().__init__(width, height)
         self.image = None
@@ -33,7 +34,7 @@ class TkCanvas(Canvas):
 
     @staticmethod
     def tr_color(color):
-        return '#%02x%02x%02x' % tuple(color)
+        return "#%02x%02x%02x" % tuple(color)
 
     def _goto(self, pos):
         turtle.goto(*pos)
@@ -70,13 +71,13 @@ class TkCanvas(Canvas):
             assert start == 0
             assert end == 2 * pi
             x, y = self.tr_pos(center)
-            left_up = (x-radius, y-radius)
-            right_down = (x+radius, y+radius)
+            left_up = (x - radius, y - radius)
+            right_down = (x + radius, y + radius)
             box = [left_up, right_down]
             turtle.getcanvas().create_oval(box, fill=self.tr_color(color), width=0)
         else:
             sx, sy = center.x + radius * cos(start), center.y + radius * sin(start)
-            theta = start + pi/2
+            theta = start + pi / 2
             self._goto_invisible((sx, sy))
             self._setheading(theta)
             amount = end - start
@@ -88,8 +89,7 @@ class TkCanvas(Canvas):
         for movement in path:
             points += movement.to_points()
         polygon = [coor for point in points for coor in self.tr_pos(point)]
-        turtle.getcanvas().create_polygon(polygon,
-            fill=self.tr_color(color))
+        turtle.getcanvas().create_polygon(polygon, fill=self.tr_color(color))
         turtle.getcanvas().update_idletasks()
 
     def axis_aligned_rectangle(self, bottom_left, width, height, color):
@@ -99,7 +99,9 @@ class TkCanvas(Canvas):
         # bounding box in pixel space, make this exactly w*h
         # subtract one to have blx, blx+1, ..., blx+w-1, etc.
         tlx, tly = blx + (width - 1), bly - (height - 1)
-        turtle.getcanvas().create_rectangle(blx, bly, tlx, tly, fill=self.tr_color(color), width=0)
+        turtle.getcanvas().create_rectangle(
+            blx, bly, tlx, tly, fill=self.tr_color(color), width=0
+        )
 
     def set_bgcolor(self, color):
         self.__ensure_init_hook()
@@ -107,7 +109,12 @@ class TkCanvas(Canvas):
 
     def clear(self):
         self.__ensure_init_hook()
-        self.axis_aligned_rectangle(Position(-self.width / 2, -self.height / 2), self.width, self.height, Color(255, 255, 255))
+        self.axis_aligned_rectangle(
+            Position(-self.width / 2, -self.height / 2),
+            self.width,
+            self.height,
+            Color(255, 255, 255),
+        )
         turtle.clear()
 
     def refreshed_turtle(self, drawn_turtle):

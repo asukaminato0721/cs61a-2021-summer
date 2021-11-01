@@ -1,41 +1,41 @@
 test = {
-  'name': 'mul_interval',
-  'points': 1,
-  'suites': [
-    {
-      'cases': [
+    "name": "mul_interval",
+    "points": 1,
+    "suites": [
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           >>> str_interval(mul_interval(interval(-1, 2), interval(4, 8)))
           '-8 to 16'
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': r"""
+                    "hidden": False,
+                    "locked": False,
+                }
+            ],
+            "scored": True,
+            "setup": r"""
       >>> import hw03
       >>> from hw03 import *
       """,
-      'teardown': '',
-      'type': 'doctest'
-    },
-    {
-      'cases': [
+            "teardown": "",
+            "type": "doctest",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           >>> # Testing for abstraction violations
           >>> # Your code should not check for which implementation is used
           >>> str_interval(mul_interval(interval(-1, 2), interval(4, 8)))
           '-8 to 16'
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': r"""
+                    "hidden": False,
+                    "locked": False,
+                }
+            ],
+            "scored": True,
+            "setup": r"""
       >>> import hw03
       >>> old_abstraction = hw03.interval, hw03.lower_bound, hw03.upper_bound
       >>> hw03.interval = lambda a, b: lambda x: a if x == 0 else b
@@ -43,10 +43,10 @@ test = {
       >>> hw03.upper_bound = lambda s: s(1)
       >>> from hw03 import *
       """,
-      'teardown': r"""
+            "teardown": r"""
       >>> hw03.interval, hw03.lower_bound, hw03.upper_bound = old_abstraction
       """,
-      'type': 'doctest'
-    }
-  ]
+            "type": "doctest",
+        },
+    ],
 }

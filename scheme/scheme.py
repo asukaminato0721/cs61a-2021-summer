@@ -1,7 +1,8 @@
 """A Scheme interpreter and its read-eval-print loop."""
-
+from __future__ import annotations
 import os
 import sys
+from typing import Any, Dict
 
 from scheme_builtins import *
 from scheme_reader import *
@@ -12,7 +13,7 @@ from ucb import main, trace
 ##############
 
 
-def scheme_eval(expr, env, _=None):  # Optional third argument is ignored
+def scheme_eval(expr, env: Frame, _=None):  # Optional third argument is ignored
     """Evaluate Scheme expression EXPR in Frame ENV.
 
     >>> expr = read_line('(+ 2 2)')
@@ -36,6 +37,11 @@ def scheme_eval(expr, env, _=None):  # Optional third argument is ignored
     else:
         # BEGIN PROBLEM 4
         "*** YOUR CODE HERE ***"
+        # https://www.cnblogs.com/ikventure/p/15059547.html#problem-4-scheme_eval
+        op = scheme_eval(first, env)
+        validate_procedure(op)
+        ops = rest.map(lambda x: scheme_eval(x, env))
+        return scheme_apply(op, ops, env)
         # END PROBLEM 4
 
 
@@ -85,9 +91,9 @@ def eval_all(expressions, env):
 class Frame:
     """An environment frame binds Scheme symbols to Scheme values."""
 
-    def __init__(self, parent):
+    def __init__(self, parent: Frame):
         """An empty frame with parent frame PARENT (which may be None)."""
-        self.bindings = {}
+        self.bindings: Dict[str, Any] = {}
         self.parent = parent
 
     def __repr__(self):
@@ -99,12 +105,21 @@ class Frame:
     def define(self, symbol, value):
         """Define Scheme SYMBOL to have VALUE."""
         # BEGIN PROBLEM 2
+        self.bindings[symbol] = value
         "*** YOUR CODE HERE ***"
         # END PROBLEM 2
 
     def lookup(self, symbol):
         """Return the value bound to SYMBOL. Errors if SYMBOL is not found."""
         # BEGIN PROBLEM 2
+        cur = self
+        while cur:
+            if symbol in cur.bindings:
+                return cur.bindings[symbol]
+            if cur.parent:
+                cur = cur.parent
+            else:
+                break
         "*** YOUR CODE HERE ***"
         # END PROBLEM 2
         raise SchemeError("unknown identifier: {0}".format(symbol))
@@ -144,7 +159,7 @@ def scheme_procedurep(x):
 class BuiltinProcedure(Procedure):
     """A Scheme procedure defined as a Python function."""
 
-    def __init__(self, fn, expect_env=False, name="builtin"):
+    def __init__(self, fn, expect_env: bool = False, name: str = "builtin"):
         self.name = name
         self.fn = fn
         self.expect_env = expect_env
@@ -152,7 +167,7 @@ class BuiltinProcedure(Procedure):
     def __str__(self):
         return "#[{0}]".format(self.name)
 
-    def apply(self, args, env):
+    def apply(self, args: Pair, env: Frame):
         """Apply SELF to ARGS in Frame ENV, where ARGS is a Scheme list (a Pair instance).
 
         >>> env = create_global_frame()
@@ -166,12 +181,20 @@ class BuiltinProcedure(Procedure):
         # Convert a Scheme list to a Python list
         arguments_list = []
         # BEGIN PROBLEM 3
+        while args:
+            arguments_list.append(args.first)
+            args = args.rest
+        if self.expect_env:
+            # https://www.cnblogs.com/ikventure/p/15059547.html#problem-3-apply
+            arguments_list.append(env)
         "*** YOUR CODE HERE ***"
         # END PROBLEM 3
         try:
             return self.fn(*arguments_list)
         except TypeError as err:
-            raise SchemeError("incorrect number of arguments: {0}".format(self))
+            raise SchemeError(
+                "incorrect number {1}of arguments: {0}".format(self, arguments_list)
+            )
 
 
 class LambdaProcedure(Procedure):
@@ -548,9 +571,7 @@ class MuProcedure(Procedure):
         return str(Pair("mu", Pair(self.formals, self.body)))
 
     def __repr__(self):
-        return "MuProcedure({0}, {1})".format(
-            repr(self.formals), repr(self.body)
-        )
+        return "MuProcedure({0}, {1})".format(repr(self.formals), repr(self.body))
 
 
 def do_mu_form(expressions, env):
@@ -732,8 +753,7 @@ def read_eval_print_loop(
                     raise err
             if (
                 isinstance(err, RuntimeError)
-                and "maximum recursion depth exceeded"
-                not in getattr(err, "args")[0]
+                and "maximum recursion depth exceeded" not in getattr(err, "args")[0]
             ):
                 raise
             elif isinstance(err, RuntimeError):
@@ -814,9 +834,7 @@ def create_global_frame():
     env.define("apply", BuiltinProcedure(complete_apply, True, "apply"))
     env.define("load", BuiltinProcedure(scheme_load, True, "load"))
     env.define("load-all", BuiltinProcedure(scheme_load_all, True, "load-all"))
-    env.define(
-        "procedure?", BuiltinProcedure(scheme_procedurep, False, "procedure?")
-    )
+    env.define("procedure?", BuiltinProcedure(scheme_procedurep, False, "procedure?"))
     env.define("map", BuiltinProcedure(scheme_map, True, "map"))
     env.define("filter", BuiltinProcedure(scheme_filter, True, "filter"))
     env.define("reduce", BuiltinProcedure(scheme_reduce, True, "reduce"))

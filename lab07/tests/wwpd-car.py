@@ -1,11 +1,11 @@
 test = {
-  'name': 'Car',
-  'points': 0,
-  'suites': [
-    {
-      'cases': [
+    "name": "Car",
+    "points": 0,
+    "suites": [
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           >>> from car import *
           >>> deneros_car = Car('Tesla', 'Model S')
           >>> deneros_car.model
@@ -22,11 +22,11 @@ test = {
           >>> Car.gas
           30
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> from car import *
           >>> deneros_car = Car('Tesla', 'Model S')
           >>> deneros_car.wheels = 2
@@ -41,11 +41,11 @@ test = {
           >>> Car.drive(deneros_car) # Type Error if an error occurs and Nothing if nothing is displayed
           'Cannot drive!'
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           >>> from car import *
           >>> deneros_car = MonsterTruck('Monster', 'Batmobile')
           >>> deneros_car.drive() # Type Error if an error occurs and Nothing if nothing is displayed
@@ -59,12 +59,12 @@ test = {
           >>> Car.rev(deneros_car) # Type Error if an error occurs and Nothing if nothing is displayed
           Error
           """,
-          'hidden': False,
-          'locked': False
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": False,
+            "type": "wwpp",
         }
-      ],
-      'scored': False,
-      'type': 'wwpp'
-    }
-  ]
+    ],
 }

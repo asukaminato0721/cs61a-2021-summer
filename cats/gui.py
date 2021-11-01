@@ -52,9 +52,7 @@ def autocorrect(word: str = ""):
 
     # Heuristically choose candidate words to score.
     letters = set(word)
-    candidates = [
-        w for w, s in LETTER_SETS if similar(s, letters, SIMILARITY_LIMIT)
-    ]
+    candidates = [w for w, s in LETTER_SETS if similar(s, letters, SIMILARITY_LIMIT)]
 
     # Try various diff functions until one doesn't raise an exception.
     for fn in [cats.final_diff, cats.minimum_mewtations, cats.feline_flips]:
@@ -102,7 +100,7 @@ def request_id():
 
 
 @route
-def report_progress(id, typed:str, prompt: str):
+def report_progress(id, typed: str, prompt: str):
     """Report progress to the multiplayer server and also return it."""
     typed = typed.split()  # A list of word strings
     prompt = prompt.split()  # A list of word strings
@@ -116,9 +114,7 @@ def fastest_words(prompt, targets):
     words = prompt.split()
     progress = Server.request_all_progress(targets=targets)
     start_times = [p[0][1] for p in progress]
-    times_per_player = [
-        [p[1] - s for p in ps] for s, ps in zip(start_times, progress)
-    ]
+    times_per_player = [[p[1] - s for p in ps] for s, ps in zip(start_times, progress)]
     game = cats.time_per_word(times_per_player, words)
     return cats.fastest_words(game)
 

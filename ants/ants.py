@@ -237,8 +237,7 @@ def choose_bee(bees: List["Bee"]):
     """Return a random bee from a list of bees, or return None if bees is
     empty."""
     assert isinstance(bees, list), (
-        "choose_bee's argument should be a list but was a %s"
-        % type(bees).__name__
+        "choose_bee's argument should be a list but was a %s" % type(bees).__name__
     )
     if bees:
         return random.choice(bees)
@@ -413,9 +412,7 @@ class ContainerAnt(Ant):
     def action(self, gamestate: "GameState"):
         # BEGIN Problem 8
         "*** YOUR CODE HERE ***"
-        return (
-            self.ant_contained.action(gamestate) if self.ant_contained else None
-        )
+        return self.ant_contained.action(gamestate) if self.ant_contained else None
         # END Problem 8
 
 
@@ -526,10 +523,7 @@ class QueenAnt(ScubaThrower):  # You should change this line
             while begin:
                 if begin.ant:
                     begin.ant.buff()
-                    if (
-                        hasattr(begin.ant, "ant_contained")
-                        and begin.ant.ant_contained
-                    ):
+                    if hasattr(begin.ant, "ant_contained") and begin.ant.ant_contained:
                         begin.ant.ant_contained.buff()
                 begin = begin.exit
         super().action(gamestate)
@@ -927,9 +921,7 @@ class GameState:
                 self.bee_entrances.append(place)
 
         register_place(self.beehive, False)
-        create_places(
-            self.base, register_place, self.dimensions[0], self.dimensions[1]
-        )
+        create_places(self.base, register_place, self.dimensions[0], self.dimensions[1])
 
     def simulate(self):
         """Simulate an attack on the ant colony (i.e., play the game)."""

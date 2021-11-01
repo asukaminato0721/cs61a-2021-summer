@@ -1,11 +1,11 @@
 test = {
-  'name': 'Problem 8',
-  'points': 1,
-  'suites': [
-    {
-      'cases': [
+    "name": "Problem 8",
+    "points": 1,
+    "suites": [
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           scm> (lambda (x y) (+ x y))
           1456de84c3edf333b6f7aee0c0624b20
           # locked
@@ -13,35 +13,35 @@ test = {
           ec908af60f03727428c7ee3f22ec3cd8
           # locked
           """,
-          'hidden': False,
-          'locked': True
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": True,
+                },
+                {
+                    "code": r"""
           scm> (lambda (x) (+ x) (+ x x))
           (lambda (x) (+ x) (+ x x))
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (lambda () 2)
           (lambda () 2)
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': '',
-      'teardown': '',
-      'type': 'scheme'
-    },
-    {
-      'cases': [
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": "",
+            "teardown": "",
+            "type": "scheme",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           >>> env = create_global_frame()
           >>> lambda_line = read_line("(lambda (a b c) (+ a b c))")
           >>> lambda_proc = do_lambda_form(lambda_line.rest, env)
@@ -52,11 +52,11 @@ test = {
           0ef147cfe5caf670e985d95d923f4b06
           # locked
           """,
-          'hidden': False,
-          'locked': True
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": True,
+                },
+                {
+                    "code": r"""
           >>> env = create_global_frame()
           >>> lambda_line = read_line("(lambda (x y) x)")
           >>> lambda_proc = do_lambda_form(lambda_line.rest, env)
@@ -67,17 +67,17 @@ test = {
           >>> lambda_proc
           LambdaProcedure(Pair('x', Pair('y', nil)), Pair('x', nil), <Global Frame>)
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": r"""
       >>> from scheme_reader import *
       >>> from scheme import *
       """,
-      'teardown': '',
-      'type': 'doctest'
-    }
-  ]
+            "teardown": "",
+            "type": "doctest",
+        },
+    ],
 }

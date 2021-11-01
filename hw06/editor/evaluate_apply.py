@@ -1,16 +1,31 @@
 from typing import Dict, List, Union, Optional
 
 import log
-from datamodel import Symbol, Expression, Number, Pair, Nil, Undefined, Boolean, String, Promise
+from datamodel import (
+    Symbol,
+    Expression,
+    Number,
+    Pair,
+    Nil,
+    Undefined,
+    Boolean,
+    String,
+    Promise,
+)
 from helper import pair_to_list
-from scheme_exceptions import SymbolLookupError, CallableResolutionError, IrreversibleOperationError, OutOfMemoryError
+from scheme_exceptions import (
+    SymbolLookupError,
+    CallableResolutionError,
+    IrreversibleOperationError,
+    OutOfMemoryError,
+)
 
 
 RECURSION_LIMIT = 100000
 
 
 class Frame:
-    def __init__(self, name: str, parent: 'Frame' = None):
+    def __init__(self, name: str, parent: "Frame" = None):
         self.parent = parent
         self.name = name
         self.vars: Dict[str, Expression] = {}
@@ -36,7 +51,9 @@ class Frame:
             self.vars[varname.value] = varval
             log.logger.frame_store(self, varname.value, varval)
         elif self.parent is None:
-            raise SymbolLookupError(f"Variable not found in current environment: '{varname}'")
+            raise SymbolLookupError(
+                f"Variable not found in current environment: '{varname}'"
+            )
         else:
             self.parent.mutate(varname, varval)
 
@@ -44,7 +61,9 @@ class Frame:
         if varname.value in self.vars:
             return self.vars[varname.value]
         if self.parent is None:
-            raise SymbolLookupError(f"Variable not found in current environment: '{varname}'")
+            raise SymbolLookupError(
+                f"Variable not found in current environment: '{varname}'"
+            )
         return self.parent.lookup(varname)
 
     def __hash__(self):
@@ -55,7 +74,9 @@ class Frame:
 
 
 class Thunk:
-    def __init__(self, expr: Expression, frame: Frame, gui_holder: log.Holder, log_stack: bool):
+    def __init__(
+        self, expr: Expression, frame: Frame, gui_holder: log.Holder, log_stack: bool
+    ):
         self.expr = expr
         self.frame = frame
         self.log_stack = log_stack
@@ -73,15 +94,23 @@ class Thunk:
         self.return_frame = return_frame
 
 
-def evaluate(expr: Expression, frame: Frame, gui_holder: log.Holder,
-             tail_context: bool = False, *, log_stack: bool=True) -> Union[Expression, Thunk]:
+def evaluate(
+    expr: Expression,
+    frame: Frame,
+    gui_holder: log.Holder,
+    tail_context: bool = False,
+    *,
+    log_stack: bool = True,
+) -> Union[Expression, Thunk]:
     depth = 0
     thunks = []
     holders = []
 
     while True:
         if depth > RECURSION_LIMIT:
-            raise OutOfMemoryError("Debugger ran out of memory due to excessively deep recursion.")
+            raise OutOfMemoryError(
+                "Debugger ran out of memory due to excessively deep recursion."
+            )
 
         visual_expression = gui_holder.expression
 
@@ -91,11 +120,13 @@ def evaluate(expr: Expression, frame: Frame, gui_holder: log.Holder,
 
         holders.append(gui_holder)
 
-        if isinstance(expr, Number) \
-                or isinstance(expr, Callable) \
-                or isinstance(expr, Boolean) \
-                or isinstance(expr, String) \
-                or isinstance(expr, Promise):
+        if (
+            isinstance(expr, Number)
+            or isinstance(expr, Callable)
+            or isinstance(expr, Boolean)
+            or isinstance(expr, String)
+            or isinstance(expr, Promise)
+        ):
             ret = expr
         elif isinstance(expr, Symbol):
             gui_holder.evaluate()
@@ -109,7 +140,10 @@ def evaluate(expr: Expression, frame: Frame, gui_holder: log.Holder,
                 gui_holder.evaluate()
                 operator = expr.first
                 import environment
-                if isinstance(operator, Symbol) and environment.get_special_form(operator.value):
+
+                if isinstance(operator, Symbol) and environment.get_special_form(
+                    operator.value
+                ):
                     operator = environment.get_special_form(operator.value)
                 else:
                     operator = evaluate(operator, frame, visual_expression.children[0])
@@ -123,9 +157,17 @@ def evaluate(expr: Expression, frame: Frame, gui_holder: log.Holder,
                     if log.logger.show_thunks:
                         gui_holder = out.gui_holder
                     else:
-                        gui_holder.expression.display_value = out.gui_holder.expression.display_value
-                        gui_holder.expression.base_expr = out.gui_holder.expression.base_expr
-                        gui_holder.expression.set_entries(list(x.expression for x in out.gui_holder.expression.children))
+                        gui_holder.expression.display_value = (
+                            out.gui_holder.expression.display_value
+                        )
+                        gui_holder.expression.base_expr = (
+                            out.gui_holder.expression.base_expr
+                        )
+                        gui_holder.expression.set_entries(
+                            list(
+                                x.expression for x in out.gui_holder.expression.children
+                            )
+                        )
                     continue
                 ret = out
         elif expr is Nil or expr is Undefined:
@@ -147,11 +189,18 @@ def evaluate(expr: Expression, frame: Frame, gui_holder: log.Holder,
         return ret
 
 
-def apply(operator: Expression, operands: List[Expression], frame: Frame, gui_holder: log.Holder):
+def apply(
+    operator: Expression,
+    operands: List[Expression],
+    frame: Frame,
+    gui_holder: log.Holder,
+):
     if isinstance(operator, Callable):
         return operator.execute(operands, frame, gui_holder)
     elif isinstance(operator, Symbol):
-        raise CallableResolutionError(f"Unable to pass parameters into the Symbol '{operator}'")
+        raise CallableResolutionError(
+            f"Unable to pass parameters into the Symbol '{operator}'"
+        )
     else:
         raise CallableResolutionError(f"Unable to pass parameters into: '{operator}'")
 
@@ -162,9 +211,20 @@ class Callable(Expression):
 
 
 class Applicable(Callable):
-    def execute(self, operands: List[Expression], frame: Frame, gui_holder: log.Holder, eval_operands=True):
+    def execute(
+        self,
+        operands: List[Expression],
+        frame: Frame,
+        gui_holder: log.Holder,
+        eval_operands=True,
+    ):
         raise NotImplementedError()
 
 
-def evaluate_all(operands: List[Expression], frame: Frame, operand_holders: List[log.Holder]) -> List[Expression]:
-    return [evaluate(operand, frame, holder) for operand, holder in zip(operands, operand_holders)]
+def evaluate_all(
+    operands: List[Expression], frame: Frame, operand_holders: List[log.Holder]
+) -> List[Expression]:
+    return [
+        evaluate(operand, frame, holder)
+        for operand, holder in zip(operands, operand_holders)
+    ]

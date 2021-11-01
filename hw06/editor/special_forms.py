@@ -63,14 +63,10 @@ class ProcedureObject(Callable):
         gui_holder: Holder,
         eval_operands=True,
     ):
-        new_frame = Frame(
-            self.name, self.frame if self.lexically_scoped else frame
-        )
+        new_frame = Frame(self.name, self.frame if self.lexically_scoped else frame)
 
         if eval_operands and self.evaluates_operands:
-            operands = evaluate_all(
-                operands, frame, gui_holder.expression.children[1:]
-            )
+            operands = evaluate_all(operands, frame, gui_holder.expression.children[1:])
 
         if self.var_param:
             verify_min_callable_length(self, len(self.params), len(operands))
@@ -86,9 +82,7 @@ class ProcedureObject(Callable):
             new_frame.assign(param, value)
 
         if self.var_param:
-            new_frame.assign(
-                self.var_param, make_list(operands[len(self.params) :])
-            )
+            new_frame.assign(self.var_param, make_list(operands[len(self.params) :]))
 
         out = None
         gui_holder.expression.set_entries(
@@ -211,9 +205,7 @@ class Macro(ProcedureBuilder):
 
 @special_form("define-macro")
 class DefineMacro(Callable):
-    def execute(
-        self, operands: List[Expression], frame: Frame, gui_holder: Holder
-    ):
+    def execute(self, operands: List[Expression], frame: Frame, gui_holder: Holder):
         verify_min_callable_length(self, 2, len(operands))
         params = operands[0]
         if not isinstance(params, Pair):
@@ -224,17 +216,13 @@ class DefineMacro(Callable):
         operands[0] = params.rest
         if not isinstance(name, Symbol):
             raise OperandDeduceError(f"Expected a Symbol, not {name}.")
-        frame.assign(
-            name, Macro().execute(operands, frame, gui_holder, name.value)
-        )
+        frame.assign(name, Macro().execute(operands, frame, gui_holder, name.value))
         return name
 
 
 @special_form("define")
 class Define(Callable):
-    def execute(
-        self, operands: List[Expression], frame: Frame, gui_holder: Holder
-    ):
+    def execute(self, operands: List[Expression], frame: Frame, gui_holder: Holder):
         verify_min_callable_length(self, 2, len(operands))
         params = operands[0]
         if isinstance(params, Symbol):
@@ -261,9 +249,7 @@ class Define(Callable):
 
 @special_form("set!")
 class Set(Callable):
-    def execute(
-        self, operands: List[Expression], frame: Frame, gui_holder: Holder
-    ):
+    def execute(self, operands: List[Expression], frame: Frame, gui_holder: Holder):
         verify_exact_callable_length(self, 2, len(operands))
         name = operands[0]
         if not isinstance(name, Symbol):
@@ -279,9 +265,7 @@ class Set(Callable):
 
 @special_form("begin")
 class Begin(Callable):
-    def execute(
-        self, operands: List[Expression], frame: Frame, gui_holder: Holder
-    ):
+    def execute(self, operands: List[Expression], frame: Frame, gui_holder: Holder):
         verify_min_callable_length(self, 1, len(operands))
         out = None
         for i, (operand, holder) in enumerate(
@@ -293,9 +277,7 @@ class Begin(Callable):
 
 @special_form("if")
 class If(Callable):
-    def execute(
-        self, operands: List[Expression], frame: Frame, gui_holder: Holder
-    ):
+    def execute(self, operands: List[Expression], frame: Frame, gui_holder: Holder):
         verify_min_callable_length(self, 2, len(operands))
         if len(operands) > 3:
             verify_exact_callable_length(self, 3, len(operands))
@@ -310,16 +292,12 @@ class If(Callable):
                     operands[2], frame, gui_holder.expression.children[3], True
                 )
         else:
-            return evaluate(
-                operands[1], frame, gui_holder.expression.children[2], True
-            )
+            return evaluate(operands[1], frame, gui_holder.expression.children[2], True)
 
 
 @special_form("quote")
 class Quote(Callable):
-    def execute(
-        self, operands: List[Expression], frame: Frame, gui_holder: Holder
-    ):
+    def execute(self, operands: List[Expression], frame: Frame, gui_holder: Holder):
         verify_exact_callable_length(self, 1, len(operands))
         return operands[0]
 
@@ -335,9 +313,7 @@ class Eval(Applicable):
     ):
         verify_exact_callable_length(self, 1, len(operands))
         if eval_operands:
-            operand = evaluate(
-                operands[0], frame, gui_holder.expression.children[1]
-            )
+            operand = evaluate(operands[0], frame, gui_holder.expression.children[1])
         else:
             operand = operands[0]
         gui_holder.expression.set_entries(
@@ -358,32 +334,22 @@ class Apply(Applicable):
     ):
         verify_exact_callable_length(self, 2, len(operands))
         if eval_operands:
-            operands = evaluate_all(
-                operands, frame, gui_holder.expression.children[1:]
-            )
+            operands = evaluate_all(operands, frame, gui_holder.expression.children[1:])
         func, args = operands
         if not isinstance(func, Applicable):
             raise OperandDeduceError(f"Unable to apply {func}.")
         gui_holder.expression.set_entries(
-            [
-                VisualExpression(
-                    Pair(func, args), gui_holder.expression.display_value
-                )
-            ]
+            [VisualExpression(Pair(func, args), gui_holder.expression.display_value)]
         )
         gui_holder.expression.children[0].expression.children = []
         gui_holder.apply()
         args = pair_to_list(args)
-        return func.execute(
-            args, frame, gui_holder.expression.children[0], False
-        )
+        return func.execute(args, frame, gui_holder.expression.children[0], False)
 
 
 @special_form("cond")
 class Cond(Callable):
-    def execute(
-        self, operands: List[Expression], frame: Frame, gui_holder: Holder
-    ):
+    def execute(self, operands: List[Expression], frame: Frame, gui_holder: Holder):
         verify_min_callable_length(self, 1, len(operands))
         for cond_i, cond in enumerate(operands):
             if not isinstance(cond, Pair):
@@ -393,10 +359,7 @@ class Cond(Callable):
             expanded = pair_to_list(cond)
             cond_holder = gui_holder.expression.children[cond_i + 1]
             eval_condition = SingletonTrue
-            if (
-                not isinstance(expanded[0], Symbol)
-                or expanded[0].value != "else"
-            ):
+            if not isinstance(expanded[0], Symbol) or expanded[0].value != "else":
                 eval_condition = evaluate(
                     expanded[0], frame, cond_holder.expression.children[0]
                 )
@@ -417,9 +380,7 @@ class Cond(Callable):
 
 @special_form("and")
 class And(Callable):
-    def execute(
-        self, operands: List[Expression], frame: Frame, gui_holder: Holder
-    ):
+    def execute(self, operands: List[Expression], frame: Frame, gui_holder: Holder):
         value = None
         for i, expr in enumerate(operands):
             value = evaluate(
@@ -435,9 +396,7 @@ class And(Callable):
 
 @special_form("or")
 class Or(Callable):
-    def execute(
-        self, operands: List[Expression], frame: Frame, gui_holder: Holder
-    ):
+    def execute(self, operands: List[Expression], frame: Frame, gui_holder: Holder):
         for i, expr in enumerate(operands):
             value = evaluate(
                 expr,
@@ -452,9 +411,7 @@ class Or(Callable):
 
 @special_form("let")
 class Let(Callable):
-    def execute(
-        self, operands: List[Expression], frame: Frame, gui_holder: Holder
-    ):
+    def execute(self, operands: List[Expression], frame: Frame, gui_holder: Holder):
         verify_min_callable_length(self, 2, len(operands))
 
         bindings = operands[0]
@@ -503,9 +460,7 @@ class Let(Callable):
 
 @special_form("variadic")
 class Variadic(Callable):
-    def execute(
-        self, operands: List[Expression], frame: Frame, gui_holder: Holder
-    ):
+    def execute(self, operands: List[Expression], frame: Frame, gui_holder: Holder):
         raise CallableResolutionError(
             "Variadic type parameter must be within a parameter list."
         )
@@ -513,19 +468,13 @@ class Variadic(Callable):
 
 @special_form("unquote")
 class Unquote(Callable):
-    def execute(
-        self, operands: List[Expression], frame: Frame, gui_holder: Holder
-    ):
-        raise CallableResolutionError(
-            "Cannot evaluate unquote outside quasiquote."
-        )
+    def execute(self, operands: List[Expression], frame: Frame, gui_holder: Holder):
+        raise CallableResolutionError("Cannot evaluate unquote outside quasiquote.")
 
 
 @special_form("unquote-splicing")
 class UnquoteSplicing(Callable):
-    def execute(
-        self, operands: List[Expression], frame: Frame, gui_holder: Holder
-    ):
+    def execute(self, operands: List[Expression], frame: Frame, gui_holder: Holder):
         raise CallableResolutionError(
             "Cannot evaluate unquote-splicing outside quasiquote."
         )
@@ -533,9 +482,7 @@ class UnquoteSplicing(Callable):
 
 @special_form("quasiquote")
 class Quasiquote(Callable):
-    def execute(
-        self, operands: List[Expression], frame: Frame, gui_holder: Holder
-    ):
+    def execute(self, operands: List[Expression], frame: Frame, gui_holder: Holder):
         verify_exact_callable_length(self, 1, len(operands))
         return Quasiquote.quasiquote_evaluate(
             operands[0], frame, gui_holder.expression.children[1]
@@ -556,8 +503,7 @@ class Quasiquote(Callable):
                 is_well_formed = not any(
                     map(
                         lambda x: isinstance(x, Symbol)
-                        and x.value
-                        in ["unquote", "quasiquote", "unquote-splicing"],
+                        and x.value in ["unquote", "quasiquote", "unquote-splicing"],
                         lst,
                     )
                 )
@@ -576,19 +522,12 @@ class Quasiquote(Callable):
                         "Unquote-splicing must be in list template."
                     )
                 gui_holder.evaluate()
-                verify_exact_callable_length(
-                    expr.first, 1, len(pair_to_list(expr)) - 1
-                )
-                out = evaluate(
-                    expr.rest.first, frame, visual_expression.children[1]
-                )
+                verify_exact_callable_length(expr.first, 1, len(pair_to_list(expr)) - 1)
+                out = evaluate(expr.rest.first, frame, visual_expression.children[1])
                 visual_expression.value = out
                 gui_holder.complete()
                 return out
-            elif (
-                isinstance(expr.first, Symbol)
-                and expr.first.value == "quasiquote"
-            ):
+            elif isinstance(expr.first, Symbol) and expr.first.value == "quasiquote":
                 visual_expression.value = expr
                 gui_holder.complete()
                 return expr
@@ -648,13 +587,9 @@ class Load(Applicable):
     ):
         verify_exact_callable_length(self, 1, len(operands))
         if eval_operands:
-            operands = evaluate_all(
-                operands, frame, gui_holder.expression.children[1:]
-            )
+            operands = evaluate_all(operands, frame, gui_holder.expression.children[1:])
         if not isinstance(operands[0], Symbol):
-            raise OperandDeduceError(
-                f"Load expected a Symbol, received {operands[0]}."
-            )
+            raise OperandDeduceError(f"Load expected a Symbol, received {operands[0]}.")
         if logger.fragile:
             raise IrreversibleOperationError()
         try:
@@ -663,16 +598,10 @@ class Load(Applicable):
                 buffer = TokenBuffer([code])
                 expr = get_expression(buffer)
                 gui_holder.expression.set_entries(
-                    [
-                        VisualExpression(
-                            expr, gui_holder.expression.display_value
-                        )
-                    ]
+                    [VisualExpression(expr, gui_holder.expression.display_value)]
                 )
                 gui_holder.apply()
-                return evaluate(
-                    expr, frame, gui_holder.expression.children[0], True
-                )
+                return evaluate(expr, frame, gui_holder.expression.children[0], True)
         except OSError as e:
             raise LoadError(e)
 
@@ -688,13 +617,9 @@ class LoadAll(Applicable):
     ):
         verify_exact_callable_length(self, 1, len(operands))
         if eval_operands:
-            operands = evaluate_all(
-                operands, frame, gui_holder.expression.children[1:]
-            )
+            operands = evaluate_all(operands, frame, gui_holder.expression.children[1:])
         if not isinstance(operands[0], String):
-            raise OperandDeduceError(
-                f"Load expected a String, received {operands[0]}."
-            )
+            raise OperandDeduceError(f"Load expected a String, received {operands[0]}.")
         if logger.fragile:
             raise IrreversibleOperationError()
         from os import listdir
@@ -704,9 +629,7 @@ class LoadAll(Applicable):
         try:
             targets = sorted(listdir(directory))
             targets = [
-                join(directory, target)
-                for target in targets
-                if target.endswith(".scm")
+                join(directory, target) for target in targets if target.endswith(".scm")
             ]
             exprs = [
                 make_list(
@@ -720,18 +643,14 @@ class LoadAll(Applicable):
             equiv = make_list([Symbol("begin-noexcept")] + exprs)
             gui_holder.expression.set_entries([equiv])
             gui_holder.apply()
-            return evaluate(
-                equiv, frame, gui_holder.expression.children[0], True
-            )
+            return evaluate(equiv, frame, gui_holder.expression.children[0], True)
         except Exception as e:
             raise SchemeError(e)
 
 
 @special_form("begin-noexcept")
 class BeginNoExcept(Callable):
-    def execute(
-        self, operands: List[Expression], frame: Frame, gui_holder: Holder
-    ):
+    def execute(self, operands: List[Expression], frame: Frame, gui_holder: Holder):
         out = Undefined
         for i, (operand, holder) in enumerate(
             zip(operands, gui_holder.expression.children[1:])
@@ -750,9 +669,7 @@ class BeginNoExcept(Callable):
 
 @special_form("delay")
 class Delay(Callable):
-    def execute(
-        self, operands: List[Expression], frame: Frame, gui_holder: Holder
-    ):
+    def execute(self, operands: List[Expression], frame: Frame, gui_holder: Holder):
         verify_exact_callable_length(self, 1, len(operands))
         return Promise(operands[0], frame)
 
@@ -769,23 +686,17 @@ class Force(Applicable):
         verify_exact_callable_length(self, 1, len(operands))
         operand = operands[0]
         if eval_operands:
-            operand = evaluate_all(
-                operands, frame, gui_holder.expression.children[1:]
-            )[0]
+            operand = evaluate_all(operands, frame, gui_holder.expression.children[1:])[
+                0
+            ]
         if not isinstance(operand, Promise):
-            raise OperandDeduceError(
-                f"Force expected a Promise, received {operand}"
-            )
+            raise OperandDeduceError(f"Force expected a Promise, received {operand}")
         if operand.forced:
             return operand.expr
         if logger.fragile:
             raise IrreversibleOperationError()
         gui_holder.expression.set_entries(
-            [
-                VisualExpression(
-                    operand.expr, gui_holder.expression.display_value
-                )
-            ]
+            [VisualExpression(operand.expr, gui_holder.expression.display_value)]
         )
         gui_holder.apply()
         evaluated = evaluate(
@@ -802,34 +713,24 @@ class Force(Applicable):
 
 @special_form("cons-stream")
 class ConsStream(Callable):
-    def execute(
-        self, operands: List[Expression], frame: Frame, gui_holder: Holder
-    ):
+    def execute(self, operands: List[Expression], frame: Frame, gui_holder: Holder):
         verify_exact_callable_length(self, 2, len(operands))
-        operands[0] = evaluate(
-            operands[0], frame, gui_holder.expression.children[1]
-        )
+        operands[0] = evaluate(operands[0], frame, gui_holder.expression.children[1])
         return Pair(operands[0], Promise(operands[1], frame))
 
 
 @special_form("expect")
 class Expect(Callable):
-    def execute(
-        self, operands: List[Expression], frame: Frame, gui_holder: Holder
-    ):
+    def execute(self, operands: List[Expression], frame: Frame, gui_holder: Holder):
         verify_exact_callable_length(self, 2, len(operands))
         case = operands[0]
-        operands[0] = evaluate(
-            operands[0], frame, gui_holder.expression.children[1]
-        )
+        operands[0] = evaluate(operands[0], frame, gui_holder.expression.children[1])
         if not IsEqual().execute_evaluated(operands, frame).value:
             log.logger.raw_out(
                 f"Evaluated {case}, expected {operands[1]}, got {operands[0]}.\n"
             )
         else:
-            log.logger.raw_out(
-                f"Evaluated {case}, got {operands[0]}, as expected.\n"
-            )
+            log.logger.raw_out(f"Evaluated {case}, got {operands[0]}, as expected.\n")
         return Undefined
 
 
@@ -844,7 +745,5 @@ class Error(Applicable):
     ):
         verify_exact_callable_length(self, 1, len(operands))
         if eval_operands:
-            operands = evaluate_all(
-                operands, frame, gui_holder.expression.children[1:]
-            )
+            operands = evaluate_all(operands, frame, gui_holder.expression.children[1:])
         raise SchemeError(operands[0])

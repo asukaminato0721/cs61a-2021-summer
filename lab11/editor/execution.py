@@ -22,6 +22,7 @@ def string_exec(strings, out, visualize_tail_calls, global_frame=None):
     if global_frame is None:
         empty = True
         from environment import build_global_frame
+
         log.logger.f_delta -= 1
         global_frame = build_global_frame()
         log.logger.active_frames.pop(0)  # clear builtin frame
@@ -53,8 +54,11 @@ def string_exec(strings, out, visualize_tail_calls, global_frame=None):
                     out(res)
                 if not log.logger.fragile and log.logger.autodraw:
                     try:
-                        log.logger.raw_out("AUTODRAW" +
-                                           json.dumps([log.logger.i, log.logger.heap.record(res)]) + "\n")
+                        log.logger.raw_out(
+                            "AUTODRAW"
+                            + json.dumps([log.logger.i, log.logger.heap.record(res)])
+                            + "\n"
+                        )
                     except RecursionError:
                         pass
         except (SchemeError, ZeroDivisionError, RecursionError, ValueError) as e:
@@ -63,13 +67,18 @@ def string_exec(strings, out, visualize_tail_calls, global_frame=None):
                 raise
             if not log.logger.fragile:
                 log.logger.raw_out("Traceback (most recent call last)\n")
-                for j, expr in enumerate(log.logger.eval_stack[:MAX_TRACEBACK_LENGTH - 1]):
+                for j, expr in enumerate(
+                    log.logger.eval_stack[: MAX_TRACEBACK_LENGTH - 1]
+                ):
                     log.logger.raw_out(str(j).ljust(3) + " " + expr + "\n")
                 truncated = len(log.logger.eval_stack) - MAX_TRACEBACK_LENGTH
                 if len(log.logger.eval_stack) > MAX_TRACEBACK_LENGTH:
                     log.logger.raw_out(f"[{truncated} lines omitted from traceback]\n")
                     log.logger.raw_out(
-                        str(len(log.logger.eval_stack) - 1).ljust(3) + " " + log.logger.eval_stack[-1] + "\n"
+                        str(len(log.logger.eval_stack) - 1).ljust(3)
+                        + " "
+                        + log.logger.eval_stack[-1]
+                        + "\n"
                     )
             log.logger.out(e)
         except TimeLimitException:

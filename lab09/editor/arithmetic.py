@@ -1,9 +1,21 @@
 from typing import List
 
-from datamodel import Expression, Number, bools, SingletonFalse, ValueHolder, Pair, SingletonTrue
+from datamodel import (
+    Expression,
+    Number,
+    bools,
+    SingletonFalse,
+    ValueHolder,
+    Pair,
+    SingletonTrue,
+)
 from environment import global_attr
 from evaluate_apply import Frame
-from helper import assert_all_numbers, verify_exact_callable_length, verify_min_callable_length
+from helper import (
+    assert_all_numbers,
+    verify_exact_callable_length,
+    verify_min_callable_length,
+)
 from primitives import BuiltIn, SingleOperandPrimitive
 
 
@@ -21,7 +33,9 @@ class Subtract(BuiltIn):
         assert_all_numbers(operands)
         if len(operands) == 1:
             return Number(-operands[0].value)
-        return Number(operands[0].value - sum(operand.value for operand in operands[1:]))
+        return Number(
+            operands[0].value - sum(operand.value for operand in operands[1:])
+        )
 
 
 @global_attr("*")
@@ -86,7 +100,7 @@ class Remainder(BuiltIn):
     def execute_evaluated(self, operands: List[Expression], frame: Frame) -> Expression:
         verify_exact_callable_length(self, 2, len(operands))
         assert_all_numbers(operands)
-        negate = (operands[0].value < 0)
+        negate = operands[0].value < 0
         negate = -1 if negate else 1
         return Number(negate * (abs(operands[0].value) % abs(operands[1].value)))
 
@@ -186,8 +200,15 @@ class IsEqual(BuiltIn):
         if all(isinstance(x, ValueHolder) for x in operands):
             return bools[operands[0].value == operands[1].value]
         elif all(isinstance(x, Pair) for x in operands):
-            return bools[IsEqual().execute_evaluated([operands[0].first, operands[1].first], frame) is SingletonTrue and \
-                         IsEqual().execute_evaluated([operands[0].rest, operands[1].rest], frame) is SingletonTrue]
+            return bools[
+                IsEqual().execute_evaluated(
+                    [operands[0].first, operands[1].first], frame
+                )
+                is SingletonTrue
+                and IsEqual().execute_evaluated(
+                    [operands[0].rest, operands[1].rest], frame
+                )
+                is SingletonTrue
+            ]
         else:
             return IsEqv().execute_evaluated(operands, frame)
-

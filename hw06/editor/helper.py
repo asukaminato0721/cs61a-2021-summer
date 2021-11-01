@@ -14,7 +14,9 @@ def pair_to_list(pos: Pair) -> List[Expression]:
     return out
 
 
-def dotted_pair_to_list(pos: Expression) -> Tuple[List[Expression], Optional[Expression]]:
+def dotted_pair_to_list(
+    pos: Expression,
+) -> Tuple[List[Expression], Optional[Expression]]:
     out = []
     vararg = None
     while pos is not Nil:
@@ -29,17 +31,23 @@ def dotted_pair_to_list(pos: Expression) -> Tuple[List[Expression], Optional[Exp
 def assert_all_numbers(operands):
     for operand in operands:
         if not isinstance(operand, Number):
-            raise MathError(f"Unable to perform arithmetic, as {operand} is not a number.")
+            raise MathError(
+                f"Unable to perform arithmetic, as {operand} is not a number."
+            )
 
 
 def verify_exact_callable_length(operator: Expression, expected: int, actual: int):
     if expected != actual:
-        raise CallableResolutionError(f"{operator} expected {expected} operands, received {actual}.")
+        raise CallableResolutionError(
+            f"{operator} expected {expected} operands, received {actual}."
+        )
 
 
 def verify_min_callable_length(operator: Expression, expected: int, actual: int):
     if expected > actual:
-        raise CallableResolutionError(f"{operator} expected at least {expected} operands, received {actual}.")
+        raise CallableResolutionError(
+            f"{operator} expected at least {expected} operands, received {actual}."
+        )
 
 
 def make_list(exprs: List[Expression], last: Expression = Nil) -> Union[Pair, NilType]:

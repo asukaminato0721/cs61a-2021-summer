@@ -56,9 +56,7 @@ def string_exec(strings, out, visualize_tail_calls, global_frame=None):
                     try:
                         log.logger.raw_out(
                             "AUTODRAW"
-                            + json.dumps(
-                                [log.logger.i, log.logger.heap.record(res)]
-                            )
+                            + json.dumps([log.logger.i, log.logger.heap.record(res)])
                             + "\n"
                         )
                     except RecursionError:
@@ -80,9 +78,7 @@ def string_exec(strings, out, visualize_tail_calls, global_frame=None):
                     log.logger.raw_out(str(j).ljust(3) + " " + expr + "\n")
                 truncated = len(log.logger.eval_stack) - MAX_TRACEBACK_LENGTH
                 if len(log.logger.eval_stack) > MAX_TRACEBACK_LENGTH:
-                    log.logger.raw_out(
-                        f"[{truncated} lines omitted from traceback]\n"
-                    )
+                    log.logger.raw_out(f"[{truncated} lines omitted from traceback]\n")
                     log.logger.raw_out(
                         str(len(log.logger.eval_stack) - 1).ljust(3)
                         + " "

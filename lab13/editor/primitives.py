@@ -8,7 +8,13 @@ from evaluate_apply import Frame, evaluate_all, Applicable
 
 
 class BuiltIn(Applicable):
-    def execute(self, operands: List[Expression], frame: Frame, gui_holder: Holder, eval_operands=True) -> Expression:
+    def execute(
+        self,
+        operands: List[Expression],
+        frame: Frame,
+        gui_holder: Holder,
+        eval_operands=True,
+    ) -> Expression:
         if eval_operands:
             operands = evaluate_all(operands, frame, gui_holder.expression.children[1:])
         gui_holder.expression.set_entries([])

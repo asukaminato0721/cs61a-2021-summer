@@ -1,11 +1,11 @@
 test = {
-  'name': 'smallest-int-having',
-  'points': 0,
-  'suites': [
-    {
-      'cases': [
+    "name": "smallest-int-having",
+    "points": 0,
+    "suites": [
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           sqlite> SELECT * FROM smallest_int_having LIMIT 48;
           2021/07/28 3:32:58 PM MDT|5
           2021/07/29 9:00:50 AM MDT|13
@@ -35,17 +35,17 @@ test = {
           2021/07/29 2:11:09 PM MDT|1322
           2021/07/29 3:41:19 PM MDT|177013
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'ordered': False,
-      'scored': True,
-      'setup': r"""
+                    "hidden": False,
+                    "locked": False,
+                }
+            ],
+            "ordered": False,
+            "scored": True,
+            "setup": r"""
       sqlite> .read lab12.sql
       """,
-      'teardown': '',
-      'type': 'sqlite'
-    }
-  ]
+            "teardown": "",
+            "type": "sqlite",
+        }
+    ],
 }

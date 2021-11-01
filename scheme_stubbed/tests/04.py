@@ -1,11 +1,11 @@
 test = {
-  'name': 'Problem 4',
-  'points': 8,
-  'suites': [
-    {
-      'cases': [
+    "name": "Problem 4",
+    "points": 8,
+    "suites": [
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           scm> (and)
           #t
           scm> (and 1 #f)
@@ -21,11 +21,11 @@ test = {
           scm> (not (and #f))
           #t
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (and 3 2 #f)
           #f
           scm> (and 3 2 1)
@@ -43,11 +43,11 @@ test = {
           scm> (and x #t)
           #f
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (define x 0)
           x
           scm> (and (define x (+ x 1))
@@ -68,11 +68,11 @@ test = {
           scm> x
           11
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (define (no-mutation) (and #t #t #t #t))
           no-mutation
           scm> no-mutation
@@ -82,19 +82,19 @@ test = {
           scm> no-mutation ; `and` should not cause mutation
           (lambda () (and #t #t #t #t))
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': '',
-      'teardown': '',
-      'type': 'scheme'
-    },
-    {
-      'cases': [
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": "",
+            "teardown": "",
+            "type": "scheme",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           scm> (or)
           #f
           scm> (or (+ 1 1))
@@ -112,11 +112,11 @@ test = {
           scm> (or 4 #t (/ 1 0))
           4
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (or 0 1 2)
           0
           scm> (or 'a #f)
@@ -130,11 +130,11 @@ test = {
           scm> (or (false-fn) 'yay)
           yay
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (define x 0)
           x
           scm> (or (begin (define x (+ x 1)) #f)
@@ -155,11 +155,11 @@ test = {
           scm> x
           11
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (define (no-mutation) (or #f #f #f #f))
           no-mutation
           scm> no-mutation
@@ -169,11 +169,11 @@ test = {
           scm> no-mutation ; `or` should not cause mutation
           (lambda () (or #f #f #f #f))
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (define (greater-than-5 x) (if (> x 5) #t #f))
           greater-than-5
           scm> (define (other y) (or (greater-than-5 y) #f))
@@ -189,19 +189,19 @@ test = {
           scm> (other 6) ; test for mutation
           #t
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': '',
-      'teardown': '',
-      'type': 'scheme'
-    },
-    {
-      'cases': [
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": "",
+            "teardown": "",
+            "type": "scheme",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           scm> (cond ((> 2 3) 5)
           ....       ((> 2 4) 6)
           ....       ((< 2 5) 7)
@@ -212,11 +212,11 @@ test = {
           ....       (else 8))
           8
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (if 0 1 2)
           1
           scm> (if #f 1 (if #t 2 3))
@@ -224,19 +224,19 @@ test = {
           scm> (if (= 1 2) (/ 1 0) 'a)
           a
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': '',
-      'teardown': '',
-      'type': 'scheme'
-    },
-    {
-      'cases': [
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": "",
+            "teardown": "",
+            "type": "scheme",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           scm> (cond ((> 2 3) 5)
           ....       ((> 2 4) 6)
           ....       ((< 2 5) 7))
@@ -267,20 +267,20 @@ test = {
           hi
           scm> (eval (cond (False 1) (False 2)))
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (cond (0 'yea)
           ....       (else 'nay))
           yea
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (define x 0)
           x
           scm> (define y 0)
@@ -299,11 +299,11 @@ test = {
           scm> (list x y z)
           (1 1 1)
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (define (print-and-false val)
           ....         (print val)
           ....         #f)
@@ -329,19 +329,19 @@ test = {
           cond3
           #t
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': '',
-      'teardown': '',
-      'type': 'scheme'
-    },
-    {
-      'cases': [
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": "",
+            "teardown": "",
+            "type": "scheme",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           scm> (define x 1)
           x
           scm> (let ((x 5))
@@ -350,30 +350,30 @@ test = {
           scm> x
           1
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (let ((a 1) (b a)) b)
           SchemeError
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (let ((x 5))
           ....    (let ((x 2)
           ....          (y x))
           ....        (+ y (* x 2))))
           9
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (define (square x) (* x x))
           square
           scm> (define (f x y)
@@ -386,19 +386,19 @@ test = {
           scm> (f 3 4)
           456
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': '',
-      'teardown': '',
-      'type': 'scheme'
-    },
-    {
-      'cases': [
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": "",
+            "teardown": "",
+            "type": "scheme",
+        },
         {
-          'code': r"""
+            "cases": [
+                {
+                    "code": r"""
           scm> (define x 3)
           x
           scm> (define y 4)
@@ -425,11 +425,11 @@ test = {
           scm> (let ((a 1) (2 2)) a)
           SchemeError
           """,
-          'hidden': False,
-          'locked': False
-        },
-        {
-          'code': r"""
+                    "hidden": False,
+                    "locked": False,
+                },
+                {
+                    "code": r"""
           scm> (define h (mu () x))
           h
           scm> (define (high fn x) (fn))
@@ -445,14 +445,14 @@ test = {
           scm> (mu ())
           SchemeError
           """,
-          'hidden': False,
-          'locked': False
-        }
-      ],
-      'scored': True,
-      'setup': '',
-      'teardown': '',
-      'type': 'scheme'
-    }
-  ]
+                    "hidden": False,
+                    "locked": False,
+                },
+            ],
+            "scored": True,
+            "setup": "",
+            "teardown": "",
+            "type": "scheme",
+        },
+    ],
 }

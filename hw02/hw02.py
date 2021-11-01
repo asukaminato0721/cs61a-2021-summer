@@ -152,9 +152,7 @@ def missing_digits(n: int):
     "*** YOUR CODE HERE ***"
     str_n = str(n)
     first, last = str_n[0], str_n[-1]
-    return len(
-        [1 for i in range(int(first), int(last) + 1) if str(i) not in str_n]
-    )
+    return len([1 for i in range(int(first), int(last) + 1) if str(i) not in str_n])
 
 
 def get_next_coin(coin: int) -> Union[int, None]:

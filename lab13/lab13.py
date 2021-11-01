@@ -69,9 +69,7 @@ def add_trees(t1, t2):
         label(t1) + label(t2),
         [
             add_trees(b1, b2)
-            for b1, b2 in zip_longest(
-                branches(t1), branches(t2), fillvalue=tree(0)
-            )
+            for b1, b2 in zip_longest(branches(t1), branches(t2), fillvalue=tree(0))
         ],
     )
 

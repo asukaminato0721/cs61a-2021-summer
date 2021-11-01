@@ -68,9 +68,7 @@ class Handler(server.BaseHTTPRequestHandler):
             query_params = parse_qs(parsed_url.query)
 
             if path in STATIC_PATHS:
-                out = bytes(
-                    STATIC_PATHS[path](**snakify(query_params)), "utf-8"
-                )
+                out = bytes(STATIC_PATHS[path](**snakify(query_params)), "utf-8")
             else:
                 path = GUI_FOLDER + path[1:]
                 if "scripts" in path and not path.endswith(".js"):
@@ -80,9 +78,7 @@ class Handler(server.BaseHTTPRequestHandler):
                 with open(path, "rb") as f:
                     out = f.read()
 
-            self.send_header(
-                "Content-type", CONTENT_TYPE_LOOKUP[path.split(".")[-1]]
-            )
+            self.send_header("Content-type", CONTENT_TYPE_LOOKUP[path.split(".")[-1]])
             self.end_headers()
             self.wfile.write(out)
 
@@ -204,9 +200,7 @@ def start_server():
         def wrapped_handler(handler=handler):
             return jsonify(handler(**snakify(request.get_json(force=True))))
 
-        app.add_url_rule(
-            route, handler.__name__, wrapped_handler, methods=["POST"]
-        )
+        app.add_url_rule(route, handler.__name__, wrapped_handler, methods=["POST"])
 
     for route, handler in STATIC_PATHS.items():
 
@@ -217,9 +211,7 @@ def start_server():
                 mimetype=CONTENT_TYPE_LOOKUP[route.split(".")[-1]],
             )
 
-        app.add_url_rule(
-            route, handler.__name__, wrapped_handler, methods=["GET"]
-        )
+        app.add_url_rule(route, handler.__name__, wrapped_handler, methods=["GET"])
 
     @app.route("/")
     def index():
