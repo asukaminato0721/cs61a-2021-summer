@@ -1,12 +1,11 @@
 """A Scheme interpreter and its read-eval-print loop."""
 
-import sys
 import os
+import sys
 
 from scheme_builtins import *
 from scheme_reader import *
 from ucb import main, trace
-
 
 ##############
 # Eval/Apply #

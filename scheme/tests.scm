@@ -682,3 +682,6 @@ x
 ; expect f
 (f (1 2))
 ; expect 1
+
+(zip '((1 2) (3 4)))
+; expect ((1 3) (2 4))

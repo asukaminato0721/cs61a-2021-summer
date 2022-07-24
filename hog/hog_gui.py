@@ -6,8 +6,9 @@ from contextlib import redirect_stdout
 
 import default_graphics
 import dice
-import hog
 from gui_files.common_server import route, start
+
+import hog
 
 PORT = 31415
 DEFAULT_SERVER = "https://hog.cs61a.org"

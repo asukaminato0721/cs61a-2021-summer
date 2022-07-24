@@ -11,11 +11,12 @@ This file also includes some features of Scheme that have not been addressed
 in the course, such as Scheme strings.
 """
 
-from ucb import main
 import itertools
 import string
 import sys
 import tokenize
+
+from ucb import main
 
 _NUMERAL_STARTS = set(string.digits) | set("+-.")
 _SYMBOL_CHARS = (

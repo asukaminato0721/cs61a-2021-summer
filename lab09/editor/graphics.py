@@ -4,16 +4,13 @@ from typing import List, Optional
 
 import log
 from css_colors import COLORS
-from datamodel import Expression, Number, Undefined, String, Symbol
+from datamodel import Expression, Number, String, Symbol, Undefined
 from environment import global_attr
 from evaluate_apply import Frame
 from helper import verify_exact_callable_length, verify_min_callable_length
-from primitives import SingleOperandPrimitive, BuiltIn
-from scheme_exceptions import (
-    OperandDeduceError,
-    IrreversibleOperationError,
-    TurtleDrawingError,
-)
+from primitives import BuiltIn, SingleOperandPrimitive
+from scheme_exceptions import (IrreversibleOperationError, OperandDeduceError,
+                               TurtleDrawingError)
 
 ABSOLUTE_MOVE = "M"
 RELATIVE_MOVE = "m"

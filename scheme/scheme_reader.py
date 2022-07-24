@@ -19,7 +19,7 @@ from __future__ import annotations
 
 import builtins
 import numbers
-from typing import Any, Callable, Union
+from typing import Any, Callable, List, Union
 
 from buffer import Buffer, InputReader, LineReader
 from scheme_tokens import DELIMITERS, tokenize_lines
@@ -50,14 +50,14 @@ class Pair:
         return "Pair({0}, {1})".format(repr(self.first), repr(self.rest))
 
     def __str__(self):
-        s = "(" + repl_str(self.first)
+        s = f"({repl_str(self.first)}"
         rest = self.rest
         while isinstance(rest, Pair):
-            s += " " + repl_str(rest.first)
+            s += f" {repl_str(rest.first)}"
             rest = rest.rest
         if rest is not nil:
-            s += " . " + repl_str(rest)
-        return s + ")"
+            s += f" . {repl_str(rest)}"
+        return f"{s})"
 
     def __len__(self):
         n, rest = 1, self.rest
@@ -69,9 +69,11 @@ class Pair:
         return n
 
     def __eq__(self, p):
-        if not isinstance(p, Pair):
-            return False
-        return self.first == p.first and self.rest == p.rest
+        return (
+            self.first == p.first and self.rest == p.rest
+            if isinstance(p, Pair)
+            else False
+        )
 
     def map(self, fn: Callable[[Any], Any]):
         """Return a Scheme list after mapping Python function FN to SELF."""
@@ -111,7 +113,7 @@ class nil:
         return self
 
 
-nil = nil()  # Assignment hides the nil class; there is only one instance
+nil = nil()  # type: ignore # Assignment hides the nil class; there is only one instance
 # Scheme list parser
 def scheme_read(src):
     """Read the next expression from SRC, a Buffer of tokens.
@@ -129,18 +131,17 @@ def scheme_read(src):
         raise EOFError
     val = src.pop_first()  # Get and remove the first token
     if val == "nil":
-        return nil
-        # BEGIN PROBLEM 1
         "*** YOUR CODE HERE ***"
+        return nil
         # END PROBLEM 1
     elif val == "(":
-        return read_tail(src)
-        # BEGIN PROBLEM 1
         "*** YOUR CODE HERE ***"
+        return read_tail(src)
         # END PROBLEM 1
     elif val == "'":
         # BEGIN PROBLEM 6
         "*** YOUR CODE HERE ***"
+        return Pair("quote", Pair(scheme_read(src), nil))
         # END PROBLEM 6
     elif val not in DELIMITERS:
         return val
@@ -162,8 +163,8 @@ def read_tail(src: Buffer):
         elif src.current() == ")":
             # BEGIN PROBLEM 1
             src.pop_first()
-            return nil
             "*** YOUR CODE HERE ***"
+            return nil
             # END PROBLEM 1
         elif (
             src.current() == "."
@@ -179,11 +180,11 @@ def read_tail(src: Buffer):
             # BEGIN PROBLEM 1
             first = scheme_read(src)
             second = read_tail(src)
-            return Pair(first, second)
             "*** YOUR CODE HERE ***"
+            return Pair(first, second)
             # END PROBLEM 1
-    except EOFError:
-        raise SyntaxError("unexpected end of file")
+    except EOFError as e:
+        raise SyntaxError("unexpected end of file") from e
 
 
 # Convenience methods
@@ -194,16 +195,13 @@ def buffer_input(prompt="scm> "):
     return Buffer(tokenize_lines(InputReader(prompt)))
 
 
-def buffer_lines(lines, prompt="scm> ", show_prompt=False):
+def buffer_lines(lines: List[str], prompt: str = "scm> ", show_prompt: bool = False):
     """Return a Buffer instance iterating through LINES."""
-    if show_prompt:
-        input_lines = lines
-    else:
-        input_lines = LineReader(lines, prompt)
+    input_lines = lines if show_prompt else LineReader(lines, prompt)
     return Buffer(tokenize_lines(input_lines))
 
 
-def read_line(line):
+def read_line(line: str):
     """Read a single string LINE as a Scheme expression."""
     buf = Buffer(tokenize_lines([line]))
     result = scheme_read(buf)
@@ -214,7 +212,7 @@ def read_line(line):
     return result
 
 
-def repl_str(val):
+def repl_str(val: Any):
     """Should largely match str(val), except for booleans and undefined."""
     if val is True:
         return "#t"
@@ -241,7 +239,7 @@ def read_print_loop():
                 print("str :", expression)
                 print("repr:", repr(expression))
         except (SyntaxError, ValueError) as err:
-            print(type(err).__name__ + ":", err)
+            print(f"{type(err).__name__}:", err)
         except (KeyboardInterrupt, EOFError):  # <Control>-D, etc.
             print()
             return

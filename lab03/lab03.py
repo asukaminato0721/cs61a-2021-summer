@@ -1,6 +1,5 @@
 from typing import Callable
 
-
 HW_SOURCE_FILE = __file__
 
 

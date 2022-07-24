@@ -11,8 +11,13 @@ This file also includes some features of Scheme that have not been addressed
 in the course, such as Scheme strings.
 """
 
-from ucb import main
+
+import contextlib
 import sys
+from itertools import chain
+from typing import Iterable
+
+from ucb import main
 
 _NUMERAL_STARTS = set("0123456789") | set("+-.")
 _SYMBOL_CHARS = (
@@ -29,22 +34,12 @@ DELIMITERS = _SINGLE_CHAR_TOKENS | {".", ",", ",@"}
 _MAX_TOKEN_LENGTH = 50
 
 
-def chain(*iters):
-    for iter in iters:
-        yield from iter
-
-
 def valid_symbol(s):
     """Returns whether s is a well-formed symbol."""
-    if len(s) == 0:
-        return False
-    for c in s:
-        if c not in _SYMBOL_CHARS:
-            return False
-    return True
+    return False if len(s) == 0 else all(c in _SYMBOL_CHARS for c in s)
 
 
-def next_candidate_token(line, k):
+def next_candidate_token(line: str, k: int):
     """A tuple (tok, k'), where tok is the next substring of line at or
     after position k that could be a token (assuming it passes a validity
     check), and k' is the position in line following that token.  Returns
@@ -80,11 +75,8 @@ def next_candidate_token(line, k):
                 elif c == "\\":
                     if k + 1 == len(line):
                         raise SyntaxError("String ended abruptly")
-                    next = line[k + 1]
-                    if next == "n":
-                        s += "\n"
-                    else:
-                        s += next
+                    _next = line[k + 1]
+                    s += "\n" if _next == "n" else _next
                     k += 2
                 else:
                     s += c
@@ -99,7 +91,7 @@ def next_candidate_token(line, k):
     return None, len(line)
 
 
-def tokenize_line(line):
+def tokenize_line(line: str):
     """The list of Scheme tokens on line.  Excludes comments and whitespace."""
     result = []
     text, i = next_candidate_token(line, 0)
@@ -119,11 +111,9 @@ def tokenize_line(line):
                     result.append(int(text))
                     number = True
                 except ValueError:
-                    try:
+                    with contextlib.suppress(ValueError):
                         result.append(float(text))
                         number = True
-                    except ValueError:
-                        pass
             if not number:
                 if valid_symbol(text):
                     result.append(text.lower())
@@ -147,13 +137,11 @@ def check_token_length_warning(token, length):
         import warnings
 
         warnings.warn(
-            "Token {} has exceeded the maximum token length {}".format(
-                token, _MAX_TOKEN_LENGTH, length
-            )
+            f"Token {token} has exceeded the maximum token length {_MAX_TOKEN_LENGTH}"
         )
 
 
-def tokenize_lines(inp):
+def tokenize_lines(inp: Iterable[str]):
     """An iterator over lists of tokens, one for each line of the iterable
     input sequence inp."""
     return (tokenize_line(line) for line in inp)

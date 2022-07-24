@@ -3,16 +3,14 @@ from collections import defaultdict, namedtuple
 from datetime import datetime, timedelta
 from random import randrange
 
-import cats
-
 from gui_files.common_server import forward_to_server, route, server_only
-from gui_files.leaderboard_integrity import (
-    create_wpm_authorization,
-    decode_challenge,
-    encode_challenge,
-    get_authorized_limit,
-    get_captcha_urls,
-)
+from gui_files.leaderboard_integrity import (create_wpm_authorization,
+                                             decode_challenge,
+                                             encode_challenge,
+                                             get_authorized_limit,
+                                             get_captcha_urls)
+
+import cats
 
 MIN_PLAYERS = 2
 MAX_PLAYERS = 4

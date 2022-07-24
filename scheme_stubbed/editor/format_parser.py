@@ -1,6 +1,6 @@
-from typing import Union, List
+from typing import List, Union
 
-from lexer import TokenBuffer, SPECIALS, Comment
+from lexer import SPECIALS, Comment, TokenBuffer
 from scheme_exceptions import ParseError
 
 

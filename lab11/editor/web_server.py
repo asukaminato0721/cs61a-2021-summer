@@ -1,11 +1,10 @@
 import json
 
-from flask import Flask, render_template, request, jsonify
-
 import database
 import execution
 import log
-from runtime_limiter import scheme_limiter, TimeLimitException
+from flask import Flask, jsonify, render_template, request
+from runtime_limiter import TimeLimitException, scheme_limiter
 from scheme_exceptions import SchemeError
 
 app = Flask(__name__)

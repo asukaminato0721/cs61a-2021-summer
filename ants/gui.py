@@ -8,11 +8,12 @@ import urllib.request
 import zipfile
 from time import sleep
 
-import ants
 import ants_strategies
 import state
 import utils
 from ucb import *
+
+import ants
 
 VERSION = 1.2
 ASSETS_DIR = "assets/"

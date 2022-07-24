@@ -2,7 +2,7 @@ import json
 from typing import List
 
 import log
-from datamodel import Expression, Undefined, Pair
+from datamodel import Expression, Pair, Undefined
 from environment import global_attr
 from evaluate_apply import Frame
 from helper import verify_exact_callable_length

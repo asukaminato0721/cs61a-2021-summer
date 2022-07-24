@@ -1,13 +1,13 @@
-from math import sin, cos, pi, atan2
+from math import atan2, cos, pi, sin
 
 try:
-    import turtle
     import tkinter
+    import turtle
 except ImportError:
     pass
 
 from .canvas import Canvas
-from .model import Color, Position, Arc
+from .model import Arc, Color, Position
 
 
 class TkCanvas(Canvas):

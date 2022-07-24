@@ -2,9 +2,9 @@ import math
 from typing import List
 
 import execution
-from datamodel import Symbol, Expression, Number
+from datamodel import Expression, Number, Symbol
 from evaluate_apply import Frame
-from primitives import SingleOperandPrimitive, BuiltIn
+from primitives import BuiltIn, SingleOperandPrimitive
 from scheme_exceptions import MathError, OperandDeduceError
 
 

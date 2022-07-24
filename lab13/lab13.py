@@ -5,6 +5,7 @@ from itertools import zip_longest
 from operator import add, mul, sub
 from typing import Any, Callable, List, Optional, Tuple
 
+
 # DONE
 def prune_min(t: Tree):
     """Prune the tree mutatively from the bottom up.

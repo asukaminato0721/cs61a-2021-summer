@@ -13,20 +13,16 @@ from http import HTTPStatus, server
 from urllib.error import URLError
 from urllib.request import Request, urlopen
 
-from _socket import timeout
-
 import execution
 import log
 import ok_interface
+from _socket import timeout
 from documentation import search
 from execution_parser import strip_comments
 from file_manager import get_scm_files, new_file, read_file, save
 from persistence import load_config, save_config
-from runtime_limiter import (
-    OperationCanceledException,
-    TimeLimitException,
-    scheme_limiter,
-)
+from runtime_limiter import (OperationCanceledException, TimeLimitException,
+                             scheme_limiter)
 from scheme_exceptions import ParseError, SchemeError, TerminatedError
 
 PORT = 8012

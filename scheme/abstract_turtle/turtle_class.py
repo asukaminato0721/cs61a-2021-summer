@@ -1,8 +1,8 @@
 from functools import wraps
-from math import pi, sin, cos, copysign
+from math import copysign, cos, pi, sin
 
-from .model import Color, Position, DrawnTurtle, Mode, LineTo, Arc
 from .canvas import Canvas
+from .model import Arc, Color, DrawnTurtle, LineTo, Mode, Position
 
 
 def turtle_method(func):
@@ -90,7 +90,7 @@ class BaseTurtle:
             )
         self.__x = x
         self.__y = y
-        if self.filling():
+        if self.filling() and self.__path:
             self.__path.append(LineTo(self.__current_pos))
         self.__update_turtle()
 
@@ -138,7 +138,7 @@ class BaseTurtle:
         start_angle = self.__theta - pi / 2 * copysign(1, radius)
         end_angle = start_angle + angle_change
 
-        if self.filling():
+        if self.filling() and self.__path:
             self.__path.append(Arc(center, abs(radius), start_angle, end_angle))
 
         if self.__pen_down:
@@ -195,10 +195,9 @@ class BaseTurtle:
     def pixel_size(self, pixel_size):
         if not isinstance(pixel_size, int) or pixel_size <= 0:
             raise ValueError(
-                "Expected a positive integer for pixel_size but got {}".format(
-                    pixel_size
-                )
+                f"Expected a positive integer for pixel_size but got {pixel_size}"
             )
+
         self.__pixel_size = pixel_size
 
     @turtle_method
@@ -237,7 +236,7 @@ class BaseTurtle:
         return self.__from_real_angle(self.__theta)
 
     @turtle_method
-    def degrees(self, amount=360):
+    def degrees(self, amount: float = 360):
         """
         Set the number of degrees in a circle
         """
@@ -385,7 +384,7 @@ class BaseTurtle:
         elif mode == "world":
             raise RuntimeError("Custom world coordinates not supported.")
         else:
-            raise RuntimeError("Unknown mode: {}".format(mode))
+            raise RuntimeError(f"Unknown mode: {mode}")
         self.goto(0, 0)
         self.setheading(0)
         self.clear()

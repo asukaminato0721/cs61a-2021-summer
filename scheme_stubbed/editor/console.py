@@ -1,11 +1,11 @@
 from typing import List
 
 import log
-from datamodel import Expression, Undefined, String
+from datamodel import Expression, String, Undefined
 from environment import global_attr
 from evaluate_apply import Frame
 from helper import verify_exact_callable_length
-from primitives import SingleOperandPrimitive, BuiltIn
+from primitives import BuiltIn, SingleOperandPrimitive
 
 
 @global_attr("print")

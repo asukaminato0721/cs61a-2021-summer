@@ -1,7 +1,8 @@
-from utils import *
-from ants import *
 from ants_strategies import start_with_strategy
+from utils import *
+
 import ants
+from ants import *
 
 
 @main

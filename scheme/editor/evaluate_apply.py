@@ -1,24 +1,12 @@
 from typing import Dict, List, Optional, Union
 
 import log
-from datamodel import (
-    Boolean,
-    Expression,
-    Nil,
-    Number,
-    Pair,
-    Promise,
-    String,
-    Symbol,
-    Undefined,
-)
+from datamodel import (Boolean, Expression, Nil, Number, Pair, Promise, String,
+                       Symbol, Undefined)
 from helper import pair_to_list
-from scheme_exceptions import (
-    CallableResolutionError,
-    IrreversibleOperationError,
-    OutOfMemoryError,
-    SymbolLookupError,
-)
+from scheme_exceptions import (CallableResolutionError,
+                               IrreversibleOperationError, OutOfMemoryError,
+                               SymbolLookupError)
 
 RECURSION_LIMIT = 100000
 

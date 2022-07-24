@@ -3,13 +3,8 @@ from functools import lru_cache
 from typing import List, Tuple, Type, Union
 
 import lexer as lexer
-from format_parser import (
-    FormatAtom,
-    FormatComment,
-    FormatList,
-    Formatted,
-    get_expression,
-)
+from format_parser import (FormatAtom, FormatComment, FormatList, Formatted,
+                           get_expression)
 
 LINE_LENGTH = 50
 MAX_EXPR_COUNT = 10
@@ -32,7 +27,7 @@ FREE_TOKENS = ["if", "define", "define-macro", "mu", "lambda"]
 OPEN_PARENS = ["(", "["]
 CLOSE_PARENS = [")", "]"]
 
-CACHE_SIZE = 2 ** 8
+CACHE_SIZE = 2**8
 
 
 def prettify(strings: List[str], javastyle: bool = False) -> str:

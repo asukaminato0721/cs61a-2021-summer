@@ -1,5 +1,5 @@
 from collections import defaultdict
-from operator import add, mul, sub, neg
+from operator import add, mul, neg, sub
 from typing import Any, Callable, Union
 
 square = lambda x: x * x

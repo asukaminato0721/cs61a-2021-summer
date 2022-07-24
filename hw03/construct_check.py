@@ -1,4 +1,4 @@
-from ast import parse, NodeVisitor, Name
+from ast import Name, NodeVisitor, parse
 
 _NAMES = {
     "Add": "+",

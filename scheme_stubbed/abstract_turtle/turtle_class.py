@@ -1,8 +1,8 @@
 from functools import wraps
-from math import pi, sin, cos, copysign
+from math import copysign, cos, pi, sin
 
-from .model import Color, Position, DrawnTurtle, Mode, LineTo, Arc
 from .canvas import Canvas
+from .model import Arc, Color, DrawnTurtle, LineTo, Mode, Position
 
 
 def turtle_method(func):

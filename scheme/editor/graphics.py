@@ -9,11 +9,8 @@ from environment import global_attr
 from evaluate_apply import Frame
 from helper import verify_exact_callable_length, verify_min_callable_length
 from primitives import BuiltIn, SingleOperandPrimitive
-from scheme_exceptions import (
-    IrreversibleOperationError,
-    OperandDeduceError,
-    TurtleDrawingError,
-)
+from scheme_exceptions import (IrreversibleOperationError, OperandDeduceError,
+                               TurtleDrawingError)
 
 ABSOLUTE_MOVE = "M"
 RELATIVE_MOVE = "m"

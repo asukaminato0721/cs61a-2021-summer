@@ -4,9 +4,10 @@ import os
 import random
 import string
 
-import cats
 from gui_files import multiplayer
 from gui_files.common_server import Server, route, sendto, start
+
+import cats
 
 PORT = 31415
 DEFAULT_SERVER = "https://cats.cs61a.org"

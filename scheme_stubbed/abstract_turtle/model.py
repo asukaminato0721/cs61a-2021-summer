@@ -1,8 +1,7 @@
 from abc import ABC, abstractmethod
 from collections import namedtuple
 from enum import Enum
-
-from math import sin, cos
+from math import cos, sin
 
 from .color_names import COLORS
 

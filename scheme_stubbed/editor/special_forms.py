@@ -2,39 +2,19 @@ from typing import List, Optional, Type
 
 import log
 from arithmetic import IsEqual
-from datamodel import (
-    Expression,
-    Symbol,
-    Pair,
-    SingletonTrue,
-    SingletonFalse,
-    Nil,
-    Undefined,
-    Promise,
-    NilType,
-    String,
-)
-from environment import global_attr
-from environment import special_form
-from evaluate_apply import Frame, evaluate, Callable, evaluate_all, Applicable
+from datamodel import (Expression, Nil, NilType, Pair, Promise, SingletonFalse,
+                       SingletonTrue, String, Symbol, Undefined)
+from environment import global_attr, special_form
+from evaluate_apply import Applicable, Callable, Frame, evaluate, evaluate_all
 from execution_parser import get_expression
-from helper import (
-    pair_to_list,
-    verify_exact_callable_length,
-    verify_min_callable_length,
-    make_list,
-    dotted_pair_to_list,
-)
+from helper import (dotted_pair_to_list, make_list, pair_to_list,
+                    verify_exact_callable_length, verify_min_callable_length)
 from lexer import TokenBuffer
-from log import Holder, VisualExpression, return_symbol, logger
-from scheme_exceptions import (
-    OperandDeduceError,
-    IrreversibleOperationError,
-    LoadError,
-    SchemeError,
-    TypeMismatchError,
-    CallableResolutionError,
-)
+from log import Holder, VisualExpression, logger, return_symbol
+from scheme_exceptions import (CallableResolutionError,
+                               IrreversibleOperationError, LoadError,
+                               OperandDeduceError, SchemeError,
+                               TypeMismatchError)
 
 
 class ProcedureObject(Callable):

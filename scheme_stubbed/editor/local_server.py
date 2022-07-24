@@ -1,33 +1,29 @@
-import os
-import time
-from _socket import timeout
-from http import server
 import io
 import json
+import os
 import socketserver
 import subprocess
 import sys
+import threading
+import time
 import urllib.parse
 import webbrowser
-import threading
-from http import HTTPStatus
+from formatter import prettify
+from http import HTTPStatus, server
 from urllib.error import URLError
 from urllib.request import Request, urlopen
 
 import execution
-import ok_interface
 import log
+import ok_interface
+from _socket import timeout
 from documentation import search
 from execution_parser import strip_comments
-from file_manager import get_scm_files, save, read_file, new_file
-from formatter import prettify
-from persistence import save_config, load_config
-from runtime_limiter import (
-    TimeLimitException,
-    OperationCanceledException,
-    scheme_limiter,
-)
-from scheme_exceptions import SchemeError, ParseError, TerminatedError
+from file_manager import get_scm_files, new_file, read_file, save
+from persistence import load_config, save_config
+from runtime_limiter import (OperationCanceledException, TimeLimitException,
+                             scheme_limiter)
+from scheme_exceptions import ParseError, SchemeError, TerminatedError
 
 PORT = 8012
 

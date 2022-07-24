@@ -4,8 +4,8 @@ except ImportError:
     pass  # but not everyone has it
 import sys
 
-from reader import read
 from expr import global_env
+from reader import read
 
 # program start
 if __name__ == "__main__":

@@ -6,6 +6,7 @@ import inspect
 import re
 import signal
 import sys
+from types import FrameType
 from typing import Callable
 
 
@@ -42,14 +43,14 @@ def trace(fn: Callable):
     def wrapped(*args, **kwds):
         global _PREFIX
         reprs = [repr(e) for e in args]
-        reprs += [repr(k) + "=" + repr(v) for k, v in kwds.items()]
+        reprs += [f"{repr(k)}={repr(v)}" for k, v in kwds.items()]
         log("{0}({1})".format(fn.__name__, ", ".join(reprs)) + ":")
         _PREFIX += "    "
         try:
             result = fn(*args, **kwds)
             _PREFIX = _PREFIX[:-4]
         except Exception as e:
-            log(fn.__name__ + " exited via exception")
+            log(f"{fn.__name__} exited via exception")
             _PREFIX = _PREFIX[:-4]
             raise
         # Here, print out the return value.
@@ -80,7 +81,7 @@ def interact(msg=None):
       execution.
     """
     # evaluate commands in current namespace
-    frame = inspect.currentframe().f_back
+    frame: FrameType = inspect.currentframe().f_back
     namespace = frame.f_globals.copy()
     namespace.update(frame.f_locals)
 

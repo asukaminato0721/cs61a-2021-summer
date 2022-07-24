@@ -1,14 +1,14 @@
 import json
 
-from datamodel import Undefined, Pair
+from datamodel import Pair, Undefined
 from evaluate_apply import evaluate
+from execution_parser import get_expression
 from graphics import Canvas
 from helper import pair_to_list
-from log import Holder, Root
-from execution_parser import get_expression
 from lexer import TokenBuffer
+from log import Holder, Root
 from runtime_limiter import TimeLimitException
-from scheme_exceptions import SchemeError, ParseError
+from scheme_exceptions import ParseError, SchemeError
 
 MAX_TRACEBACK_LENGTH = 20
 MAX_AUTODRAW_LENGTH = 50

@@ -237,13 +237,10 @@ def run_tests():
 
     # noinspection PyUnresolvedReferences
     from client.cli.ok import parse_input
-
     # noinspection PyUnresolvedReferences
     from client.sources.doctest.models import Doctest
-
     # noinspection PyUnresolvedReferences
     from client.sources.ok_test.scheme import SchemeSuite
-
     # noinspection PyUnresolvedReferences
     from client.sources.scheme_test.models import SchemeTest
 

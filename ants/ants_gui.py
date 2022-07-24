@@ -18,14 +18,17 @@ The Hive is handled as a special case so that the player can visually inspect
 how many bees remain in the beehive.
 """
 
-import ants, ants_strategies
-import graphics
-from graphics import shift_point
-from ucb import *
-from math import pi
 import math
 import os
 import random
+from math import pi
+
+import ants_strategies
+import graphics
+from graphics import shift_point
+from ucb import *
+
+import ants
 
 STRATEGY_SECONDS = 1
 INSECT_FILES = {

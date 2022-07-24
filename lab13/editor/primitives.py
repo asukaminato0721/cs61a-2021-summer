@@ -1,10 +1,9 @@
 from typing import List
 
+from datamodel import Expression
+from evaluate_apply import Applicable, Frame, evaluate_all
 from helper import verify_exact_callable_length
 from log import Holder
-
-from datamodel import Expression
-from evaluate_apply import Frame, evaluate_all, Applicable
 
 
 class BuiltIn(Applicable):

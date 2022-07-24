@@ -2,6 +2,7 @@
 
 from re import I
 from typing import Callable
+
 from dice import four_sided, make_test_dice, six_sided
 from ucb import interact, main, trace
 

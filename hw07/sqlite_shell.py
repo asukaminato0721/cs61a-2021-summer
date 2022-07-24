@@ -7,8 +7,8 @@
 import codecs
 import io
 import os
-import sys
 import sqlite3
+import sys
 import time
 import warnings
 

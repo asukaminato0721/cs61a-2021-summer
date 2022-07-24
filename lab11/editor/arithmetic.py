@@ -1,21 +1,11 @@
 from typing import List
 
-from datamodel import (
-    Expression,
-    Number,
-    Pair,
-    SingletonFalse,
-    SingletonTrue,
-    ValueHolder,
-    bools,
-)
+from datamodel import (Expression, Number, Pair, SingletonFalse, SingletonTrue,
+                       ValueHolder, bools)
 from environment import global_attr
 from evaluate_apply import Frame
-from helper import (
-    assert_all_numbers,
-    verify_exact_callable_length,
-    verify_min_callable_length,
-)
+from helper import (assert_all_numbers, verify_exact_callable_length,
+                    verify_min_callable_length)
 from primitives import BuiltIn, SingleOperandPrimitive
 
 

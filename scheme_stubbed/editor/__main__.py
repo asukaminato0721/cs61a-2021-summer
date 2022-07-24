@@ -2,10 +2,10 @@ import argparse
 import json
 import os
 from difflib import unified_diff
+from formatter import prettify
 
 import local_server
 import log
-from formatter import prettify
 
 
 def reformat_files(src, dest=None, check=False):

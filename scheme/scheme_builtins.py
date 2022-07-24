@@ -1,9 +1,12 @@
 """This module implements the built-in procedures of the Scheme language."""
 
+import builtins
 import math
 import numbers
 import operator
 import sys
+from typing import Type, Union
+
 from scheme_reader import Pair, nil, repl_str
 
 
@@ -85,10 +88,7 @@ def scheme_eqvp(x, y):
 
 @builtin("eq?")
 def scheme_eqp(x, y):
-    if scheme_symbolp(x) and scheme_symbolp(y):
-        return x == y
-    else:
-        return x is y
+    return x == y if scheme_symbolp(x) and scheme_symbolp(y) else x is y
 
 
 @builtin("pair?")
@@ -180,7 +180,7 @@ def scheme_set_cdr(x, y):
 
 @builtin("list")
 def scheme_list(*vals):
-    result = nil
+    result: Union[Type[nil], Pair] = nil
     for e in reversed(vals):
         result = Pair(e, result)
     return result
@@ -314,7 +314,7 @@ def scheme_remainder(val0, val1):
     try:
         result = val0 % val1
     except ZeroDivisionError as err:
-        raise SchemeError(err)
+        raise SchemeError(err) from err
     while result < 0 and val0 > 0 or result > 0 and val0 < 0:
         result -= val1
     return result
@@ -481,10 +481,11 @@ def _title():
 def attempt_install_tk_turtle():
     try:
         from abstract_turtle import turtle
-    except ImportError:
+    except ImportError as e:
         raise SchemeError(
             "Could not find abstract_turtle. This should never happen in student-facing situations. If you are a student, please file a bug on Piazza."
-        )
+        ) from e
+
     return turtle
 
 
@@ -507,8 +508,8 @@ def attempt_create_tk_canvas():
 
 def attempt_create_pillow_canvas():
     try:
-        import PIL as _
         import numpy as _
+        import PIL as _
     except:
         raise SchemeError(
             "\n".join(

@@ -1,20 +1,10 @@
-from datamodel import (
-    Expression,
-    Boolean,
-    Number,
-    Symbol,
-    Nil,
-    SingletonTrue,
-    SingletonFalse,
-    Pair,
-    bools,
-    String,
-)
+from datamodel import (Boolean, Expression, Nil, Number, Pair, SingletonFalse,
+                       SingletonTrue, String, Symbol, bools)
 from environment import global_attr
 from helper import pair_to_list
 from primitives import SingleOperandPrimitive
 from scheme_exceptions import OperandDeduceError
-from special_forms import LambdaObject, MuObject, MacroObject
+from special_forms import LambdaObject, MacroObject, MuObject
 
 
 @global_attr("atom?")

@@ -1,6 +1,6 @@
-from operator import add, mul, sub
 from functools import reduce
 from math import prod
+from operator import add, mul, sub
 from typing import Any, Callable
 
 square = lambda x: x * x

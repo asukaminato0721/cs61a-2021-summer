@@ -1,14 +1,7 @@
 from typing import Union
 
-from datamodel import (
-    Expression,
-    Nil,
-    Number,
-    SingletonFalse,
-    SingletonTrue,
-    String,
-    Symbol,
-)
+from datamodel import (Expression, Nil, Number, SingletonFalse, SingletonTrue,
+                       String, Symbol)
 from helper import make_list
 from lexer import SPECIALS, TokenBuffer
 from log import logger

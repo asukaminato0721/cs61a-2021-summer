@@ -1,15 +1,5 @@
-from datamodel import (
-    Boolean,
-    Expression,
-    Nil,
-    Number,
-    Pair,
-    SingletonFalse,
-    SingletonTrue,
-    String,
-    Symbol,
-    bools,
-)
+from datamodel import (Boolean, Expression, Nil, Number, Pair, SingletonFalse,
+                       SingletonTrue, String, Symbol, bools)
 from environment import global_attr
 from helper import pair_to_list
 from primitives import SingleOperandPrimitive

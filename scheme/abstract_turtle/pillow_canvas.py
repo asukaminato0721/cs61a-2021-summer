@@ -1,8 +1,8 @@
-from math import sin, cos, pi
+from math import cos, pi, sin
 
 try:
-    from PIL import Image, ImageDraw
     import numpy as np
+    from PIL import Image, ImageDraw
 except ImportError:
     pass
 

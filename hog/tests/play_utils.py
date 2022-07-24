@@ -66,7 +66,7 @@ def safe(commentary):
 
 def describe_game(hog, test_number, score0, score1, goal):
     strat_seed0, strat_seed1, dice_seed = run_with_seed(
-        test_number, lambda: [random.randrange(2 ** 32) for _ in range(3)]
+        test_number, lambda: [random.randrange(2**32) for _ in range(3)]
     )
     strategy0 = random_strat(strat_seed0)
     strategy1 = random_strat(strat_seed1)
@@ -116,7 +116,7 @@ def random_strat(seed):
             + seed * 161803398874989484820
         )
         return run_with_seed(
-            conditional_seed % (2 ** 32), lambda: random.randrange(0, 11)
+            conditional_seed % (2**32), lambda: random.randrange(0, 11)
         )
 
     return random_strat
@@ -134,7 +134,7 @@ def get_dice(seed):
     def dice():
         nonlocal seed
         seed, value = run_with_seed(
-            seed, lambda: (random.randrange(0, 2 ** 32), random.randrange(1, 7))
+            seed, lambda: (random.randrange(0, 2**32), random.randrange(1, 7))
         )
         return value
 

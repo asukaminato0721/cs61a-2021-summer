@@ -25,8 +25,8 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 """
 
 
-import re
 import inspect
+import re
 
 __version__ = "0.8.4"
 __author__ = "Hsiaoming Yang <me@lepture.com>"

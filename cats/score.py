@@ -1,7 +1,8 @@
-import cats
 import pickle
-import time
 import random
+import time
+
+import cats
 
 if __name__ == "__main__":
     pickled_file = "data/testcases.out"

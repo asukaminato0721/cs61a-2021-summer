@@ -1,18 +1,9 @@
 from enum import Enum
-from typing import List, Union, Dict, Tuple, TYPE_CHECKING
+from typing import TYPE_CHECKING, Dict, List, Tuple, Union
 
-from datamodel import (
-    Expression,
-    ValueHolder,
-    Pair,
-    Nil,
-    Symbol,
-    Undefined,
-    Promise,
-    NilType,
-    UndefinedType,
-)
 import evaluate_apply
+from datamodel import (Expression, Nil, NilType, Pair, Promise, Symbol,
+                       Undefined, UndefinedType, ValueHolder)
 from helper import pair_to_list
 from log_utils import get_id
 from scheme_exceptions import OperandDeduceError

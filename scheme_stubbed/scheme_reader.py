@@ -17,9 +17,9 @@ would be read to the value, where possible.
 
 import numbers
 
-from ucb import main, trace, interact
-from scheme_tokens import tokenize_lines, DELIMITERS
 from buffer import Buffer, InputReader, LineReader
+from scheme_tokens import DELIMITERS, tokenize_lines
+from ucb import interact, main, trace
 
 # Pairs and Scheme lists
 
@@ -37,7 +37,7 @@ class Pair:
     """
 
     def __init__(self, first, rest):
-        from scheme_builtins import scheme_valid_cdrp, SchemeError
+        from scheme_builtins import SchemeError, scheme_valid_cdrp
 
         self.first = first
         self.rest = rest
@@ -46,14 +46,14 @@ class Pair:
         return "Pair({0}, {1})".format(repr(self.first), repr(self.rest))
 
     def __str__(self):
-        s = "(" + repl_str(self.first)
+        s = f"({repl_str(self.first)}"
         rest = self.rest
         while isinstance(rest, Pair):
-            s += " " + repl_str(rest.first)
+            s += f" {repl_str(rest.first)}"
             rest = rest.rest
         if rest is not nil:
-            s += " . " + repl_str(rest)
-        return s + ")"
+            s += f" . {repl_str(rest)}"
+        return f"{s})"
 
     def __len__(self):
         n, rest = 1, self.rest
@@ -65,9 +65,11 @@ class Pair:
         return n
 
     def __eq__(self, p):
-        if not isinstance(p, Pair):
-            return False
-        return self.first == p.first and self.rest == p.rest
+        return (
+            self.first == p.first and self.rest == p.rest
+            if isinstance(p, Pair)
+            else False
+        )
 
     def map(self, fn):
         """Return a Scheme list after mapping Python function FN to SELF."""
@@ -102,7 +104,7 @@ nil = nil()  # Assignment hides the nil class; there is only one instance
 quotes = {"'": "quote", "`": "quasiquote", ",": "unquote"}
 
 
-def scheme_read(src):
+def scheme_read(src: Buffer):
     """Read the next expression from SRC, a Buffer of tokens.
 
     >>> scheme_read(Buffer(tokenize_lines(['nil'])))
@@ -118,10 +120,11 @@ def scheme_read(src):
         raise EOFError
     # BEGIN PROBLEM 1/2
     "*** YOUR CODE HERE ***"
+    return src.current()
     # END PROBLEM 1/2
 
 
-def read_tail(src):
+def read_tail(src: Buffer):
     """Return the remainder of a list in SRC, starting before an element or ).
 
     >>> read_tail(Buffer(tokenize_lines([')'])))
@@ -135,8 +138,8 @@ def read_tail(src):
         # BEGIN PROBLEM 1
         "*** YOUR CODE HERE ***"
         # END PROBLEM 1
-    except EOFError:
-        raise SyntaxError("unexpected end of file")
+    except EOFError as e:
+        raise SyntaxError("unexpected end of file") from e
 
 
 # Convenience methods
@@ -147,12 +150,9 @@ def buffer_input(prompt="scm> "):
     return Buffer(tokenize_lines(InputReader(prompt)))
 
 
-def buffer_lines(lines, prompt="scm> ", show_prompt=False):
+def buffer_lines(lines, prompt: str = "scm> ", show_prompt: bool = False):
     """Return a Buffer instance iterating through LINES."""
-    if show_prompt:
-        input_lines = lines
-    else:
-        input_lines = LineReader(lines, prompt)
+    input_lines = lines if show_prompt else LineReader(lines, prompt)
     return Buffer(tokenize_lines(input_lines))
 
 
@@ -187,7 +187,7 @@ def read_print_loop():
                 print("str :", expression)
                 print("repr:", repr(expression))
         except (SyntaxError, ValueError) as err:
-            print(type(err).__name__ + ":", err)
+            print(f"{type(err).__name__}:", err)
         except (KeyboardInterrupt, EOFError):  # <Control>-D, etc.
             print()
             return

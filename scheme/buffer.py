@@ -2,6 +2,8 @@
 
 import math
 import sys
+from dataclasses import dataclass
+from typing import List
 
 if sys.version_info[0] < 3:  # Python 2 compatibility
 
@@ -97,9 +99,11 @@ class Buffer:
         msg = "{0:>" + str(math.floor(math.log10(n)) + 1) + "}: "
 
         # Up to three previous lines and current line are included in output
-        s = ""
-        for i in range(max(0, n - 4), n - 1):
-            s += msg.format(i + 1) + " ".join(map(str, self.lines[i])) + "\n"
+        s = "".join(
+            msg.format(i + 1) + " ".join(map(str, self.lines[i])) + "\n"
+            for i in range(max(0, n - 4), n - 1)
+        )
+
         s += msg.format(n)
         s += " ".join(map(str, self.current_line[: self.index]))
         s += " >> "
@@ -108,17 +112,17 @@ class Buffer:
 
 
 # Try to import readline for interactive history
-try:
+import contextlib
+
+with contextlib.suppress(Exception):
     import readline
-except:
-    pass
 
 
+@dataclass
 class InputReader:
     """An InputReader is an iterable that prompts the user for input."""
 
-    def __init__(self, prompt):
-        self.prompt = prompt
+    prompt: str
 
     def __iter__(self):
         while True:
@@ -126,13 +130,13 @@ class InputReader:
             self.prompt = " " * len(self.prompt)
 
 
+@dataclass
 class LineReader:
     """A LineReader is an iterable that prints lines after a prompt."""
 
-    def __init__(self, lines, prompt, comment=";"):
-        self.lines = lines
-        self.prompt = prompt
-        self.comment = comment
+    lines: List[str]
+    prompt: str
+    comment: str = ";"
 
     def __iter__(self):
         while self.lines:

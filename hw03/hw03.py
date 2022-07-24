@@ -391,7 +391,7 @@ def quadratic(x: Interval, a: float, b: float, c: float) -> Interval:
     "*** YOUR CODE HERE ***"
 
     def f(_x):
-        return a * _x ** 2 + b * _x + c
+        return a * _x**2 + b * _x + c
 
     middle = -b / (2 * a)
     _left = lower_bound(x)

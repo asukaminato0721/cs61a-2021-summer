@@ -1,5 +1,5 @@
-from classes import *
 from cards import *
+from classes import *
 
 try:
     import readline

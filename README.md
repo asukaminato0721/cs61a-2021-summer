@@ -71,7 +71,8 @@ current progress:
   - [ ] Optional2
   - [ ] Optional3
     > ContainerAnt 这个 class 是没图的，但是默认设置会尝试载入图. 要手动把代码改掉 `self.ant_types = {a.name: a for a in ant_types if a != ContainerAnt}`
-- [ ] scheme
+- [x] scheme
+- [ ] scheme_stubbed (这个是加强版的 scheme, 就不做了)
 
 ---
 

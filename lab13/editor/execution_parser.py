@@ -1,16 +1,9 @@
 from typing import Union
 
-from datamodel import (
-    Expression,
-    Symbol,
-    Number,
-    Nil,
-    SingletonTrue,
-    SingletonFalse,
-    String,
-)
+from datamodel import (Expression, Nil, Number, SingletonFalse, SingletonTrue,
+                       String, Symbol)
 from helper import make_list
-from lexer import TokenBuffer, SPECIALS
+from lexer import SPECIALS, TokenBuffer
 from log import logger
 from scheme_exceptions import ParseError
 

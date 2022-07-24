@@ -2,8 +2,8 @@ import formatter
 import os
 import re
 import sys
-from collections import namedtuple
 from abc import ABCMeta, abstractmethod
+from collections import namedtuple
 from contextlib import contextmanager
 
 from scheme_exceptions import TerminatedError
@@ -227,9 +227,9 @@ def run_tests():
     reload_tests()
 
     # noinspection PyUnresolvedReferences
-    from client.api import assignment
-
     import logging
+
+    from client.api import assignment
 
     LOGGING_FORMAT = "%(levelname)s  | %(filename)s:%(lineno)d | %(message)s"
     logging.basicConfig(format=LOGGING_FORMAT)
@@ -237,13 +237,10 @@ def run_tests():
 
     # noinspection PyUnresolvedReferences
     from client.cli.ok import parse_input
-
-    # noinspection PyUnresolvedReferences
-    from client.sources.ok_test.scheme import SchemeSuite
-
     # noinspection PyUnresolvedReferences
     from client.sources.doctest.models import Doctest
-
+    # noinspection PyUnresolvedReferences
+    from client.sources.ok_test.scheme import SchemeSuite
     # noinspection PyUnresolvedReferences
     from client.sources.scheme_test.models import SchemeTest
 

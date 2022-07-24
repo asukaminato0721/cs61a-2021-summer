@@ -4,6 +4,7 @@ import math
 import numbers
 import operator
 import sys
+
 from scheme_reader import Pair, nil, repl_str
 
 
@@ -510,8 +511,8 @@ def attempt_create_tk_canvas():
 
 def attempt_create_pillow_canvas():
     try:
-        import PIL as _
         import numpy as _
+        import PIL as _
     except:
         raise SchemeError(
             "\n".join(
